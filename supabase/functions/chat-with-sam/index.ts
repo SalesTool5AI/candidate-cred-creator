@@ -15,8 +15,11 @@ serve(async (req) => {
   try {
     const { message, conversationHistory, userEmail, userName } = await req.json()
 
+    console.log('Received request:', { message, userEmail, userName })
+
     const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
     if (!anthropicApiKey) {
+      console.error('ANTHROPIC_API_KEY is not set')
       throw new Error('ANTHROPIC_API_KEY is not set')
     }
 
@@ -80,16 +83,28 @@ serve(async (req) => {
       {
         role: "system",
         content: knowledgeBase + "\n\nYou are having a conversation with a hiring manager or potential employer who wants to get to know Sam Bryant better. Answer as Sam would, using 'I' and drawing from the knowledge base above. Be authentic, professional, and include specific examples when relevant."
-      },
-      ...conversationHistory.map((msg: any) => ({
-        role: msg.role,
-        content: msg.content
-      })),
-      {
-        role: "user",
-        content: message
       }
     ]
+
+    // Add conversation history
+    if (conversationHistory && conversationHistory.length > 0) {
+      conversationHistory.forEach((msg: any) => {
+        if (msg.role === 'user' || msg.role === 'assistant') {
+          messages.push({
+            role: msg.role,
+            content: msg.content
+          })
+        }
+      })
+    }
+
+    // Add current message
+    messages.push({
+      role: "user",
+      content: message
+    })
+
+    console.log('Calling Anthropic API...')
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -105,13 +120,17 @@ serve(async (req) => {
       })
     })
 
+    console.log('Anthropic API response status:', response.status)
+
     if (!response.ok) {
       const errorText = await response.text()
       console.error('Anthropic API error:', errorText)
-      throw new Error(`Anthropic API error: ${response.status}`)
+      throw new Error(`Anthropic API error: ${response.status} - ${errorText}`)
     }
 
     const data = await response.json()
+    console.log('Anthropic API response:', data)
+
     const assistantMessage = data.content[0].text
 
     return new Response(
