@@ -70,69 +70,131 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-gray-900">
-            Sam Bryant's Portfolio
-          </CardTitle>
-          <CardDescription className="text-gray-600">
-            Exclusive access for hiring managers
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {!sent ? (
-            <form onSubmit={handleMagicLink} className="space-y-4">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Company Email Address
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.name@company.com"
-                  required
-                  className="w-full"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Only authorized company domains can access this portfolio
-                </p>
-              </div>
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700"
-              >
-                {loading ? "Sending..." : "Send Magic Link"}
-              </Button>
-            </form>
-          ) : (
-            <div className="text-center space-y-4">
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-green-800">Check Your Email!</h3>
-                <p className="text-green-700 text-sm mt-2">
-                  We've sent a secure login link to <strong>{email}</strong>
-                </p>
-                <p className="text-green-600 text-xs mt-2">
-                  Click the link in your email to access the portfolio
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSent(false);
-                  setEmail('');
-                }}
-                className="w-full"
-              >
-                Try Different Email
-              </Button>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black relative overflow-hidden flex items-center justify-center">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        {/* Network lines */}
+        <div className="absolute top-1/4 left-1/4 w-px h-32 bg-gradient-to-b from-cyan-400/30 to-transparent transform rotate-45"></div>
+        <div className="absolute top-1/3 right-1/3 w-px h-24 bg-gradient-to-b from-blue-400/20 to-transparent transform -rotate-12"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-px h-28 bg-gradient-to-b from-cyan-300/25 to-transparent transform rotate-12"></div>
+        
+        {/* Floating dots */}
+        <div className="absolute top-1/4 left-1/2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-blue-400 rounded-full animate-pulse delay-500"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-1 h-1 bg-cyan-300 rounded-full animate-pulse delay-1000"></div>
+      </div>
+
+      {/* Central lightbulb-inspired design */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10">
+        <div className="relative w-64 h-64">
+          {/* Lightbulb outline */}
+          <div className="absolute inset-0 border-2 border-cyan-400/30 rounded-full"></div>
+          <div className="absolute top-8 left-8 right-8 bottom-16 border-2 border-cyan-400/20 rounded-t-full"></div>
+          
+          {/* Network pattern inside */}
+          <div className="absolute inset-12">
+            <div className="w-full h-full relative">
+              <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-cyan-400/20 to-transparent"></div>
+              <div className="absolute left-0 top-1/2 w-full h-px bg-gradient-to-r from-cyan-400/20 to-transparent"></div>
+              <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-cyan-400 rounded-full"></div>
+              <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-400 rounded-full"></div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative z-10 w-full max-w-md px-4">
+        {/* Tagline */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-wide">
+            It begins with an idea...
+          </h1>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
+        </div>
+
+        <Card className="bg-gray-900/50 border-gray-700/50 backdrop-blur-sm shadow-2xl">
+          <CardHeader className="text-center pb-6">
+            <CardTitle className="text-2xl font-light text-white mb-2">
+              Sam Bryant's Portfolio
+            </CardTitle>
+            <CardDescription className="text-gray-300">
+              Exclusive access for hiring managers
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {!sent ? (
+              <form onSubmit={handleMagicLink} className="space-y-6">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-3">
+                    Company Email Address
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your.name@company.com"
+                    required
+                    className="w-full bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-cyan-400/20"
+                  />
+                  <p className="text-xs text-gray-400 mt-2">
+                    Only authorized company domains can access this portfolio
+                  </p>
+                </div>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-medium py-3 transition-all duration-300 transform hover:scale-105"
+                >
+                  {loading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      <span>Sending...</span>
+                    </div>
+                  ) : (
+                    "Send Magic Link"
+                  )}
+                </Button>
+              </form>
+            ) : (
+              <div className="text-center space-y-6">
+                <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 p-6 rounded-lg border border-green-500/20">
+                  <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="font-semibold text-white mb-2">Check Your Email!</h3>
+                  <p className="text-gray-300 text-sm mb-2">
+                    We've sent a secure login link to
+                  </p>
+                  <p className="text-cyan-400 font-medium text-sm mb-3">{email}</p>
+                  <p className="text-gray-400 text-xs">
+                    Click the link in your email to access the portfolio
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSent(false);
+                    setEmail('');
+                  }}
+                  className="w-full border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+                >
+                  Try Different Email
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Footer tagline */}
+        <div className="text-center mt-8">
+          <p className="text-gray-400 text-sm">
+            Where innovation meets opportunity
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
