@@ -13,7 +13,7 @@ export function Contact() {
   };
 
   const handleLinkedInClick = () => {
-    window.open("https://linkedin.com/in/enterprise-sales-pro", "_blank");
+    window.open("https://linkedin.com/in/sambryant", "_blank");
   };
 
   const handleScheduleClick = () => {
@@ -45,7 +45,7 @@ export function Contact() {
                 <p className="text-gray-600 mb-4">
                   Drop me a line to discuss opportunities or schedule a conversation.
                 </p>
-                <p className="font-semibold text-blue-600">sales.pro@email.com</p>
+                <p className="font-semibold text-blue-600">sb@sam-bryant.com</p>
               </CardContent>
             </Card>
             

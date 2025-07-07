@@ -4,28 +4,28 @@ import { Badge } from "@/components/ui/badge";
 
 const experiences = [
   {
-    company: "TechGlobal Solutions",
-    position: "Senior Enterprise Sales Executive",
-    period: "2022 - Present",
+    company: "Tyk",
+    position: "Account Exectuive EMEA",
+    period: "Feb 2025 - Present",
     achievements: [
       "Generated $1.2M in new business revenue within first year",
       "Closed 3 enterprise deals worth $400K+ each",
       "Built strategic partnerships with 15+ Fortune 500 companies",
       "Led cross-functional team for major client implementations"
     ],
-    technologies: ["Salesforce", "HubSpot", "Outreach.io", "LinkedIn Sales Navigator"]
+    technologies: ["Claude", "HubSpot", "Apollo.io", "LinkedIn Sales Navigator"]
   },
   {
-    company: "CloudTech Innovations",
-    position: "Sales Development Manager",
-    period: "2020 - 2022",
+    company: "Broadcom",
+    position: "Strategic Account Director",
+    period: "Oct 2023 - Feb 2025",
     achievements: [
       "Exceeded quarterly targets by 125% for 6 consecutive quarters",
-      "Managed and mentored team of 5 junior sales representatives",
+      "Managed strategic accounts such as AstraZeneca, Fidelity International, Morrisons, WPP",
       "Developed new prospecting strategies increasing lead quality by 40%",
       "Achieved 92% client retention rate across managed accounts"
     ],
-    technologies: ["Microsoft Dynamics", "ZoomInfo", "Slack", "Tableau"]
+    technologies: ["Salesforce", "LinkedIn Sales Navigator"]
   },
   {
     company: "Enterprise Software Corp",
