@@ -18,6 +18,15 @@ export function Hero() {
       
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="animate-fade-in">
+          {/* Profile Picture */}
+          <div className="mb-8 flex justify-center">
+            <img 
+              src="/lovable-uploads/d5d74f7d-4a40-4978-96a9-c110d15a553e.png" 
+              alt="Sam Bryant" 
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-2xl object-cover"
+            />
+          </div>
+          
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
             Sam Bryant
           </h1>
