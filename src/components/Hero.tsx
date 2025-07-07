@@ -19,13 +19,13 @@ export function Hero() {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-            Sales Excellence
+            Sam Bryant
           </h1>
           <h2 className="text-2xl md:text-3xl font-light mb-8 text-blue-100">
-            Enterprise Software Sales Professional
+            Enterprise Software Sales Account Executive
           </h2>
           <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed text-blue-50">
-            Driving revenue growth through strategic partnerships and innovative solutions. 
+            Driving revenue growth through, prospecting, relationship building & strategic partner selling
             <span className="font-semibold text-white"> Proven track record</span> of exceeding targets and building lasting client relationships.
           </p>
           
