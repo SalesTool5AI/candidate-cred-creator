@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGate } from "@/components/AuthGate";
 import Index from "./pages/Index";
+import Chat from "./pages/Chat";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,14 @@ const App = () => (
               element={
                 <AuthGate>
                   <Index />
+                </AuthGate>
+              } 
+            />
+            <Route 
+              path="/chat" 
+              element={
+                <AuthGate>
+                  <Chat />
                 </AuthGate>
               } 
             />
