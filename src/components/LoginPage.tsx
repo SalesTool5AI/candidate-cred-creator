@@ -103,16 +103,8 @@ export const LoginPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-md px-4">
-        {/* Tagline */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-wide">
-            It begins with an idea...
-          </h1>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
-        </div>
-
-        <Card className="bg-gray-900/50 border-gray-700/50 backdrop-blur-sm shadow-2xl">
+      <div className="relative z-10 w-full max-w-md px-4 flex flex-col items-center">
+        <Card className="bg-gray-900/50 border-gray-700/50 backdrop-blur-sm shadow-2xl mb-8">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-light text-white mb-2">
               Sam Bryant's Portfolio
@@ -188,10 +180,10 @@ export const LoginPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Footer tagline */}
-        <div className="text-center mt-8">
-          <p className="text-gray-400 text-sm">
-            Where innovation meets opportunity
+        {/* New tagline */}
+        <div className="text-center">
+          <p className="text-gray-200 text-lg font-light leading-relaxed max-w-lg">
+            Helping Global Enterprises Solve Complex Problems Through Strategic Sales, Empathy & Execution
           </p>
         </div>
       </div>
