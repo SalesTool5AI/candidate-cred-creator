@@ -69,7 +69,9 @@ export const ChatInterface: React.FC = () => {
   };
 
   const sendMessage = async () => {
-    if (!inputMessage.trim() || !conversationId || isLoading) return;
+    if (!inputMessage.trim() || isLoading) return;
+
+    console.log('Sending message:', inputMessage);
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -79,16 +81,19 @@ export const ChatInterface: React.FC = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputMessage.trim();
     setInputMessage('');
     setIsLoading(true);
 
     try {
-      // Save user message to database
-      await supabase.from('chat_messages').insert({
-        conversation_id: conversationId,
-        role: 'user',
-        content: userMessage.content,
-      });
+      // Save user message to database if we have a conversation ID
+      if (conversationId) {
+        await supabase.from('chat_messages').insert({
+          conversation_id: conversationId,
+          role: 'user',
+          content: userMessage.content,
+        });
+      }
 
       // Get conversation history for context
       const conversationHistory = messages.map(msg => ({
@@ -96,19 +101,26 @@ export const ChatInterface: React.FC = () => {
         content: msg.content
       }));
 
+      console.log('Calling chat-with-sam function...');
+
       // Call the edge function
       const { data, error } = await supabase.functions.invoke('chat-with-sam', {
         body: {
-          message: userMessage.content,
+          message: currentInput,
           conversationHistory,
           userEmail: 'anonymous@visitor.com',
           userName: 'Anonymous Visitor',
         },
       });
 
-      if (error) throw error;
+      console.log('Edge function response:', data, error);
 
-      if (data.success) {
+      if (error) {
+        console.error('Edge function error:', error);
+        throw error;
+      }
+
+      if (data && data.success) {
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
@@ -118,14 +130,16 @@ export const ChatInterface: React.FC = () => {
 
         setMessages(prev => [...prev, assistantMessage]);
 
-        // Save assistant message to database
-        await supabase.from('chat_messages').insert({
-          conversation_id: conversationId,
-          role: 'assistant',
-          content: assistantMessage.content,
-        });
+        // Save assistant message to database if we have a conversation ID
+        if (conversationId) {
+          await supabase.from('chat_messages').insert({
+            conversation_id: conversationId,
+            role: 'assistant',
+            content: assistantMessage.content,
+          });
+        }
       } else {
-        throw new Error(data.error || 'Failed to get response');
+        throw new Error(data?.error || 'Failed to get response from AI');
       }
 
     } catch (error) {
@@ -135,6 +149,15 @@ export const ChatInterface: React.FC = () => {
         description: "Failed to send message. Please try again.",
         variant: "destructive",
       });
+      
+      // Add error message to chat
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "I'm sorry, I'm having trouble responding right now. Please try again in a moment.",
+        created_at: new Date().toISOString(),
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
