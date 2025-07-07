@@ -17,14 +17,14 @@ const achievements: Achievement[] = [
     description: "Peak quota performance at VMware - High Achievers programme"
   },
   {
-    number: 21,
-    suffix: "M",
+    number: "£21m",
+    suffix: "",
     title: "Revenue Closed",
     description: "Total sales revenue closed in strategic enterprise deals"
   },
   {
-    number: 2,
-    suffix: "M",
+    number: "£2m",
+    suffix: "",
     title: "GP Portfolio Built",
     description: "Built £2M gross profit portfolio from scratch at SoftwareONE"
   },
