@@ -1,0 +1,100 @@
+
+import { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+
+interface Achievement {
+  number: number;
+  suffix: string;
+  title: string;
+  description: string;
+}
+
+const achievements: Achievement[] = [
+  {
+    number: 150,
+    suffix: "%",
+    title: "Target Achievement",
+    description: "Consistently exceeded sales quotas over 3+ years"
+  },
+  {
+    number: 2.5,
+    suffix: "M+",
+    title: "Revenue Generated",
+    description: "Total sales revenue driven in enterprise deals"
+  },
+  {
+    number: 95,
+    suffix: "%",
+    title: "Client Retention",
+    description: "Outstanding customer satisfaction and loyalty rate"
+  },
+  {
+    number: 25,
+    suffix: "+",
+    title: "Enterprise Clients",
+    description: "Major accounts successfully onboarded and managed"
+  }
+];
+
+function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const increment = target / 100;
+    const timer = setInterval(() => {
+      setCount(prev => {
+        if (prev >= target) {
+          clearInterval(timer);
+          return target;
+        }
+        return Math.min(prev + increment, target);
+      });
+    }, 20);
+
+    return () => clearInterval(timer);
+  }, [target]);
+
+  return (
+    <span className="text-4xl md:text-5xl font-bold text-blue-600">
+      {Math.floor(count)}{suffix}
+    </span>
+  );
+}
+
+export function Achievements() {
+  return (
+    <section id="achievements" className="py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Proven Results
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Numbers that speak louder than words. Here's what I've accomplished in enterprise sales.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {achievements.map((achievement, index) => (
+            <Card 
+              key={index} 
+              className="hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 hover:border-blue-200"
+            >
+              <CardContent className="p-6 text-center">
+                <div className="mb-4">
+                  <AnimatedCounter target={achievement.number} suffix={achievement.suffix} />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {achievement.title}
+                </h3>
+                <p className="text-gray-600">
+                  {achievement.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
