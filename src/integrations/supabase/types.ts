@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      allowed_domains: {
+        Row: {
+          company_name: string
+          created_at: string
+          domain: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          domain: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          domain?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      authorized_users: {
+        Row: {
+          company_name: string
+          created_at: string
+          domain: string
+          email: string
+          id: string
+          last_login: string | null
+          user_id: string
+        }
+        Insert: {
+          company_name: string
+          created_at?: string
+          domain: string
+          email: string
+          id?: string
+          last_login?: string | null
+          user_id: string
+        }
+        Update: {
+          company_name?: string
+          created_at?: string
+          domain?: string
+          email?: string
+          id?: string
+          last_login?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

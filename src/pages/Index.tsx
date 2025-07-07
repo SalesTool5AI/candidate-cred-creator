@@ -5,10 +5,12 @@ import { Skills } from "@/components/Skills";
 import { Experience } from "@/components/Experience";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
+import { LogoutButton } from "@/components/LogoutButton";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <LogoutButton />
       <Hero />
       <Achievements />
       <Skills />
