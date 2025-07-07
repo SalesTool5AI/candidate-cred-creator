@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface Achievement {
-  number: number;
+  value: number | string;
   suffix: string;
   title: string;
   description: string;
@@ -11,35 +11,40 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
-    number: 394,
+    value: 394,
     suffix: "%",
     title: "Quota Achievement",
     description: "Peak quota performance at VMware - High Achievers programme"
   },
   {
-    number: "£21m",
+    value: "£21m",
     suffix: "",
     title: "Revenue Closed",
     description: "Total sales revenue closed in strategic enterprise deals"
   },
   {
-    number: "£2m",
+    value: "£2m",
     suffix: "",
     title: "GP Portfolio Built",
     description: "Built £2M gross profit portfolio from scratch at SoftwareONE"
   },
   {
-    number: 5,
+    value: 5,
     suffix: "",
     title: "Global Top Performer",
     description: "Top 5 globally in services growth 2016-2021"
   }
 ];
 
-function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
+function AnimatedCounter({ target, suffix }: { target: number | string; suffix: string }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
+    // If target is a string, don't animate
+    if (typeof target === 'string') {
+      return;
+    }
+
     const increment = target / 100;
     const timer = setInterval(() => {
       setCount(prev => {
@@ -56,7 +61,7 @@ function AnimatedCounter({ target, suffix }: { target: number; suffix: string })
 
   return (
     <span className="text-2xl sm:text-4xl md:text-5xl font-bold text-blue-600">
-      {Math.floor(count)}{suffix}
+      {typeof target === 'string' ? target : Math.floor(count)}{suffix}
     </span>
   );
 }
@@ -82,7 +87,7 @@ export function Achievements() {
             >
               <CardContent className="p-4 sm:p-6 text-center">
                 <div className="mb-3 sm:mb-4">
-                  <AnimatedCounter target={achievement.number} suffix={achievement.suffix} />
+                  <AnimatedCounter target={achievement.value} suffix={achievement.suffix} />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">
                   {achievement.title}
