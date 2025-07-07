@@ -7,7 +7,7 @@ import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { LogoutButton } from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -21,8 +21,8 @@ const Index = () => {
           className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           size="lg"
         >
-          <MessageCircle className="w-5 h-5 mr-2" />
-          Chat with Sam
+          <Bot className="w-5 h-5 mr-2" />
+          Ask AI Sam
         </Button>
       </Link>
 

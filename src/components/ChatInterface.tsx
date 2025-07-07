@@ -5,7 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Send, MessageCircle, Loader2 } from 'lucide-react';
+import { Send, MessageCircle, Loader2, Bot } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -14,21 +14,11 @@ interface Message {
   created_at: string;
 }
 
-interface Conversation {
-  id: string;
-  user_email: string;
-  user_name?: string;
-  created_at: string;
-}
-
 export const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
-  const [userEmail, setUserEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [showEmailForm, setShowEmailForm] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -40,22 +30,17 @@ export const ChatInterface: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const startConversation = async () => {
-    if (!userEmail.trim()) {
-      toast({
-        title: "Email Required",
-        description: "Please enter your email to start the conversation.",
-        variant: "destructive",
-      });
-      return;
-    }
+  useEffect(() => {
+    initializeConversation();
+  }, []);
 
+  const initializeConversation = async () => {
     try {
       const { data, error } = await supabase
         .from('chat_conversations')
         .insert({
-          user_email: userEmail,
-          user_name: userName || null,
+          user_email: 'anonymous@visitor.com',
+          user_name: 'Anonymous Visitor',
         })
         .select()
         .single();
@@ -63,22 +48,21 @@ export const ChatInterface: React.FC = () => {
       if (error) throw error;
 
       setConversationId(data.id);
-      setShowEmailForm(false);
 
       // Add welcome message
       const welcomeMessage = {
         id: 'welcome',
         role: 'assistant' as const,
-        content: "Hi! I'm an AI assistant trained on Sam Bryant's background and experience. I can answer questions about his career, achievements, work style, and expertise. Feel free to ask me anything you'd like to know about Sam!",
+        content: "Hi! I'm an AI assistant trained on Sam Bryant's professional background and experience. I can answer questions about his career, achievements, work style, expertise, and more. What would you like to know about Sam?",
         created_at: new Date().toISOString(),
       };
       setMessages([welcomeMessage]);
 
     } catch (error) {
-      console.error('Error starting conversation:', error);
+      console.error('Error initializing conversation:', error);
       toast({
         title: "Error",
-        description: "Failed to start conversation. Please try again.",
+        description: "Failed to initialize chat. Please refresh the page.",
         variant: "destructive",
       });
     }
@@ -117,8 +101,8 @@ export const ChatInterface: React.FC = () => {
         body: {
           message: userMessage.content,
           conversationHistory,
-          userEmail,
-          userName,
+          userEmail: 'anonymous@visitor.com',
+          userName: 'Anonymous Visitor',
         },
       });
 
@@ -159,11 +143,7 @@ export const ChatInterface: React.FC = () => {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (showEmailForm) {
-        startConversation();
-      } else {
-        sendMessage();
-      }
+      sendMessage();
     }
   };
 
@@ -176,62 +156,6 @@ export const ChatInterface: React.FC = () => {
     "What makes you different from other salespeople?"
   ];
 
-  if (showEmailForm) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-gray-900/50 border-gray-700/50 backdrop-blur-sm">
-          <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <MessageCircle className="w-8 h-8 text-white" />
-            </div>
-            <CardTitle className="text-2xl text-white mb-2">
-              Get to Know Sam Bryant
-            </CardTitle>
-            <p className="text-gray-300 text-sm">
-              Start a conversation to learn about Sam's experience, expertise, and work style
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Email *
-              </label>
-              <Input
-                id="email"
-                type="email"
-                value={userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
-                placeholder="your.email@company.com"
-                className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
-                onKeyPress={handleKeyPress}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                Your Name (Optional)
-              </label>
-              <Input
-                id="name"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="Your name"
-                className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
-                onKeyPress={handleKeyPress}
-              />
-            </div>
-            <Button
-              onClick={startConversation}
-              className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
-            >
-              Start Conversation
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black p-4">
       <div className="max-w-4xl mx-auto">
@@ -239,12 +163,18 @@ export const ChatInterface: React.FC = () => {
           <CardHeader className="border-b border-gray-700/50">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-white" />
+                <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <CardTitle className="text-white">Chat with Sam Bryant</CardTitle>
-                <p className="text-sm text-gray-400">AI Assistant trained on Sam's background</p>
+                <CardTitle className="text-white">AI Sam Bryant</CardTitle>
+                <p className="text-sm text-gray-400">Ask me anything about Sam's background and experience</p>
               </div>
+            </div>
+            <div className="mt-2 p-2 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+              <p className="text-xs text-blue-300 flex items-center">
+                <Bot className="w-3 h-3 mr-1" />
+                This is an AI assistant trained on Sam Bryant's professional information
+              </p>
             </div>
           </CardHeader>
 
@@ -274,7 +204,7 @@ export const ChatInterface: React.FC = () => {
                 <div className="flex justify-start">
                   <div className="bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2">
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="text-sm">Sam is thinking...</span>
+                    <span className="text-sm">AI Sam is thinking...</span>
                   </div>
                 </div>
               )}
@@ -304,7 +234,7 @@ export const ChatInterface: React.FC = () => {
                 <Input
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Ask Sam anything..."
+                  placeholder="Ask AI Sam anything..."
                   className="flex-1 bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
                   onKeyPress={handleKeyPress}
                   disabled={isLoading}
