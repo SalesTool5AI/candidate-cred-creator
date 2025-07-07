@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail, Phone } from "lucide-react";
+import { ArrowDown, Mail, Phone, Trophy } from "lucide-react";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -46,12 +46,13 @@ export function Hero() {
               className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
               onClick={() => scrollToSection('achievements')}
             >
+              <Trophy className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
               View Achievements
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
+              className="border-white text-blue-600 bg-white hover:bg-blue-50 font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
               onClick={() => scrollToSection('contact')}
             >
               <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
