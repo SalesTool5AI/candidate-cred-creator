@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Mail, Phone, Trophy } from "lucide-react";
 
@@ -36,8 +35,7 @@ export function Hero() {
           <p className="text-base sm:text-xl md:text-2xl mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed text-blue-50 px-4">
             Enterprise sales leader with an entrepreneurial mindset, trusted by global brands to navigate
             complex deals and deliver results. I thrive in high-stakes environments, leverage AI to scale
-            my output, and aim to leave every team, customer, and process 
-            <span className="font-semibold text-white"> better than I found it.</span>
+            my output, and aim to leave every team, customer, and process better than I found it.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4">
