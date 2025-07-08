@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail, Phone, Trophy, ChevronDown } from "lucide-react";
+import { ArrowDown, Mail, Phone, Trophy } from "lucide-react";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -85,18 +85,12 @@ export function Hero() {
           </div>
         </div>
         
-        {/* Enhanced scroll indicator */}
+        {/* Simple scroll indicator */}
         <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="flex flex-col items-center animate-bounce">
-            <p className="text-cyan-400 text-sm mb-2 font-medium">Scroll to see more</p>
-            <div className="flex flex-col items-center space-y-1">
-              <ChevronDown className="h-6 w-6 text-cyan-400 animate-pulse" />
-              <ArrowDown 
-                className="h-6 w-6 sm:h-8 sm:w-8 text-cyan-400 cursor-pointer hover:text-white transition-colors" 
-                onClick={() => scrollToSection('sales-performance')}
-              />
-            </div>
-          </div>
+          <ArrowDown 
+            className="h-6 w-6 sm:h-8 sm:w-8 text-cyan-400 cursor-pointer hover:text-white transition-colors animate-bounce" 
+            onClick={() => scrollToSection('sales-performance')}
+          />
         </div>
       </div>
     </section>
