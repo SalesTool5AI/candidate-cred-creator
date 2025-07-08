@@ -5,7 +5,6 @@ import { SalesPerformanceDashboard } from "@/components/SalesPerformanceDashboar
 import { Experience } from "@/components/Experience";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
-import { LogoutButton } from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";
 import { Bot } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -13,8 +12,6 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
-      <LogoutButton />
-      
       {/* Fixed Chat Button */}
       <Link to="/chat">
         <Button 
