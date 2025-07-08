@@ -104,7 +104,7 @@ serve(async (req) => {
       content: message
     })
 
-    console.log('Calling Anthropic API...')
+    console.log('Calling Anthropic API with messages:', JSON.stringify(messages, null, 2))
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -115,8 +115,8 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         model: 'claude-3-5-sonnet-20241022',
-        max_tokens: 1000,
-        messages: messages
+        max_tokens: 1500,
+        messages: messages.slice(1) // Remove system message for Anthropic format
       })
     })
 
@@ -129,7 +129,7 @@ serve(async (req) => {
     }
 
     const data = await response.json()
-    console.log('Anthropic API response:', data)
+    console.log('Anthropic API response:', JSON.stringify(data, null, 2))
 
     const assistantMessage = data.content[0].text
 
