@@ -47,12 +47,6 @@ const globalClients = [
   { name: "AstraZeneca", emoji: "💊" },
 ];
 
-const bottomStats = [
-  { value: "9-12 months", label: "Average sales cycle" },
-  { value: "89-394%", label: "Quota achievement range" },
-  { value: "$21M+", label: "VMware performance" },
-];
-
 export function SalesPerformanceDashboard() {
   return (
     <section className="py-12 sm:py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
@@ -158,7 +152,7 @@ export function SalesPerformanceDashboard() {
         </div>
 
         {/* 4. GLOBAL CLIENTS SECTION */}
-        <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm mb-16">
+        <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-2xl text-green-400 flex items-center justify-center gap-3">
               <Users className="w-6 h-6" />
@@ -177,26 +171,6 @@ export function SalesPerformanceDashboard() {
                     <p className="text-sm font-medium text-white">{client.name}</p>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 5. BOTTOM CTA SECTION */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-none">
-          <CardContent className="p-8 text-center text-white">
-            <h3 className="text-2xl font-bold mb-4">
-              Proven Enterprise Sales Excellence
-            </h3>
-            <p className="text-lg mb-6 opacity-90">
-              Consistent track record of building relationships with C-level executives and closing complex, multi-million dollar deals
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {bottomStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold mb-2">{stat.value}</div>
-                  <div className="text-sm opacity-80">{stat.label}</div>
-                </div>
               ))}
             </div>
           </CardContent>
