@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail, Phone, Trophy } from "lucide-react";
+import { ArrowDown, Mail, Phone, Trophy, ChevronDown } from "lucide-react";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -36,6 +36,13 @@ export function Hero() {
             />
           </div>
           
+          {/* Headline */}
+          <div className="mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-cyan-400 mb-2">
+              Enterprise Sales Executive | $30m+ Career Bookings
+            </h2>
+          </div>
+          
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
             Sam Bryant
           </h1>
@@ -52,10 +59,10 @@ export function Hero() {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
-              onClick={() => scrollToSection('achievements')}
+              onClick={() => scrollToSection('sales-performance')}
             >
               <Trophy className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              🏆 View Achievements
+              🏆 View Performance
             </Button>
             <Button 
               size="lg" 
@@ -80,11 +87,18 @@ export function Hero() {
           </div>
         </div>
         
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown 
-            className="h-6 w-6 sm:h-8 sm:w-8 text-cyan-400 cursor-pointer hover:text-white transition-colors" 
-            onClick={() => scrollToSection('achievements')}
-          />
+        {/* Enhanced scroll indicator */}
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="flex flex-col items-center animate-bounce">
+            <p className="text-cyan-400 text-sm mb-2 font-medium">Scroll to see more</p>
+            <div className="flex flex-col items-center space-y-1">
+              <ChevronDown className="h-6 w-6 text-cyan-400 animate-pulse" />
+              <ArrowDown 
+                className="h-6 w-6 sm:h-8 sm:w-8 text-cyan-400 cursor-pointer hover:text-white transition-colors" 
+                onClick={() => scrollToSection('sales-performance')}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>

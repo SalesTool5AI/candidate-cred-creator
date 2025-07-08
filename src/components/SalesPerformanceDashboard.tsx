@@ -49,7 +49,7 @@ const globalClients = [
 
 export function SalesPerformanceDashboard() {
   return (
-    <section className="py-12 sm:py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
+    <section id="sales-performance" className="py-12 sm:py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 right-10 w-px h-16 bg-gradient-to-b from-green-400/20 to-transparent transform -rotate-45"></div>

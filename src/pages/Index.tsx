@@ -1,6 +1,5 @@
 
 import { Hero } from "@/components/Hero";
-import { Achievements } from "@/components/Achievements";
 import { SalesPerformanceDashboard } from "@/components/SalesPerformanceDashboard";
 import { Experience } from "@/components/Experience";
 import { About } from "@/components/About";
@@ -24,7 +23,6 @@ const Index = () => {
       </Link>
 
       <Hero />
-      <Achievements />
       <SalesPerformanceDashboard />
       <Experience />
       <About />
