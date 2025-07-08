@@ -13,14 +13,28 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Edge function called - processing request...')
+    
     const { message, conversationHistory, userEmail, userName } = await req.json()
 
-    console.log('Received request:', { message, userEmail, userName })
+    console.log('Received request:', { message, userEmail, userName, historyLength: conversationHistory?.length })
 
     const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
     if (!anthropicApiKey) {
       console.error('ANTHROPIC_API_KEY is not set')
-      throw new Error('ANTHROPIC_API_KEY is not set')
+      return new Response(
+        JSON.stringify({ 
+          error: 'ANTHROPIC_API_KEY is not configured',
+          success: false 
+        }),
+        { 
+          status: 500,
+          headers: { 
+            ...corsHeaders,
+            'Content-Type': 'application/json' 
+          } 
+        }
+      )
     }
 
     // Knowledge base about Sam Bryant
@@ -104,7 +118,7 @@ serve(async (req) => {
       content: message
     })
 
-    console.log('Calling Anthropic API with messages:', JSON.stringify(messages, null, 2))
+    console.log('Calling Anthropic API with', messages.length, 'messages')
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -125,14 +139,44 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text()
       console.error('Anthropic API error:', errorText)
-      throw new Error(`Anthropic API error: ${response.status} - ${errorText}`)
+      return new Response(
+        JSON.stringify({ 
+          error: `Anthropic API error: ${response.status} - ${errorText}`,
+          success: false 
+        }),
+        { 
+          status: 500,
+          headers: { 
+            ...corsHeaders,
+            'Content-Type': 'application/json' 
+          } 
+        }
+      )
     }
 
     const data = await response.json()
-    console.log('Anthropic API response:', JSON.stringify(data, null, 2))
+    console.log('Anthropic API success - response received')
 
-    const assistantMessage = data.content[0].text
+    const assistantMessage = data.content?.[0]?.text
 
+    if (!assistantMessage) {
+      console.error('No message content in response:', data)
+      return new Response(
+        JSON.stringify({ 
+          error: 'No response content from AI',
+          success: false 
+        }),
+        { 
+          status: 500,
+          headers: { 
+            ...corsHeaders,
+            'Content-Type': 'application/json' 
+          } 
+        }
+      )
+    }
+
+    console.log('Returning successful response')
     return new Response(
       JSON.stringify({ 
         message: assistantMessage,
@@ -150,7 +194,7 @@ serve(async (req) => {
     console.error('Error in chat-with-sam function:', error)
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: error.message || 'Unknown error occurred',
         success: false 
       }),
       { 
