@@ -43,12 +43,9 @@ export function Hero() {
             </h2>
           </div>
           
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
             Sam Bryant
           </h1>
-          <h2 className="text-lg sm:text-2xl md:text-3xl font-light mb-6 sm:mb-8 text-cyan-100 px-2">
-            Enterprise Account Executive
-          </h2>
           <p className="text-base sm:text-xl md:text-2xl mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed text-gray-300 px-4">
             Enterprise sales leader with an entrepreneurial mindset, trusted by global brands to navigate
             complex deals and deliver results. I thrive in high-stakes environments, leverage AI to scale
