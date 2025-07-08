@@ -36,16 +36,17 @@ export function Hero() {
             />
           </div>
           
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+            Sam Bryant
+          </h1>
+          
           {/* Headline */}
-          <div className="mb-4 sm:mb-6">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-cyan-400 mb-2">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-cyan-400">
               Enterprise Sales Executive | $30m+ Career Bookings
             </h2>
           </div>
           
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
-            Sam Bryant
-          </h1>
           <p className="text-base sm:text-xl md:text-2xl mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed text-gray-300 px-4">
             Enterprise sales leader with an entrepreneurial mindset, trusted by global brands to navigate
             complex deals and deliver results. I thrive in high-stakes environments, leverage AI to scale
