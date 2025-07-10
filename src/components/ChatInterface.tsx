@@ -182,10 +182,10 @@ export const ChatInterface: React.FC = () => {
   ];
 
   return (
-    <div className="dark min-h-screen bg-gradient-to-b from-gray-900 to-black p-4">
+    <div className="dark min-h-screen bg-gradient-to-b from-gray-900 to-black p-4" style={{backgroundColor: '#111827'}}>
       <div className="max-w-4xl mx-auto">
-        <Card className="h-[80vh] bg-gray-900 border-gray-700 backdrop-blur-sm flex flex-col !bg-gray-900">{/* Force dark background */}
-          <CardHeader className="border-b border-gray-700/50 bg-gray-900/30">
+        <Card className="h-[80vh] !bg-gray-900 border-gray-700 backdrop-blur-sm flex flex-col" style={{backgroundColor: '#111827 !important'}}>
+          <CardHeader className="border-b border-gray-700 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
                 <Bot className="w-5 h-5 text-white" />
@@ -203,8 +203,8 @@ export const ChatInterface: React.FC = () => {
             </div>
           </CardHeader>
 
-          <CardContent className="flex-1 flex flex-col p-0 bg-gray-900/95">
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-900/95">
+          <CardContent className="flex-1 flex flex-col p-0 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -214,8 +214,9 @@ export const ChatInterface: React.FC = () => {
                     className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
-                        : 'bg-gray-800 text-gray-100 border border-gray-700'
+                        : '!bg-gray-800 text-gray-100 border border-gray-700'
                     }`}
+                    style={message.role === 'assistant' ? {backgroundColor: '#1f2937 !important'} : {}}
                   >
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                     <p className="text-xs opacity-70 mt-1">
@@ -227,7 +228,7 @@ export const ChatInterface: React.FC = () => {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="!bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700">{/* Force dark bg with !important */}
+                  <div className="!bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700" style={{backgroundColor: '#1f2937 !important'}}>
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span className="text-sm">AI Sam is thinking...</span>
                   </div>
@@ -238,14 +239,15 @@ export const ChatInterface: React.FC = () => {
             </div>
 
             {messages.length === 1 && (
-              <div className="p-4 border-t border-gray-700/50 bg-gray-900/95">
+              <div className="p-4 border-t border-gray-700 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
                 <p className="text-sm text-gray-400 mb-3">Suggested questions to get started:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {suggestedQuestions.map((question, index) => (
                     <button
                       key={index}
                       onClick={() => setInputMessage(question)}
-                      className="text-left text-xs p-2 bg-gray-800/50 hover:bg-gray-700/50 rounded border border-gray-600/50 text-gray-300 transition-colors"
+                      className="text-left text-xs p-2 !bg-gray-800 hover:!bg-gray-700 rounded border border-gray-600 text-gray-300 transition-colors"
+                      style={{backgroundColor: '#1f2937 !important'}}
                     >
                       {question}
                     </button>
@@ -254,7 +256,7 @@ export const ChatInterface: React.FC = () => {
               </div>
             )}
 
-            <div className="p-4 border-t border-gray-700/50 bg-gray-900/95">
+            <div className="p-4 border-t border-gray-700 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
               <div className="flex space-x-2">
                 <Input
                   value={inputMessage}
