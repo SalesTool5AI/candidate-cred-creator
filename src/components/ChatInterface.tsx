@@ -203,8 +203,8 @@ export const ChatInterface: React.FC = () => {
             </div>
           </CardHeader>
 
-          <CardContent className="flex-1 flex flex-col p-0 bg-gray-900/50">
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-900/50">
+          <CardContent className="flex-1 flex flex-col p-0 bg-gray-900/90">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-900/90">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -238,7 +238,7 @@ export const ChatInterface: React.FC = () => {
             </div>
 
             {messages.length === 1 && (
-              <div className="p-4 border-t border-gray-700/50 bg-gray-900/30">
+              <div className="p-4 border-t border-gray-700/50 bg-gray-900/90">
                 <p className="text-sm text-gray-400 mb-3">Suggested questions to get started:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {suggestedQuestions.map((question, index) => (
@@ -254,7 +254,7 @@ export const ChatInterface: React.FC = () => {
               </div>
             )}
 
-            <div className="p-4 border-t border-gray-700/50 bg-gray-900/30">
+            <div className="p-4 border-t border-gray-700/50 bg-gray-900/90">
               <div className="flex space-x-2">
                 <Input
                   value={inputMessage}
