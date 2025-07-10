@@ -2,11 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DollarSign, Target, TrendingUp, Calendar, Award, Users } from "lucide-react";
+import { Banknote, Target, TrendingUp, Calendar, Award, Users } from "lucide-react";
 import { useState } from "react";
 
 const keyMetrics = [
-  { icon: DollarSign, label: "Total Career Bookings", value: "$30M+", description: "Enterprise deals closed" },
+  { icon: Banknote, label: "Total Career Bookings", value: "$30M+", description: "Enterprise deals closed" },
   { icon: Target, label: "Average Quota Achievement", value: "125%+", description: "Consistent over-performance" },
   { icon: TrendingUp, label: "Peak Performance", value: "394%", description: "Best quarterly result" },
   { icon: Calendar, label: "Enterprise Experience", value: "10+ Years", description: "Complex deal expertise" },
@@ -17,24 +17,6 @@ const achievements = [
   { title: "Territory Growth", value: "£0 → £2M GP", color: "border-l-green-500" },
   { title: "Global Ranking", value: "Top 5 Worldwide", color: "border-l-blue-500" },
   { title: "Current Pipeline", value: "£4M+ ARR", color: "border-l-purple-500" },
-];
-
-const careerProgression = [
-  { 
-    company: "Tyk Technologies", 
-    period: "2025-Present", 
-    role: "Enterprise Account Executive"
-  },
-  { 
-    company: "VMware/Broadcom", 
-    period: "2021-2025", 
-    role: "Strategic Account Director"
-  },
-  { 
-    company: "SoftwareONE", 
-    period: "2014-2021", 
-    role: "Global Account Manager"
-  },
 ];
 
 const globalClients = [
@@ -130,17 +112,16 @@ export function SalesPerformanceDashboard() {
           ))}
         </div>
 
-        {/* Two-Column Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
-          {/* Left Column - Key Achievements */}
+        {/* Key Achievements Section */}
+        <div className="mb-12 sm:mb-16">
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center gap-3">
+              <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center justify-center gap-3">
                 <Award className="w-6 h-6" />
                 Key Achievements
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {achievements.map((achievement, index) => (
                 <div 
                   key={index} 
@@ -152,34 +133,6 @@ export function SalesPerformanceDashboard() {
                   <p className="text-xl font-bold text-cyan-400">
                     {achievement.value}
                   </p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Right Column - Career Progression */}
-          <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center gap-3">
-                <TrendingUp className="w-6 h-6" />
-                Career Progression
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {careerProgression.map((role, index) => (
-                <div 
-                  key={index} 
-                  className="border-l-4 border-l-cyan-500 pl-4 py-3 bg-gray-700/30 rounded-r-lg"
-                >
-                  <h4 className="text-lg font-bold text-white mb-1">
-                    {role.company}
-                  </h4>
-                  <p className="text-sm text-gray-300 mb-1">
-                    {role.role}
-                  </p>
-                  <Badge variant="outline" className="text-gray-300 border-gray-600">
-                    {role.period}
-                  </Badge>
                 </div>
               ))}
             </CardContent>
