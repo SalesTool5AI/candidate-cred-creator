@@ -203,8 +203,8 @@ export const ChatInterface: React.FC = () => {
             </div>
           </CardHeader>
 
-          <CardContent className="flex-1 flex flex-col p-0 bg-gray-900/90">
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-900/90">
+          <CardContent className="flex-1 flex flex-col p-0 bg-gray-900/95">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-900/95">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -214,7 +214,7 @@ export const ChatInterface: React.FC = () => {
                     className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
-                        : 'bg-gray-800/90 text-gray-100 border border-gray-700/50'
+                        : 'bg-gray-800/95 text-gray-100 border border-gray-700/50'
                     }`}
                   >
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -227,7 +227,7 @@ export const ChatInterface: React.FC = () => {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-800/90 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700/50">
+                  <div className="bg-gray-800/95 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700/50">
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span className="text-sm">AI Sam is thinking...</span>
                   </div>
@@ -238,7 +238,7 @@ export const ChatInterface: React.FC = () => {
             </div>
 
             {messages.length === 1 && (
-              <div className="p-4 border-t border-gray-700/50 bg-gray-900/90">
+              <div className="p-4 border-t border-gray-700/50 bg-gray-900/95">
                 <p className="text-sm text-gray-400 mb-3">Suggested questions to get started:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {suggestedQuestions.map((question, index) => (
@@ -254,7 +254,7 @@ export const ChatInterface: React.FC = () => {
               </div>
             )}
 
-            <div className="p-4 border-t border-gray-700/50 bg-gray-900/90">
+            <div className="p-4 border-t border-gray-700/50 bg-gray-900/95">
               <div className="flex space-x-2">
                 <Input
                   value={inputMessage}
