@@ -211,7 +211,7 @@ export const ChatInterface: React.FC = () => {
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
+                    className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ring-0 outline-none focus:ring-0 ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
                         : 'text-gray-100 border border-gray-700'
@@ -228,7 +228,7 @@ export const ChatInterface: React.FC = () => {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700" style={{backgroundColor: '#1f2937'}}>
+                  <div className="text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700 ring-0 outline-none focus:ring-0" style={{backgroundColor: '#1f2937'}}>
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span className="text-sm">AI Sam is thinking...</span>
                   </div>
