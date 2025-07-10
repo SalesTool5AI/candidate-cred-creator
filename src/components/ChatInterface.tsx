@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { Send, MessageCircle, Loader2, Bot } from 'lucide-react';
 
 interface Message {
@@ -184,14 +184,14 @@ export const ChatInterface: React.FC = () => {
   return (
     <div className="dark min-h-screen bg-gradient-to-b from-gray-900 to-black p-4" style={{backgroundColor: '#111827'}}>
       <div className="max-w-4xl mx-auto">
-        <Card className="h-[80vh] !bg-gray-900 border-gray-700 backdrop-blur-sm flex flex-col" style={{backgroundColor: '#111827 !important'}}>
-          <CardHeader className="border-b border-gray-700 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
+        <div className="h-[80vh] border border-gray-700 backdrop-blur-sm flex flex-col rounded-lg shadow-sm" style={{backgroundColor: '#111827'}}>
+          <div className="border-b border-gray-700 flex flex-col space-y-1.5 p-6" style={{backgroundColor: '#111827'}}>
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <CardTitle className="text-white">AI Sam Bryant</CardTitle>
+                <h3 className="text-2xl font-semibold leading-none tracking-tight text-white">AI Sam Bryant</h3>
                 <p className="text-sm text-gray-400">Ask me anything about Sam's background and experience</p>
               </div>
             </div>
@@ -201,10 +201,10 @@ export const ChatInterface: React.FC = () => {
                 This is an AI assistant trained on Sam Bryant's professional information
               </p>
             </div>
-          </CardHeader>
+          </div>
 
-          <CardContent className="flex-1 flex flex-col p-0 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
+          <div className="flex-1 flex flex-col p-0" style={{backgroundColor: '#111827'}}>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{backgroundColor: '#111827'}}>
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -214,9 +214,9 @@ export const ChatInterface: React.FC = () => {
                     className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
-                        : '!bg-gray-800 text-gray-100 border border-gray-700'
+                        : 'text-gray-100 border border-gray-700'
                     }`}
-                    style={message.role === 'assistant' ? {backgroundColor: '#1f2937 !important'} : {}}
+                    style={message.role === 'assistant' ? {backgroundColor: '#1f2937'} : {}}
                   >
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                     <p className="text-xs opacity-70 mt-1">
@@ -228,7 +228,7 @@ export const ChatInterface: React.FC = () => {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="!bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700" style={{backgroundColor: '#1f2937 !important'}}>
+                  <div className="text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700" style={{backgroundColor: '#1f2937'}}>
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span className="text-sm">AI Sam is thinking...</span>
                   </div>
@@ -239,15 +239,15 @@ export const ChatInterface: React.FC = () => {
             </div>
 
             {messages.length === 1 && (
-              <div className="p-4 border-t border-gray-700 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
+              <div className="p-4 border-t border-gray-700" style={{backgroundColor: '#111827'}}>
                 <p className="text-sm text-gray-400 mb-3">Suggested questions to get started:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {suggestedQuestions.map((question, index) => (
                     <button
                       key={index}
                       onClick={() => setInputMessage(question)}
-                      className="text-left text-xs p-2 !bg-gray-800 hover:!bg-gray-700 rounded border border-gray-600 text-gray-300 transition-colors"
-                      style={{backgroundColor: '#1f2937 !important'}}
+                      className="text-left text-xs p-2 hover:opacity-80 rounded border border-gray-600 text-gray-300 transition-colors"
+                      style={{backgroundColor: '#1f2937'}}
                     >
                       {question}
                     </button>
@@ -256,7 +256,7 @@ export const ChatInterface: React.FC = () => {
               </div>
             )}
 
-            <div className="p-4 border-t border-gray-700 !bg-gray-900" style={{backgroundColor: '#111827 !important'}}>
+            <div className="p-4 border-t border-gray-700" style={{backgroundColor: '#111827'}}>
               <div className="flex space-x-2">
                 <Input
                   value={inputMessage}
@@ -276,8 +276,8 @@ export const ChatInterface: React.FC = () => {
                 </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
