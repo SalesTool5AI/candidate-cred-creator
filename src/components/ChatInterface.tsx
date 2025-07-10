@@ -182,7 +182,7 @@ export const ChatInterface: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black p-4">
+    <div className="dark min-h-screen bg-gradient-to-b from-gray-900 to-black p-4">
       <div className="max-w-4xl mx-auto">
         <Card className="h-[80vh] bg-gray-900/50 border-gray-700/50 backdrop-blur-sm flex flex-col">
           <CardHeader className="border-b border-gray-700/50 bg-gray-900/30">
