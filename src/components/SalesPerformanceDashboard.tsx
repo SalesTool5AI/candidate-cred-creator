@@ -1,7 +1,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { DollarSign, Target, TrendingUp, Calendar, Award, Users } from "lucide-react";
+import { useState } from "react";
 
 const keyMetrics = [
   { icon: DollarSign, label: "Total Career Bookings", value: "$30M+", description: "Enterprise deals closed" },
@@ -11,83 +13,116 @@ const keyMetrics = [
 ];
 
 const achievements = [
-  { title: "Deal Size Range", value: "$1.5M - $4M ARR", color: "border-green-400" },
-  { title: "Territory Growth", value: "£0 → £2M GP", color: "border-blue-400" },
-  { title: "Global Ranking", value: "Top 5 Worldwide", color: "border-purple-400" },
-  { title: "Current Pipeline", value: "£4M+ ARR", color: "border-orange-400" },
+  { title: "Deal Size Range", value: "$1.5M - $4M ARR", color: "border-l-cyan-500" },
+  { title: "Territory Growth", value: "£0 → £2M GP", color: "border-l-green-500" },
+  { title: "Global Ranking", value: "Top 5 Worldwide", color: "border-l-blue-500" },
+  { title: "Current Pipeline", value: "£4M+ ARR", color: "border-l-purple-500" },
 ];
 
 const careerProgression = [
   { 
     company: "Tyk Technologies", 
     period: "2025-Present", 
-    gradient: "from-green-500 to-emerald-600",
     role: "Enterprise Account Executive"
   },
   { 
     company: "VMware/Broadcom", 
     period: "2021-2025", 
-    gradient: "from-blue-500 to-indigo-600",
     role: "Strategic Account Director"
   },
   { 
     company: "SoftwareONE", 
     period: "2014-2021", 
-    gradient: "from-purple-500 to-violet-600",
     role: "Global Account Manager"
   },
 ];
 
 const globalClients = [
-  { name: "FedEx", emoji: "🚚" },
-  { name: "Mastercard", emoji: "💳" },
-  { name: "Ford", emoji: "🚗" },
-  { name: "Barclays", emoji: "🏦" },
-  { name: "Santander", emoji: "🏛️" },
-  { name: "AstraZeneca", emoji: "💊" },
+  { 
+    name: "FedEx", 
+    emoji: "🚚",
+    description: "Global logistics leader with complex multi-region deployment requirements",
+    dealSize: "$2.1M ARR",
+    challenge: "Modernizing legacy infrastructure across 220 countries"
+  },
+  { 
+    name: "Mastercard", 
+    emoji: "💳",
+    description: "Financial services giant requiring enterprise-grade security solutions",
+    dealSize: "$3.2M ARR", 
+    challenge: "Implementing secure payment processing infrastructure"
+  },
+  { 
+    name: "Arm", 
+    emoji: "🔧",
+    description: "Semiconductor company needing scalable development tools",
+    dealSize: "$1.8M ARR",
+    challenge: "Supporting global development teams with unified toolchain"
+  },
+  { 
+    name: "Barclays", 
+    emoji: "🏦",
+    description: "Major banking institution with regulatory compliance needs",
+    dealSize: "$4.0M ARR",
+    challenge: "Meeting strict financial services compliance requirements"
+  },
+  { 
+    name: "Johnson Matthey", 
+    emoji: "⚗️",
+    description: "Specialty chemicals company requiring advanced analytics",
+    dealSize: "$1.5M ARR",
+    challenge: "Optimizing chemical processes with data-driven insights"
+  },
+  { 
+    name: "AstraZeneca", 
+    emoji: "💊",
+    description: "Pharmaceutical giant with global research operations",
+    dealSize: "$2.8M ARR",
+    challenge: "Accelerating drug discovery through cloud collaboration"
+  },
 ];
 
 export function SalesPerformanceDashboard() {
+  const [selectedClient, setSelectedClient] = useState<typeof globalClients[0] | null>(null);
+
   return (
     <section id="sales-performance" className="py-12 sm:py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 right-10 w-px h-16 bg-gradient-to-b from-green-400/20 to-transparent transform -rotate-45"></div>
-        <div className="absolute bottom-10 left-20 w-px h-20 bg-gradient-to-b from-emerald-400/15 to-transparent transform rotate-30"></div>
-        <div className="absolute top-1/4 right-1/4 w-1 h-1 bg-green-400/60 rounded-full animate-pulse delay-500"></div>
+        <div className="absolute top-20 right-10 w-px h-16 bg-gradient-to-b from-cyan-400/20 to-transparent transform -rotate-45"></div>
+        <div className="absolute bottom-10 left-20 w-px h-20 bg-gradient-to-b from-cyan-400/15 to-transparent transform rotate-30"></div>
+        <div className="absolute top-1/4 right-1/4 w-1 h-1 bg-cyan-400/60 rounded-full animate-pulse delay-500"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* 1. HEADER */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+        {/* Header */}
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             Sales Performance Dashboard
           </h2>
-          <p className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
             Enterprise sales leader with proven track record of exceeding targets and closing complex, high-value deals with Fortune 500 companies
           </p>
         </div>
 
-        {/* 2. KEY METRICS GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* Key Metrics Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {keyMetrics.map((metric, index) => (
             <Card 
               key={index} 
               className="hover:shadow-xl transition-all duration-300 hover:scale-105 bg-gray-800/50 border-gray-700/50 backdrop-blur-sm"
             >
-              <CardContent className="p-6 text-center">
-                <div className="mb-4">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center">
-                    <metric.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="text-3xl sm:text-4xl font-bold text-green-400 mb-2">
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="mb-3 sm:mb-4">
+                  <metric.icon className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400 mx-auto mb-2" />
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-400">
                     {metric.value}
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                   {metric.label}
                 </h3>
-                <p className="text-sm text-gray-300">
+                <p className="text-sm sm:text-base text-gray-300">
                   {metric.description}
                 </p>
               </CardContent>
@@ -95,12 +130,12 @@ export function SalesPerformanceDashboard() {
           ))}
         </div>
 
-        {/* 3. TWO-COLUMN SECTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {/* Two-Column Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {/* Left Column - Key Achievements */}
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-2xl text-green-400 flex items-center gap-3">
+              <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center gap-3">
                 <Award className="w-6 h-6" />
                 Key Achievements
               </CardTitle>
@@ -114,7 +149,7 @@ export function SalesPerformanceDashboard() {
                   <h4 className="text-lg font-semibold text-white mb-1">
                     {achievement.title}
                   </h4>
-                  <p className="text-xl font-bold text-green-400">
+                  <p className="text-xl font-bold text-cyan-400">
                     {achievement.value}
                   </p>
                 </div>
@@ -125,7 +160,7 @@ export function SalesPerformanceDashboard() {
           {/* Right Column - Career Progression */}
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-2xl text-green-400 flex items-center gap-3">
+              <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center gap-3">
                 <TrendingUp className="w-6 h-6" />
                 Career Progression
               </CardTitle>
@@ -134,15 +169,15 @@ export function SalesPerformanceDashboard() {
               {careerProgression.map((role, index) => (
                 <div 
                   key={index} 
-                  className={`bg-gradient-to-r ${role.gradient} p-4 rounded-lg text-white`}
+                  className="border-l-4 border-l-cyan-500 pl-4 py-3 bg-gray-700/30 rounded-r-lg"
                 >
-                  <h4 className="text-lg font-bold mb-1">
+                  <h4 className="text-lg font-bold text-white mb-1">
                     {role.company}
                   </h4>
-                  <p className="text-sm opacity-90 mb-1">
+                  <p className="text-sm text-gray-300 mb-1">
                     {role.role}
                   </p>
-                  <Badge variant="secondary" className="bg-white/20 text-white">
+                  <Badge variant="outline" className="text-gray-300 border-gray-600">
                     {role.period}
                   </Badge>
                 </div>
@@ -151,28 +186,55 @@ export function SalesPerformanceDashboard() {
           </Card>
         </div>
 
-        {/* 4. GLOBAL CLIENTS SECTION */}
+        {/* Global Clients Section */}
         <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-2xl text-green-400 flex items-center justify-center gap-3">
+            <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center justify-center gap-3">
               <Users className="w-6 h-6" />
               Global Enterprise Clients
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
               {globalClients.map((client, index) => (
-                <Card 
-                  key={index} 
-                  className="bg-gray-700/50 hover:bg-gray-600/50 transition-all duration-300 hover:scale-105 border-gray-600/50"
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="h-auto p-4 bg-gray-700/50 hover:bg-gray-600/50 border-gray-600/50 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105"
+                  onClick={() => setSelectedClient(client)}
                 >
-                  <CardContent className="p-4 text-center">
+                  <div className="text-center">
                     <div className="text-3xl mb-2">{client.emoji}</div>
                     <p className="text-sm font-medium text-white">{client.name}</p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </Button>
               ))}
             </div>
+
+            {/* Client Details */}
+            {selectedClient && (
+              <Card className="bg-gray-700/50 border-gray-600/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg text-white flex items-center gap-3">
+                    <span className="text-2xl">{selectedClient.emoji}</span>
+                    {selectedClient.name}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-gray-300">{selectedClient.description}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="border-l-4 border-l-green-500 pl-4">
+                      <h4 className="font-semibold text-white mb-1">Deal Size</h4>
+                      <p className="text-green-400 font-bold">{selectedClient.dealSize}</p>
+                    </div>
+                    <div className="border-l-4 border-l-blue-500 pl-4">
+                      <h4 className="font-semibold text-white mb-1">Key Challenge</h4>
+                      <p className="text-gray-300 text-sm">{selectedClient.challenge}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </CardContent>
         </Card>
       </div>
