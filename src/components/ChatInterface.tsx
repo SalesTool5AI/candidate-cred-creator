@@ -214,7 +214,7 @@ export const ChatInterface: React.FC = () => {
                     className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
                       message.role === 'user'
                         ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
-                        : 'bg-gray-800/95 text-gray-100 border border-gray-700/50'
+                        : 'bg-gray-800 text-gray-100 border border-gray-700'
                     }`}
                   >
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
