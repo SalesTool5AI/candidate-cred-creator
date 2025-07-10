@@ -184,7 +184,7 @@ export const ChatInterface: React.FC = () => {
   return (
     <div className="dark min-h-screen bg-gradient-to-b from-gray-900 to-black p-4">
       <div className="max-w-4xl mx-auto">
-        <Card className="h-[80vh] bg-gray-900/50 border-gray-700/50 backdrop-blur-sm flex flex-col">
+        <Card className="h-[80vh] bg-gray-900 border-gray-700 backdrop-blur-sm flex flex-col !bg-gray-900">{/* Force dark background */}
           <CardHeader className="border-b border-gray-700/50 bg-gray-900/30">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -227,7 +227,7 @@ export const ChatInterface: React.FC = () => {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-800/95 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700/50">
+                  <div className="!bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700">{/* Force dark bg with !important */}
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span className="text-sm">AI Sam is thinking...</span>
                   </div>
