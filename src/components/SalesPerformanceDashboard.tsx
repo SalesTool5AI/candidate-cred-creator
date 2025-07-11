@@ -41,9 +41,9 @@ const caseStudies = [
     slug: "fedex",
     name: "FedEx", 
     emoji: "📦",
-    title: "Crisis to £900K Win",
+    title: "Crisis to £1.6M Win",
     summary: "Turned FedEx's cost-cutting mandate into a strategic technology upgrade, delivering massive savings while securing a major contract.",
-    metrics: "£900K ARR • £4M+ savings • 3-month turnaround"
+    metrics: "£1.6M ARR • £4M+ savings • 3-month turnaround"
   },
   { 
     slug: "fidelity",
