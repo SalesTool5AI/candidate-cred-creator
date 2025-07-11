@@ -17,7 +17,9 @@ const experiences = [
     period: "Feb 2025 - Present",
     achievements: [
       "Selected as part of 2025 cohort of those innovating and using AI in their role",
-      "Networking with founders and creators"
+      "Networking with founders and creators",
+      "Key notes from CEO's such as Jensen Huang, Ali Ghodsi, Aaron Levie, Amjad Masad",
+      "AI workshops, on marketing, GTM, productivity and coding"
     ],
     technologies: ["AI Strategy", "Innovation", "Networking", "Leadership Development"]
   },
@@ -104,11 +106,13 @@ export function Experience() {
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div className="flex items-center gap-4">
-                    <img 
-                      src={exp.logo} 
-                      alt={`${exp.company} logo`} 
-                      className="h-10 w-auto max-w-[120px] object-contain"
-                    />
+                    <div className={exp.company === "Perplexity" ? "bg-black p-2 rounded" : ""}>
+                      <img 
+                        src={exp.logo} 
+                        alt={`${exp.company} logo`} 
+                        className="h-10 w-auto max-w-[120px] object-contain"
+                      />
+                    </div>
                     <div>
                       <CardTitle className="text-xl sm:text-2xl text-white mb-1">
                         {exp.position}
