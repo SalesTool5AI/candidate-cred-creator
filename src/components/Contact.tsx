@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, User, Calendar } from "lucide-react";
+import { Mail, Phone, User, Calendar, Linkedin, MessageCircle } from "lucide-react";
 
 export function Contact() {
   const handleEmailClick = () => {
@@ -57,8 +57,8 @@ export function Contact() {
               className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 text-lg transition-all duration-300 hover:scale-105"
               onClick={handlePhoneClick}
             >
-              <Phone className="mr-3 h-5 w-5" />
-              Call Me
+              <MessageCircle className="mr-3 h-5 w-5" />
+              WhatsApp Me
             </Button>
             
             <Button 
@@ -66,7 +66,7 @@ export function Contact() {
               className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-4 text-lg transition-all duration-300 hover:scale-105"
               onClick={handleLinkedInClick}
             >
-              <User className="mr-3 h-5 w-5" />
+              <Linkedin className="mr-3 h-5 w-5" />
               LinkedIn Profile
             </Button>
           </div>
