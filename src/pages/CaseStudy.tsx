@@ -109,18 +109,19 @@ const caseStudies: Record<string, CaseStudy> = {
   arm: {
     emoji: "🤖",
     company: "ARM",
-    title: "Cold Call to Strategic Partner",
+    title: "From Cold Call to Strategic Partner: The ARM Limited Success Story",
     metrics: {
       arr: "£1M+ annual GP",
-      timeline: "18% markup eliminated",
-      achievement: "On-site access granted"
+      timeline: "Office access 2 days/week",
+      achievement: "18% markup eliminated"
     },
-    summary: "Built ARM's largest technology partnership from a cold call, securing preferred vendor status and exclusive access to their development teams.",
+    summary: "Transformed a cold call into ARM's largest technology partnership, securing preferred vendor status and exclusive access through strategic value creation and genuine problem-solving.",
     content: {
-      challenge: "ARM, the semiconductor giant, had an established vendor ecosystem and wasn't actively seeking new partners. Breaking into their supplier network required demonstrating exceptional value and building relationships from scratch.",
-      approach: "My cold call strategy focused on understanding their unique challenges in supporting global development teams. I spent months researching their technology stack and identifying opportunities where we could add value beyond cost savings.",
-      execution: "The breakthrough came when I proposed a unified toolchain solution that could eliminate the 18% markup they were paying through their existing vendor. This required deep technical knowledge and the ability to coordinate complex implementations across multiple ARM locations.",
-      results: "The partnership now generates over £1M in annual gross profit and has granted us unprecedented access to ARM's development teams. We've become their go-to partner for scaling development operations globally."
+      challenge: "ARM Limited, the Cambridge-based chip design giant, was drowning in success. Revenue was soaring, but their procurement strategy hadn't evolved with their growth. Despite being a tech innovator, they were still relying on a local reseller for software procurement—paying an eye-watering 18% markup in the process. The team knew they had a problem but needed a partner who could deliver a real solution, not just point out the obvious.",
+      approach: "After landing a meeting through a cold call, I didn't just present another vendor pitch. Instead, I offered to benchmark their recent quotes against market rates. The numbers were stark: they were hemorrhaging money on every software purchase. When we met face-to-face, I came armed with data, not just promises. This wasn't about features—it was about demonstrating real impact through concrete evidence.",
+      execution: "I proposed a two-pronged strategy that addressed both immediate savings and long-term optimization:\n\nPhase 1: Visibility & Control\n• Implemented Pyracloud our software management tool to centralize license keys, invoices, and pricing catalogs\n• Gave ARM complete visibility into their software spend for the first time\n• Streamlined contract management through SoftwareONE\n\nPhase 2: Optimization & Intelligence\n• Deployed a software asset managed service for usage tracking and asset management\n• Identified waste and underutilized licenses\n• Created data-driven insights for future procurement decisions",
+      results: "Year 1: Eliminated the 18% markup, delivering immediate six-figure savings\nYear 3: Grew account value to over £1 million GP annually\nPartnership Level: Earned contractor status with office access 2 days per week, working directly within their procurement and IT teams",
+      leadership: "Key Takeaways:\n\n• Lead with Value, Not Features - The breakthrough came from demonstrating real impact through benchmarking, not presenting product specifications\n• Think Partnership, Not Transaction - By focusing on long-term strategy rather than one-off sales, I transformed a procurement relationship into a strategic partnership\n• Proximity Breeds Trust - Working on-site built relationships that no amount of external meetings could match. When you're integrated into their daily operations, you become part of the solution\n• Data Drives Decisions - Concrete savings evidence was more persuasive than any sales presentation. Numbers don't lie\n\nThis case study demonstrates how strategic selling and genuine value creation can transform a cold prospect into a million-pound account and trusted partnership."
     },
     nextCase: "mastercard"
   }
