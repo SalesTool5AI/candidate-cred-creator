@@ -125,8 +125,14 @@ export const ChatInterface: React.FC = () => {
         }));
 
       console.log('Calling chat-with-sam function...');
+      console.log('Request details:', { 
+        userEmail, 
+        currentInput, 
+        conversationId,
+        historyLength: conversationHistory.length 
+      });
 
-      // Call the edge function
+      // Call the edge function with detailed error handling
       const { data, error } = await supabase.functions.invoke('chat-with-sam', {
         body: {
           message: currentInput,
@@ -139,11 +145,16 @@ export const ChatInterface: React.FC = () => {
         }
       });
 
-      console.log('Edge function response:', data, error);
+      console.log('Edge function response:', { data, error });
 
       if (error) {
-        console.error('Edge function error:', error);
-        throw error;
+        console.error('Supabase function error details:', {
+          name: error.name,
+          message: error.message,
+          context: error.context,
+          stack: error.stack
+        });
+        throw new Error(`Function call failed: ${error.message}`);
       }
 
       if (data && data.success) {
@@ -173,21 +184,38 @@ export const ChatInterface: React.FC = () => {
       }
 
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Full error details:', {
+        error,
+        type: typeof error,
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
+        context: error?.context
+      });
+      
+      let errorMessage = "Failed to send message. Please try again.";
+      
+      // More specific error messages based on error type
+      if (error?.name === 'FunctionsFetchError') {
+        errorMessage = "Connection to AI service failed. Please check your internet connection and try again.";
+      } else if (error?.message?.includes('ANTHROPIC_API_KEY')) {
+        errorMessage = "AI service configuration error. Please contact support.";
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
       
       // Add error message to chat
-      const errorMessage: Message = {
+      const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         content: "I'm sorry, I'm having trouble responding right now. Please try again in a moment.",
         created_at: new Date().toISOString(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prev => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
     }

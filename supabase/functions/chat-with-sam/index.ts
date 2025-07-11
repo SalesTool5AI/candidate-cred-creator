@@ -4,7 +4,8 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-user-email',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
 }
 
 // Initialize Supabase client
@@ -94,16 +95,27 @@ function extractKeywords(query: string): string[] {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response(null, { 
+      status: 200,
+      headers: corsHeaders 
+    })
   }
 
   try {
-    console.log('Edge function called - processing request...')
+    console.log('=== Edge function called - processing request ===')
+    console.log('Request method:', req.method)
+    console.log('Request headers:', Object.fromEntries(req.headers.entries()))
     
     const { message, conversationHistory, userEmail, userName } = await req.json()
 
-    console.log('Received request:', { message, userEmail, userName, historyLength: conversationHistory?.length })
+    console.log('=== Received request data ===', { 
+      message: message?.substring(0, 100) + (message?.length > 100 ? '...' : ''), 
+      userEmail, 
+      userName, 
+      historyLength: conversationHistory?.length 
+    })
 
     const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
     if (!anthropicApiKey) {
@@ -274,10 +286,17 @@ Remember: Be helpful, specific, and authentic. If you need more context to give 
     )
 
   } catch (error) {
-    console.error('Error in chat-with-sam function:', error)
+    console.error('=== Edge function error ===')
+    console.error('Error type:', typeof error)
+    console.error('Error name:', error?.name)
+    console.error('Error message:', error?.message)
+    console.error('Error stack:', error?.stack)
+    console.error('Full error object:', error)
+    
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Unknown error occurred',
+        error: error?.message || 'Unknown error occurred',
+        errorType: error?.name || 'UnknownError',
         success: false 
       }),
       { 
