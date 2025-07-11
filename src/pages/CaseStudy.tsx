@@ -113,7 +113,7 @@ const caseStudies: Record<string, CaseStudy> = {
     metrics: {
       arr: "£1M+ annual GP",
       timeline: "Office access 2 days/week",
-      achievement: "18% markup eliminated"
+      achievement: "SW1 strategic account"
     },
     summary: "Transformed a cold call into ARM's largest technology partnership, securing preferred vendor status and exclusive access through strategic value creation and genuine problem-solving.",
     content: {
