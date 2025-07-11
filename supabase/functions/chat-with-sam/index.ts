@@ -221,15 +221,22 @@ serve(async (req) => {
     }
 
     // Extract keywords and search knowledge base
+    console.log('User message:', message)
     const keywords = extractKeywords(message)
+    console.log('Extracted keywords:', keywords)
     const knowledgeResults = await searchKnowledgeBase(message)
+    console.log('Knowledge base results found:', knowledgeResults.length)
+    console.log('Knowledge base results:', knowledgeResults.map(r => ({ question: r.question, relevanceScore: r.relevanceScore })))
     
     // Build relevant context from knowledge base
     let relevantContext = ''
     if (knowledgeResults.length > 0) {
       relevantContext = knowledgeResults
-        .map(item => `${item.question}: ${item.answer}`)
+        .map(item => `Q: ${item.question}\nA: ${item.answer}`)
         .join('\n\n')
+      console.log('Built context for AI:', relevantContext.substring(0, 200) + '...')
+    } else {
+      console.log('No knowledge base context found')
     }
 
     // Build conversation context
