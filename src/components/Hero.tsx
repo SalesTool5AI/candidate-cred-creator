@@ -85,6 +85,18 @@ export function Hero() {
           </div>
         </div>
         
+        {/* Admin Link - positioned in top right */}
+        <div className="absolute top-4 right-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = '/admin'}
+            className="text-xs bg-gray-800/50 border-gray-600 text-gray-300 hover:bg-gray-700"
+          >
+            Admin
+          </Button>
+        </div>
+        
         {/* Simple scroll indicator */}
         <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2">
           <ArrowDown 
