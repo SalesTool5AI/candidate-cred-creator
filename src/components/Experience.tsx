@@ -2,9 +2,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+// Import company logos
+import tykLogo from "@/assets/logos/tyk.png";
+import vmwareLogo from "@/assets/logos/vmware.png";
+import broadcomLogo from "@/assets/logos/broadcom.png";
+import softwareOneLogo from "@/assets/logos/softwareone.png";
+
 const experiences = [
   {
     company: "Tyk Technologies Limited",
+    logo: tykLogo,
     position: "Enterprise Account Executive (EMEA)",
     period: "2025 - Present",
     achievements: [
@@ -17,6 +24,7 @@ const experiences = [
   },
   {
     company: "VMware by Broadcom",
+    logo: broadcomLogo,
     position: "Strategic Account Director",
     period: "Oct 2023 - Feb 2025",
     achievements: [
@@ -29,6 +37,7 @@ const experiences = [
   },
   {
     company: "VMware",
+    logo: vmwareLogo,
     position: "Account Executive | Global Accounts",
     period: "Sept 2021 - October 2023",
     achievements: [
@@ -41,6 +50,7 @@ const experiences = [
   },
   {
     company: "SoftwareONE",
+    logo: softwareOneLogo,
     position: "Global Account Manager | UK&I",
     period: "Sept 2014 - September 2021",
     achievements: [
@@ -81,13 +91,20 @@ export function Experience() {
             >
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <CardTitle className="text-xl sm:text-2xl text-white mb-1">
-                      {exp.position}
-                    </CardTitle>
-                    <p className="text-lg sm:text-xl text-cyan-400 font-semibold">
-                      {exp.company}
-                    </p>
+                  <div className="flex items-center gap-4">
+                    <img 
+                      src={exp.logo} 
+                      alt={`${exp.company} logo`} 
+                      className="h-10 w-auto max-w-[120px] object-contain"
+                    />
+                    <div>
+                      <CardTitle className="text-xl sm:text-2xl text-white mb-1">
+                        {exp.position}
+                      </CardTitle>
+                      <p className="text-lg sm:text-xl text-cyan-400 font-semibold">
+                        {exp.company}
+                      </p>
+                    </div>
                   </div>
                   <Badge variant="outline" className="text-gray-300 border-gray-600 mt-2 md:mt-0 self-start md:self-center">
                     {exp.period}
