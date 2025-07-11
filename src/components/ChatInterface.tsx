@@ -184,20 +184,25 @@ export const ChatInterface: React.FC = () => {
       }
 
     } catch (error) {
-      console.error('Full error details:', {
-        error,
-        type: typeof error,
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-        context: error?.context
-      });
+      console.error('Full error details:', error);
       
+      // Extract the actual error message from the response
+      const errorData = error?.data || error;
       let errorMessage = "Failed to send message. Please try again.";
+      let errorDetails = '';
       
-      // More specific error messages based on error type
+      // Handle different error types with more detailed messages
       if (error?.name === 'FunctionsFetchError') {
         errorMessage = "Connection to AI service failed. Please check your internet connection and try again.";
+      } else if (errorData?.error) {
+        errorMessage = errorData.error;
+        if (errorData.details) {
+          errorDetails = typeof errorData.details === 'string' 
+            ? errorData.details 
+            : JSON.stringify(errorData.details, null, 2);
+        }
+      } else if (error?.message) {
+        errorMessage = error.message;
       } else if (error?.message?.includes('ANTHROPIC_API_KEY')) {
         errorMessage = "AI service configuration error. Please contact support.";
       }

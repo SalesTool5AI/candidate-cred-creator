@@ -103,34 +103,119 @@ serve(async (req) => {
     })
   }
 
+  // Add test endpoint for debugging
+  if (req.url.endsWith('/test')) {
+    return new Response(
+      JSON.stringify({ 
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        env: {
+          hasAnthropicKey: !!Deno.env.get('ANTHROPIC_API_KEY'),
+          hasSupabaseUrl: !!Deno.env.get('SUPABASE_URL'),
+          hasSupabaseKey: !!Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+        }
+      }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    )
+  }
+
   try {
     console.log('=== Edge function called - processing request ===')
-    console.log('Request method:', req.method)
-    console.log('Request headers:', Object.fromEntries(req.headers.entries()))
     
-    const { message, conversationHistory, userEmail, userName } = await req.json()
-
-    console.log('=== Received request data ===', { 
-      message: message?.substring(0, 100) + (message?.length > 100 ? '...' : ''), 
-      userEmail, 
-      userName, 
-      historyLength: conversationHistory?.length 
-    })
-
+    // Check environment variables first
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
     const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY')
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error('Missing Supabase environment variables')
+      return new Response(
+        JSON.stringify({ 
+          error: 'Missing Supabase configuration. Please check environment variables.',
+          success: false,
+          details: {
+            hasSupabaseUrl: !!supabaseUrl,
+            hasSupabaseKey: !!supabaseServiceKey
+          }
+        }),
+        { 
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+    
     if (!anthropicApiKey) {
       console.error('ANTHROPIC_API_KEY is not set')
       return new Response(
         JSON.stringify({ 
-          error: 'ANTHROPIC_API_KEY is not configured',
+          error: 'ANTHROPIC_API_KEY is not configured. Please add it to your Supabase Edge Function secrets.',
           success: false 
         }),
         { 
           status: 500,
-          headers: { 
-            ...corsHeaders,
-            'Content-Type': 'application/json' 
-          } 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+
+    // Parse request body with error handling
+    let requestData
+    try {
+      requestData = await req.json()
+      console.log('Request data parsed successfully')
+    } catch (e) {
+      console.error('Failed to parse request body:', e)
+      return new Response(
+        JSON.stringify({ 
+          error: 'Invalid request body - must be valid JSON',
+          success: false 
+        }),
+        { 
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+    
+    const { message, conversationHistory, userEmail, userName } = requestData
+    console.log('Received:', { message: message?.substring(0, 50), userEmail, userName })
+
+    // Test database connection
+    try {
+      const { data: testData, error: testError } = await supabase
+        .from('sam_knowledge_base')
+        .select('id')
+        .limit(1)
+      
+      if (testError) {
+        console.error('Database connection test failed:', testError)
+        return new Response(
+          JSON.stringify({ 
+            error: 'Database error - sam_knowledge_base table not accessible',
+            success: false,
+            details: testError
+          }),
+          { 
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        )
+      }
+      console.log('Database connection successful')
+    } catch (dbError) {
+      console.error('Database error:', dbError)
+      return new Response(
+        JSON.stringify({ 
+          error: 'Database connection failed',
+          success: false,
+          details: String(dbError)
+        }),
+        { 
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
       )
     }
