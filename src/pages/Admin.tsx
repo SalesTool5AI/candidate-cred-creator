@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { AdminAuth } from "@/components/AdminAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -236,7 +237,8 @@ export default function Admin() {
   const categories = ["all", ...Array.from(new Set(entries.map(e => e.category)))];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-gray-900 py-12">
+    <AdminAuth>
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-gray-900 py-12">
       <div className="container mx-auto px-4">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-4">Knowledge Base Admin</h1>
@@ -460,5 +462,6 @@ export default function Admin() {
         )}
       </div>
     </div>
+    </AdminAuth>
   );
 }
