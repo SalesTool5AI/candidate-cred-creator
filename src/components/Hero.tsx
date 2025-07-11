@@ -60,12 +60,11 @@ export function Hero() {
               onClick={() => scrollToSection('sales-performance')}
             >
               <Trophy className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              🏆 View Performance
+              View Performance
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="border-cyan-400 text-cyan-400 bg-gray-800/50 hover:bg-cyan-400 hover:text-gray-900 font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
               onClick={() => scrollToSection('contact')}
             >
               <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
