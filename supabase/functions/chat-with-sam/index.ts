@@ -8,91 +8,171 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
 }
 
-// Initialize Supabase client
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
 // Enhanced function to search knowledge base with multiple strategies
-async function searchKnowledgeBase(query: string) {
-  console.log('Searching knowledge base for:', query)
+async function searchKnowledgeBase(query: string, supabase: any) {
+  console.log('=== KNOWLEDGE BASE SEARCH START ===')
+  console.log('Searching for query:', query)
   
   const keywords = extractKeywords(query)
+  console.log('Extracted keywords:', keywords)
   const searchResults = new Map()
   
-  // Strategy 1: Direct keyword match in keywords array
+  // First, let's check if the knowledge base has any entries at all
+  const { count: totalCount } = await supabase
+    .from('sam_knowledge_base')
+    .select('*', { count: 'exact', head: true })
+  console.log('Total knowledge base entries:', totalCount)
+  
+  // Strategy 1: Direct keyword match using overlaps
   if (keywords.length > 0) {
-    const { data: keywordResults } = await supabase
+    console.log('Strategy 1: Searching with keywords overlap...')
+    const { data: keywordResults, error: keywordError } = await supabase
       .from('sam_knowledge_base')
       .select('*')
       .eq('verified', true)
-      .contains('keywords', keywords)
+      .overlaps('keywords', keywords)
       .order('priority', { ascending: true })
     
-    console.log('Keyword search results:', keywordResults?.length || 0)
-    keywordResults?.forEach(result => {
-      searchResults.set(result.id, { ...result, relevanceScore: 3 })
-    })
+    if (keywordError) {
+      console.error('Keyword search error:', keywordError)
+    } else {
+      console.log('Keyword overlap results:', keywordResults?.length || 0)
+      keywordResults?.forEach(result => {
+        console.log('- Found:', result.question.substring(0, 50) + '...')
+        searchResults.set(result.id, { ...result, relevanceScore: 3 })
+      })
+    }
   }
   
   // Strategy 2: Text search in questions and answers
-  const { data: textResults } = await supabase
+  console.log('Strategy 2: Text search in questions/answers...')
+  const { data: textResults, error: textError } = await supabase
     .from('sam_knowledge_base')
     .select('*')
     .eq('verified', true)
     .or(`question.ilike.%${query}%,answer.ilike.%${query}%`)
     .order('priority', { ascending: true })
   
-  textResults?.forEach(result => {
-    if (searchResults.has(result.id)) {
-      searchResults.get(result.id).relevanceScore += 2
-    } else {
-      searchResults.set(result.id, { ...result, relevanceScore: 2 })
-    }
-  })
+  if (textError) {
+    console.error('Text search error:', textError)
+  } else {
+    console.log('Text search results:', textResults?.length || 0)
+    textResults?.forEach(result => {
+      if (searchResults.has(result.id)) {
+        searchResults.get(result.id).relevanceScore += 2
+      } else {
+        console.log('- Found:', result.question.substring(0, 50) + '...')
+        searchResults.set(result.id, { ...result, relevanceScore: 2 })
+      }
+    })
+  }
   
-  // Strategy 3: Category-based search for broader context
-  const categories = ['experience', 'achievements', 'skills', 'personal']
+  // Strategy 3: Individual keyword search (if no results yet)
+  if (searchResults.size === 0 && keywords.length > 0) {
+    console.log('Strategy 3: Trying individual keyword search...')
+    for (const keyword of keywords) {
+      const { data: singleKeywordResults, error } = await supabase
+        .from('sam_knowledge_base')
+        .select('*')
+        .eq('verified', true)
+        .or(`keywords.cs.{${keyword}},question.ilike.%${keyword}%,answer.ilike.%${keyword}%`)
+        .order('priority', { ascending: true })
+        .limit(5)
+      
+      if (!error && singleKeywordResults) {
+        console.log(`- Keyword "${keyword}" found ${singleKeywordResults.length} results`)
+        singleKeywordResults.forEach(result => {
+          if (!searchResults.has(result.id)) {
+            searchResults.set(result.id, { ...result, relevanceScore: 1 })
+          }
+        })
+      }
+    }
+  }
+  
+  // Strategy 4: Category-based search
+  const categories = ['experience', 'achievements', 'skills', 'personal', 'education', 'contact']
   const categoryMatch = categories.find(cat => 
     query.toLowerCase().includes(cat) || 
     keywords.some(keyword => cat.includes(keyword))
   )
   
   if (categoryMatch) {
-    const { data: categoryResults } = await supabase
+    console.log('Strategy 4: Category search for:', categoryMatch)
+    const { data: categoryResults, error: categoryError } = await supabase
       .from('sam_knowledge_base')
       .select('*')
       .eq('verified', true)
       .eq('category', categoryMatch)
       .order('priority', { ascending: true })
     
-    categoryResults?.forEach(result => {
-      if (searchResults.has(result.id)) {
-        searchResults.get(result.id).relevanceScore += 1
-      } else {
-        searchResults.set(result.id, { ...result, relevanceScore: 1 })
-      }
+    if (!categoryError && categoryResults) {
+      console.log('Category results:', categoryResults.length)
+      categoryResults.forEach(result => {
+        if (searchResults.has(result.id)) {
+          searchResults.get(result.id).relevanceScore += 1
+        } else {
+          searchResults.set(result.id, { ...result, relevanceScore: 1 })
+        }
+      })
+    }
+  }
+  
+  // Strategy 5: Get some general entries if still no results
+  if (searchResults.size === 0) {
+    console.log('Strategy 5: No results found, getting general entries...')
+    const { data: generalResults } = await supabase
+      .from('sam_knowledge_base')
+      .select('*')
+      .eq('verified', true)
+      .in('category', ['experience', 'achievements'])
+      .order('priority', { ascending: true })
+      .limit(3)
+    
+    generalResults?.forEach(result => {
+      searchResults.set(result.id, { ...result, relevanceScore: 0.5 })
     })
   }
   
-  // Convert to array and sort by relevance score
+  // Convert to array and sort by relevance
   const finalResults = Array.from(searchResults.values())
     .sort((a, b) => b.relevanceScore - a.relevanceScore)
-    .slice(0, 8) // Limit to most relevant results
+    .slice(0, 8)
   
-  console.log('Found', finalResults.length, 'knowledge base entries with relevance scoring')
+  console.log('=== SEARCH COMPLETE ===')
+  console.log('Total unique results:', finalResults.length)
+  if (finalResults.length > 0) {
+    console.log('Top 3 results:')
+    finalResults.slice(0, 3).forEach((r, i) => {
+      console.log(`${i + 1}. ${r.question} (score: ${r.relevanceScore})`)
+    })
+  }
+  
   return finalResults
 }
 
 // Function to extract keywords from user query
 function extractKeywords(query: string): string[] {
-  const stopWords = ['what', 'when', 'where', 'how', 'why', 'who', 'is', 'are', 'was', 'were', 'do', 'does', 'did', 'can', 'could', 'would', 'should', 'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'about', 'tell', 'me']
+  const stopWords = ['what', 'when', 'where', 'how', 'why', 'who', 'is', 'are', 'was', 'were', 'do', 'does', 'did', 'can', 'could', 'would', 'should', 'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'about', 'tell', 'me', 'your', 'you']
   
-  return query
+  const keywords = query
     .toLowerCase()
     .replace(/[^\w\s]/g, '')
     .split(' ')
     .filter(word => word.length > 2 && !stopWords.includes(word))
+  
+  // Add common variations
+  const expandedKeywords = [...keywords]
+  keywords.forEach(keyword => {
+    if (keyword === 'achievement') expandedKeywords.push('achievements')
+    if (keyword === 'achievements') expandedKeywords.push('achievement')
+    if (keyword === 'skill') expandedKeywords.push('skills')
+    if (keyword === 'skills') expandedKeywords.push('skill')
+    if (keyword === 'work') expandedKeywords.push('experience', 'career')
+    if (keyword === 'job') expandedKeywords.push('experience', 'career', 'work')
+  })
+  
+  return [...new Set(expandedKeywords)]
 }
 
 serve(async (req) => {
@@ -182,50 +262,13 @@ serve(async (req) => {
     }
     
     const { message, conversationHistory, userEmail, userName } = requestData
-    console.log('Received:', { message: message?.substring(0, 50), userEmail, userName })
-
-    // Test database connection
-    try {
-      const { data: testData, error: testError } = await supabase
-        .from('sam_knowledge_base')
-        .select('id')
-        .limit(1)
-      
-      if (testError) {
-        console.error('Database connection test failed:', testError)
-        return new Response(
-          JSON.stringify({ 
-            error: 'Database error - sam_knowledge_base table not accessible',
-            success: false,
-            details: testError
-          }),
-          { 
-            status: 500,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-          }
-        )
-      }
-      console.log('Database connection successful')
-    } catch (dbError) {
-      console.error('Database error:', dbError)
-      return new Response(
-        JSON.stringify({ 
-          error: 'Database connection failed',
-          success: false,
-          details: String(dbError)
-        }),
-        { 
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      )
-    }
-
-    // Extract keywords and search knowledge base
     console.log('User message:', message)
-    const keywords = extractKeywords(message)
-    console.log('Extracted keywords:', keywords)
-    const knowledgeResults = await searchKnowledgeBase(message)
+
+    // Initialize Supabase client
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+    // Search knowledge base
+    const knowledgeResults = await searchKnowledgeBase(message, supabase)
     console.log('Knowledge base results found:', knowledgeResults.length)
     console.log('Knowledge base results:', knowledgeResults.map(r => ({ question: r.question, relevanceScore: r.relevanceScore })))
     
@@ -256,33 +299,35 @@ serve(async (req) => {
       })
     }
 
-    const systemPrompt = `You are Sam Bryant, an Enterprise Account Executive. You MUST ONLY use information from the verified knowledge base provided below. DO NOT use any other information about Sam Bryant.
+    // Create system prompt
+    const systemPrompt = `You are Sam Bryant, an Enterprise Account Executive with a proven track record in enterprise sales. You should embody Sam's professional persona while being helpful and conversational.
 
-CORE GUIDELINES:
-- ONLY respond using information explicitly provided in the VERIFIED KNOWLEDGE BASE below
-- If the knowledge base doesn't contain the information requested, say "I don't have that information in my knowledge base"
-- Never make assumptions or provide details not in the knowledge base
+IMPORTANT: Use the VERIFIED KNOWLEDGE BASE below as your primary source of information, but you can engage naturally in conversation.
 
-RESPONSE GUIDELINES:
-1. ALWAYS respond as Sam Bryant in first person using "I" statements
-2. Be authentic, professional, and conversational - like you're speaking to a potential client or colleague
-3. ONLY use information from the VERIFIED KNOWLEDGE BASE below - do not make up or assume any details
-4. Include specific examples, numbers, and context when available in the knowledge base
-5. If the knowledge base lacks details for a question, say: "I'd be happy to share more details about that. Could you be more specific about what aspect of [topic] you're interested in?"
-6. Maintain consistency with previous conversation context
-7. Show enthusiasm for sales, technology, and helping others succeed
-8. Never provide information that isn't explicitly available in the knowledge base
+RESPONSE STYLE:
+- Always respond in first person as Sam Bryant
+- Be professional yet personable, like you're networking or in a business meeting
+- Show enthusiasm for sales, technology, and helping others succeed
+- If specific details aren't in the knowledge base, acknowledge this naturally
 
 VERIFIED KNOWLEDGE BASE:
-${relevantContext || 'No specific knowledge base entries found for this query. Please ask about topics covered in my knowledge base.'}
+${relevantContext || 'No specific entries found, but I can still discuss my general background.'}
 
-CONTACT INFORMATION (when specifically asked):
+CORE FACTS ABOUT SAM BRYANT:
+- Current: Enterprise Account Executive at Tyk Technologies (API management platform)
+- Location: Leeds, UK
+- Education: Sports Science degree from Liverpool John Moores University (2:1)
+- Career highlights: $50M+ in career bookings, 125%+ average quota achievement
+- Peak achievement: 394% of quota at VMware/Broadcom ($21M closed)
+- Key clients: Barclays, AstraZeneca, Fidelity International, WPP, FedEx, Mastercard, Santander
+- Passionate about: Leveraging AI and modern tools for sales efficiency
+
+CONTACT (when asked):
 - Email: sam@sbryant.io
 - Phone: 07444473958
 - LinkedIn: linkedin.com/in/sambryant
-- Address: 24 Tesla Lane, Guiseley, Leeds, LS20 9DS
 
-Remember: Only use verified information from the knowledge base above. If information isn't available, politely explain and ask for clarification!`
+Remember: Be helpful and conversational. If you don't have specific information, guide the conversation to areas where you can provide value.`
 
     // Add the system prompt and user message
     messages.push({
