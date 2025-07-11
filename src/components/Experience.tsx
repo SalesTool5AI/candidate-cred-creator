@@ -3,12 +3,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 // Import company logos
+import perplexityLogo from "@/assets/logos/perplexity-white.png";
 import tykLogo from "@/assets/logos/tyk-white.png";
 import vmwareLogo from "@/assets/logos/vmware-white.png";
 import broadcomLogo from "@/assets/logos/broadcom-white.png";
 import softwareOneLogo from "@/assets/logos/softwareone-white.png";
 
 const experiences = [
+  {
+    company: "Perplexity",
+    logo: perplexityLogo,
+    position: "Selected for AI Business Fellowship",
+    period: "Feb 2025 - Present",
+    achievements: [
+      "Selected as part of 2025 cohort of those innovating and using AI in their role",
+      "Networking with founders and creators"
+    ],
+    technologies: ["AI Strategy", "Innovation", "Networking", "Leadership Development"]
+  },
   {
     company: "Tyk Technologies Limited",
     logo: tykLogo,
