@@ -42,61 +42,25 @@ export function Contact() {
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
-            <Card className="hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer bg-gray-800/50 border-gray-700/50 backdrop-blur-sm" onClick={handleEmailClick}>
-              <CardHeader className="text-center pb-4">
-                <Mail className="h-8 w-8 sm:h-12 sm:w-12 text-cyan-400 mx-auto mb-3 sm:mb-4" />
-                <CardTitle className="text-lg sm:text-xl text-white">Email Me</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center pt-0">
-                <p className="text-sm sm:text-base text-gray-300 mb-3 sm:mb-4">
-                  Drop me a line to discuss opportunities or schedule a conversation.
-                </p>
-                <p className="font-semibold text-cyan-400 text-sm sm:text-base">sam@sbryant.io</p>
-              </CardContent>
-            </Card>
+        <div className="max-w-md mx-auto">
+          <div className="flex flex-col gap-4">
+            <Button 
+              size="lg" 
+              className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-semibold py-4 text-lg transition-all duration-300 hover:scale-105"
+              onClick={handleEmailClick}
+            >
+              <Mail className="mr-3 h-5 w-5" />
+              Email Me
+            </Button>
             
-            <Card className="hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer bg-gray-800/50 border-gray-700/50 backdrop-blur-sm" onClick={handlePhoneClick}>
-              <CardHeader className="text-center pb-4">
-                <Phone className="h-8 w-8 sm:h-12 sm:w-12 text-green-400 mx-auto mb-3 sm:mb-4" />
-                <CardTitle className="text-lg sm:text-xl text-white">Call Me</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center pt-0">
-                <p className="text-sm sm:text-base text-gray-300 mb-3 sm:mb-4">
-                  Prefer to talk? Give me a call to discuss your sales needs.
-                </p>
-                <p className="font-semibold text-green-400 text-sm sm:text-base">07444473958</p>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            <Card className="hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer bg-gray-800/50 border-gray-700/50 backdrop-blur-sm" onClick={handleLinkedInClick}>
-              <CardHeader className="text-center pb-4">
-                <User className="h-8 w-8 sm:h-12 sm:w-12 text-blue-400 mx-auto mb-3 sm:mb-4" />
-                <CardTitle className="text-lg sm:text-xl text-white">LinkedIn</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center pt-0">
-                <p className="text-sm sm:text-base text-gray-300 mb-3 sm:mb-4">
-                  Connect with me professionally and see my latest updates.
-                </p>
-                <p className="font-semibold text-blue-400 text-sm sm:text-base">View Profile</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer bg-gray-800/50 border-gray-700/50 backdrop-blur-sm" onClick={handleScheduleClick}>
-              <CardHeader className="text-center pb-4">
-                <Calendar className="h-8 w-8 sm:h-12 sm:w-12 text-purple-400 mx-auto mb-3 sm:mb-4" />
-                <CardTitle className="text-lg sm:text-xl text-white">Schedule Meeting</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center pt-0">
-                <p className="text-sm sm:text-base text-gray-300 mb-3 sm:mb-4">
-                  Book a time that works for both of us to discuss opportunities.
-                </p>
-                <p className="font-semibold text-purple-400 text-sm sm:text-base">Book Now</p>
-              </CardContent>
-            </Card>
+            <Button 
+              size="lg" 
+              className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 text-lg transition-all duration-300 hover:scale-105"
+              onClick={handlePhoneClick}
+            >
+              <Phone className="mr-3 h-5 w-5" />
+              Call Me
+            </Button>
           </div>
           
           <div className="text-center mt-8 sm:mt-12">
