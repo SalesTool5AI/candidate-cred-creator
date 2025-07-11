@@ -1,10 +1,48 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import "https://deno.land/x/xhr@0.1.0/mod.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+// Initialize Supabase client
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+// Function to search knowledge base
+async function searchKnowledgeBase(query: string) {
+  console.log('Searching knowledge base for:', query)
+  
+  // Search by keywords and text content
+  const { data: results, error } = await supabase
+    .from('sam_knowledge_base')
+    .select('*')
+    .eq('verified', true)
+    .or(`question.ilike.%${query}%,answer.ilike.%${query}%,keywords.cs.{${query.toLowerCase()}}`)
+    .order('priority', { ascending: true })
+    .limit(10)
+
+  if (error) {
+    console.error('Knowledge base search error:', error)
+    return []
+  }
+
+  console.log('Found', results?.length || 0, 'knowledge base entries')
+  return results || []
+}
+
+// Function to extract keywords from user query
+function extractKeywords(query: string): string[] {
+  const stopWords = ['what', 'when', 'where', 'how', 'why', 'who', 'is', 'are', 'was', 'were', 'do', 'does', 'did', 'can', 'could', 'would', 'should', 'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'about', 'tell', 'me']
+  
+  return query
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .split(' ')
+    .filter(word => word.length > 2 && !stopWords.includes(word))
 }
 
 serve(async (req) => {
@@ -37,12 +75,25 @@ serve(async (req) => {
       )
     }
 
-    // Build conversation context - start directly with user message to avoid system message issues
+    // Extract keywords and search knowledge base
+    const keywords = extractKeywords(message)
+    const knowledgeResults = await searchKnowledgeBase(message)
+    
+    // Build relevant context from knowledge base
+    let relevantContext = ''
+    if (knowledgeResults.length > 0) {
+      relevantContext = knowledgeResults
+        .map(item => `${item.question}: ${item.answer}`)
+        .join('\n\n')
+    }
+
+    // Build conversation context
     const messages = []
 
-    // Add conversation history
+    // Add conversation history (limit to last 6 messages to stay within context)
     if (conversationHistory && conversationHistory.length > 0) {
-      conversationHistory.forEach((msg: any) => {
+      const recentHistory = conversationHistory.slice(-6)
+      recentHistory.forEach((msg: any) => {
         if (msg.role === 'user' || msg.role === 'assistant') {
           messages.push({
             role: msg.role,
@@ -52,36 +103,35 @@ serve(async (req) => {
       })
     }
 
-    // Add current message with enhanced context
-    const enhancedPrompt = `You are Sam Bryant, an Enterprise Account Executive speaking directly to a potential employer or hiring manager. Answer this question as Sam would, using "I" and drawing from your specific experience and achievements:
+    // Create strict system prompt to prevent hallucination
+    const systemPrompt = `You are Sam Bryant, Enterprise Account Executive. You MUST follow these critical rules:
 
-YOUR BACKGROUND:
-- Currently at Tyk Technologies (2025-Present): Enterprise Account Executive (EMEA) working with prospects above 10,000 users
-- Previously at VMware by Broadcom (2023-2025): Closed $21M, achieved 394% of quota
-- VMware Global Accounts (2021-2023): Worked with FedEx, Mastercard, Santander, Ford
-- SoftwareONE (2014-2021): Built £2M GP portfolio from scratch, top 5 globally in services growth
+STRICT RESPONSE RULES:
+1. ONLY answer using information provided in the VERIFIED KNOWLEDGE BASE below
+2. If the question cannot be answered from the knowledge base, you MUST respond: "I don't have verified information about that specific topic. Could you ask me about my professional experience, achievements, or background?"
+3. NEVER make up facts, dates, numbers, or details not in the knowledge base
+4. Always speak in first person as Sam Bryant using "I" statements
+5. Be professional and authentic but stick strictly to verified facts
 
-KEY ACHIEVEMENTS:
-- Winner VMware Account Executive of the Quarter (Q2 2022)
-- Selected for High Achievers Programme with additional RSU allocation
-- Successfully created opportunities in Vinci Holdings, Barclays, Centrica, BNP Paribas, Sanlam, GSK
-- Closed two £240k deals in Barclays, submitted £4M ARR proposal (biggest bid Tyk has ever made)
-- Built book of business from £0 to £2M gross profit per year at SoftwareONE
+VERIFIED KNOWLEDGE BASE:
+${relevantContext || 'No specific knowledge base entries found for this query.'}
 
-EXPERTISE: Enterprise SaaS sales (7-8 figures), C-level engagement, AI tools advocate, business case & ROI selling, translating technical concepts to business value
+CONTACT INFORMATION (if asked):
+- Email: sam@sbryant.io
+- Phone: 07444473958
+- LinkedIn: linkedin.com/in/sambryant
+- Address: 24 Tesla Lane, Guiseley, Leeds, LS20 9DS
 
-PERSONALITY: Entrepreneurial mindset, thrive in high-stakes environments, former academy footballer, goal to leave every team/customer/process better than I found it
+Remember: If you cannot answer from the verified knowledge base above, say so directly. Do not improvise or add unverified details.`
 
-Question: ${message}
-
-Respond as Sam Bryant would, authentically and professionally, using specific examples from your experience when relevant.`
-
+    // Add the system prompt and user message
     messages.push({
       role: "user",
-      content: enhancedPrompt
+      content: `${systemPrompt}\n\nUser Question: ${message}\n\nPlease respond as Sam Bryant using only the verified information provided above.`
     })
 
     console.log('Calling Anthropic API with', messages.length, 'messages')
+    console.log('Knowledge base entries found:', knowledgeResults.length)
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -92,7 +142,8 @@ Respond as Sam Bryant would, authentically and professionally, using specific ex
       },
       body: JSON.stringify({
         model: 'claude-3-5-sonnet-20241022',
-        max_tokens: 1500,
+        max_tokens: 1000,
+        temperature: 0.1, // Lower temperature for more factual responses
         messages: messages
       })
     })
@@ -143,6 +194,7 @@ Respond as Sam Bryant would, authentically and professionally, using specific ex
     return new Response(
       JSON.stringify({ 
         message: assistantMessage,
+        knowledgeEntriesUsed: knowledgeResults.length,
         success: true 
       }),
       { 

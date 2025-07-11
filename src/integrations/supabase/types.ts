@@ -124,6 +124,45 @@ export type Database = {
           },
         ]
       }
+      sam_knowledge_base: {
+        Row: {
+          answer: string
+          category: string
+          created_at: string
+          id: string
+          keywords: string[] | null
+          priority: number | null
+          question: string
+          subcategory: string | null
+          updated_at: string
+          verified: boolean | null
+        }
+        Insert: {
+          answer: string
+          category: string
+          created_at?: string
+          id?: string
+          keywords?: string[] | null
+          priority?: number | null
+          question: string
+          subcategory?: string | null
+          updated_at?: string
+          verified?: boolean | null
+        }
+        Update: {
+          answer?: string
+          category?: string
+          created_at?: string
+          id?: string
+          keywords?: string[] | null
+          priority?: number | null
+          question?: string
+          subcategory?: string | null
+          updated_at?: string
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
