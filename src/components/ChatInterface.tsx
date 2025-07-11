@@ -105,11 +105,15 @@ export const ChatInterface: React.FC = () => {
     try {
       // Save user message to database if we have a conversation ID
       if (conversationId) {
-        await supabase.from('chat_messages').insert({
-          conversation_id: conversationId,
-          role: 'user',
-          content: userMessage.content,
-        });
+        try {
+          await supabase.from('chat_messages').insert({
+            conversation_id: conversationId,
+            role: 'user',
+            content: userMessage.content,
+          });
+        } catch (dbError) {
+          console.log('Failed to save user message to DB:', dbError);
+        }
       }
 
       // Get conversation history for context (excluding welcome message)
@@ -154,11 +158,15 @@ export const ChatInterface: React.FC = () => {
 
         // Save assistant message to database if we have a conversation ID
         if (conversationId) {
-          await supabase.from('chat_messages').insert({
-            conversation_id: conversationId,
-            role: 'assistant',
-            content: assistantMessage.content,
-          });
+          try {
+            await supabase.from('chat_messages').insert({
+              conversation_id: conversationId,
+              role: 'assistant',
+              content: assistantMessage.content,
+            });
+          } catch (dbError) {
+            console.log('Failed to save assistant message to DB:', dbError);
+          }
         }
       } else {
         throw new Error(data?.error || 'Failed to get response from AI');
