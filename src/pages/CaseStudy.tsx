@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 // Import company logos
 import mastercardLogo from "@/assets/logos/mastercard.png";
 import johnsonMattheyLogo from "@/assets/logos/johnson-matthey.png";
-import fedexLogo from "@/assets/logos/fedex-clean.png";
+import fedexLogo from "@/assets/logos/fedex-simple.png";
 import fidelityLogo from "@/assets/logos/fidelity.png";
 import armLogo from "@/assets/logos/arm.png";
 
