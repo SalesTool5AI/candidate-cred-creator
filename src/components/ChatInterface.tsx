@@ -19,6 +19,7 @@ export const ChatInterface: React.FC = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -31,16 +32,32 @@ export const ChatInterface: React.FC = () => {
   }, [messages]);
 
   useEffect(() => {
-    initializeConversation();
+    // Generate or retrieve user session
+    const sessionEmail = generateUserSession();
+    setUserEmail(sessionEmail);
+    initializeConversation(sessionEmail);
   }, []);
 
-  const initializeConversation = async () => {
+  const generateUserSession = (): string => {
+    // Check if user already has a session
+    let sessionEmail = localStorage.getItem('chat_user_email');
+    if (!sessionEmail) {
+      // Generate a unique session identifier
+      const timestamp = Date.now();
+      const randomId = Math.random().toString(36).substring(2, 15);
+      sessionEmail = `visitor_${timestamp}_${randomId}@session.com`;
+      localStorage.setItem('chat_user_email', sessionEmail);
+    }
+    return sessionEmail;
+  };
+
+  const initializeConversation = async (email: string) => {
     try {
       const { data, error } = await supabase
         .from('chat_conversations')
         .insert({
-          user_email: 'anonymous@visitor.com',
-          user_name: 'Anonymous Visitor',
+          user_email: email,
+          user_name: 'Visitor',
         })
         .select()
         .single();
@@ -110,8 +127,8 @@ export const ChatInterface: React.FC = () => {
         body: {
           message: currentInput,
           conversationHistory,
-          userEmail: 'anonymous@visitor.com',
-          userName: 'Anonymous Visitor',
+          userEmail: userEmail,
+          userName: 'Visitor',
         },
       });
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminAuth } from "@/components/AdminAuth";
+import { ConversationManager } from "@/components/ConversationManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
-import { Trash2, Edit, Plus, Search, Upload, Download } from "lucide-react";
+import { Trash2, Edit, Plus, Search, Upload, Download, MessageSquare, Database } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface KnowledgeEntry {
@@ -239,229 +241,253 @@ export default function Admin() {
   return (
     <AdminAuth>
       <div className="min-h-screen bg-gradient-to-b from-slate-900 to-gray-900 py-12">
-      <div className="container mx-auto px-4">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Knowledge Base Admin</h1>
-          <p className="text-gray-300">Manage verified information about Sam Bryant</p>
-        </div>
-
-        {/* Controls */}
-        <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-          <div className="flex gap-4 items-center">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search entries..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64 bg-gray-800 border-gray-600 text-white"
-              />
-            </div>
-            
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-48 bg-gray-800 border-gray-600 text-white">
-                <SelectValue placeholder="Filter by category" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map(cat => (
-                  <SelectItem key={cat} value={cat}>
-                    {cat === "all" ? "All Categories" : cat}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        <div className="container mx-auto px-4">
+          <div className="mb-8 text-center">
+            <h1 className="text-4xl font-bold text-white mb-4">Admin Dashboard</h1>
+            <p className="text-gray-300">Manage knowledge base and conversations</p>
           </div>
 
-          <div className="flex gap-2">
-            <Button onClick={exportToCSV} variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-2" />
-              Export
-            </Button>
-            
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Bulk Import
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="bg-gray-800 border-gray-600">
-                <DialogHeader>
-                  <DialogTitle className="text-white">Bulk Import</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <p className="text-sm text-gray-300">
-                    Format: category|subcategory|question|answer|keywords|priority (one per line)
-                  </p>
-                  <Textarea
-                    placeholder="experience|tyk|What is Sam's current role?|I am currently...|current role,tyk|1"
-                    value={bulkText}
-                    onChange={(e) => setBulkText(e.target.value)}
-                    className="min-h-32 bg-gray-700 border-gray-600 text-white"
-                  />
-                  <Button onClick={handleBulkImport} className="w-full">
-                    Import Entries
-                  </Button>
+          <Tabs defaultValue="knowledge" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 bg-gray-800 mb-8">
+              <TabsTrigger value="knowledge" className="text-gray-300 data-[state=active]:text-white">
+                <Database className="w-4 h-4 mr-2" />
+                Knowledge Base
+              </TabsTrigger>
+              <TabsTrigger value="conversations" className="text-gray-300 data-[state=active]:text-white">
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Conversations
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="knowledge">
+              <div className="mb-6 text-center">
+                <h2 className="text-3xl font-bold text-white mb-4">Knowledge Base Management</h2>
+                <p className="text-gray-300">Manage verified information about Sam Bryant</p>
+              </div>
+
+              {/* Controls */}
+              <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
+                <div className="flex gap-4 items-center">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input
+                      placeholder="Search entries..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10 w-64 bg-gray-800 border-gray-600 text-white"
+                    />
+                  </div>
+                  
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger className="w-48 bg-gray-800 border-gray-600 text-white">
+                      <SelectValue placeholder="Filter by category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map(cat => (
+                        <SelectItem key={cat} value={cat}>
+                          {cat === "all" ? "All Categories" : cat}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-              </DialogContent>
-            </Dialog>
 
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button onClick={resetForm}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Entry
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="bg-gray-800 border-gray-600 max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle className="text-white">
-                    {editingEntry ? "Edit Entry" : "Add New Entry"}
-                  </DialogTitle>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="category" className="text-white">Category</Label>
-                      <Input
-                        id="category"
-                        value={formData.category}
-                        onChange={(e) => setFormData({...formData, category: e.target.value})}
-                        className="bg-gray-700 border-gray-600 text-white"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="subcategory" className="text-white">Subcategory</Label>
-                      <Input
-                        id="subcategory"
-                        value={formData.subcategory}
-                        onChange={(e) => setFormData({...formData, subcategory: e.target.value})}
-                        className="bg-gray-700 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="question" className="text-white">Question</Label>
-                    <Input
-                      id="question"
-                      value={formData.question}
-                      onChange={(e) => setFormData({...formData, question: e.target.value})}
-                      className="bg-gray-700 border-gray-600 text-white"
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="answer" className="text-white">Answer</Label>
-                    <Textarea
-                      id="answer"
-                      value={formData.answer}
-                      onChange={(e) => setFormData({...formData, answer: e.target.value})}
-                      className="bg-gray-700 border-gray-600 text-white min-h-24"
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="keywords" className="text-white">Keywords (comma separated)</Label>
-                    <Input
-                      id="keywords"
-                      value={formData.keywords}
-                      onChange={(e) => setFormData({...formData, keywords: e.target.value})}
-                      className="bg-gray-700 border-gray-600 text-white"
-                      placeholder="keyword1, keyword2, keyword3"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="priority" className="text-white">Priority (1=high, 2=medium, 3=low)</Label>
-                    <Input
-                      id="priority"
-                      type="number"
-                      min="1"
-                      max="3"
-                      value={formData.priority}
-                      onChange={(e) => setFormData({...formData, priority: parseInt(e.target.value)})}
-                      className="bg-gray-700 border-gray-600 text-white"
-                    />
-                  </div>
-                  
-                  <Button type="submit" className="w-full">
-                    {editingEntry ? "Update Entry" : "Add Entry"}
+                <div className="flex gap-2">
+                  <Button onClick={exportToCSV} variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    Export
                   </Button>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </div>
-
-        {/* Entries Grid */}
-        {loading ? (
-          <div className="text-center text-white">Loading...</div>
-        ) : (
-          <div className="grid gap-4">
-            {filteredEntries.map((entry) => (
-              <Card key={entry.id} className="bg-gray-800/50 border-gray-700">
-                <CardHeader className="pb-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-white text-lg">{entry.question}</CardTitle>
-                      <div className="flex gap-2 mt-2">
-                        <Badge variant="outline" className="text-cyan-400 border-cyan-400">
-                          {entry.category}
-                        </Badge>
-                        {entry.subcategory && (
-                          <Badge variant="outline" className="text-blue-400 border-blue-400">
-                            {entry.subcategory}
-                          </Badge>
-                        )}
-                        <Badge variant="outline" className="text-green-400 border-green-400">
-                          Priority {entry.priority}
-                        </Badge>
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <Upload className="h-4 w-4 mr-2" />
+                        Bulk Import
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-gray-800 border-gray-600">
+                      <DialogHeader>
+                        <DialogTitle className="text-white">Bulk Import</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <p className="text-sm text-gray-300">
+                          Format: category|subcategory|question|answer|keywords|priority (one per line)
+                        </p>
+                        <Textarea
+                          placeholder="experience|tyk|What is Sam's current role?|I am currently...|current role,tyk|1"
+                          value={bulkText}
+                          onChange={(e) => setBulkText(e.target.value)}
+                          className="min-h-32 bg-gray-700 border-gray-600 text-white"
+                        />
+                        <Button onClick={handleBulkImport} className="w-full">
+                          Import Entries
+                        </Button>
                       </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleEdit(entry)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleDelete(entry.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-300 mb-3">{entry.answer}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {entry.keywords.map((keyword, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs bg-gray-700 text-gray-300">
-                        {keyword}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
+                    </DialogContent>
+                  </Dialog>
 
-        {filteredEntries.length === 0 && !loading && (
-          <div className="text-center text-gray-400 py-12">
-            No entries found. {searchTerm || selectedCategory !== "all" ? "Try adjusting your filters." : "Add your first entry!"}
-          </div>
-        )}
+                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button onClick={resetForm}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Entry
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-gray-800 border-gray-600 max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle className="text-white">
+                          {editingEntry ? "Edit Entry" : "Add New Entry"}
+                        </DialogTitle>
+                      </DialogHeader>
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="category" className="text-white">Category</Label>
+                            <Input
+                              id="category"
+                              value={formData.category}
+                              onChange={(e) => setFormData({...formData, category: e.target.value})}
+                              className="bg-gray-700 border-gray-600 text-white"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="subcategory" className="text-white">Subcategory</Label>
+                            <Input
+                              id="subcategory"
+                              value={formData.subcategory}
+                              onChange={(e) => setFormData({...formData, subcategory: e.target.value})}
+                              className="bg-gray-700 border-gray-600 text-white"
+                            />
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="question" className="text-white">Question</Label>
+                          <Input
+                            id="question"
+                            value={formData.question}
+                            onChange={(e) => setFormData({...formData, question: e.target.value})}
+                            className="bg-gray-700 border-gray-600 text-white"
+                            required
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="answer" className="text-white">Answer</Label>
+                          <Textarea
+                            id="answer"
+                            value={formData.answer}
+                            onChange={(e) => setFormData({...formData, answer: e.target.value})}
+                            className="bg-gray-700 border-gray-600 text-white min-h-24"
+                            required
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="keywords" className="text-white">Keywords (comma separated)</Label>
+                          <Input
+                            id="keywords"
+                            value={formData.keywords}
+                            onChange={(e) => setFormData({...formData, keywords: e.target.value})}
+                            className="bg-gray-700 border-gray-600 text-white"
+                            placeholder="keyword1, keyword2, keyword3"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="priority" className="text-white">Priority (1=high, 2=medium, 3=low)</Label>
+                          <Input
+                            id="priority"
+                            type="number"
+                            min="1"
+                            max="3"
+                            value={formData.priority}
+                            onChange={(e) => setFormData({...formData, priority: parseInt(e.target.value)})}
+                            className="bg-gray-700 border-gray-600 text-white"
+                          />
+                        </div>
+                        
+                        <Button type="submit" className="w-full">
+                          {editingEntry ? "Update Entry" : "Add Entry"}
+                        </Button>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
+
+              {/* Entries Grid */}
+              {loading ? (
+                <div className="text-center text-white">Loading...</div>
+              ) : (
+                <div className="grid gap-4">
+                  {filteredEntries.map((entry) => (
+                    <Card key={entry.id} className="bg-gray-800/50 border-gray-700">
+                      <CardHeader className="pb-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <CardTitle className="text-white text-lg">{entry.question}</CardTitle>
+                            <div className="flex gap-2 mt-2">
+                              <Badge variant="outline" className="text-cyan-400 border-cyan-400">
+                                {entry.category}
+                              </Badge>
+                              {entry.subcategory && (
+                                <Badge variant="outline" className="text-blue-400 border-blue-400">
+                                  {entry.subcategory}
+                                </Badge>
+                              )}
+                              <Badge variant="outline" className="text-green-400 border-green-400">
+                                Priority {entry.priority}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleEdit(entry)}
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDelete(entry.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-300 mb-3">{entry.answer}</p>
+                        <div className="flex flex-wrap gap-1">
+                          {entry.keywords.map((keyword, idx) => (
+                            <Badge key={idx} variant="secondary" className="text-xs bg-gray-700 text-gray-300">
+                              {keyword}
+                            </Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+
+              {filteredEntries.length === 0 && !loading && (
+                <div className="text-center text-gray-400 py-12">
+                  No entries found. {searchTerm || selectedCategory !== "all" ? "Try adjusting your filters." : "Add your first entry!"}
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="conversations">
+              <ConversationManager />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
-    </div>
     </AdminAuth>
   );
 }
