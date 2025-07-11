@@ -6,7 +6,7 @@ import { Banknote, Target, TrendingUp, Calendar, Award, Users } from "lucide-rea
 import { useState } from "react";
 
 const keyMetrics = [
-  { icon: Banknote, label: "Total Career Bookings", value: "$30M+", description: "Enterprise deals closed" },
+  { icon: Banknote, label: "Total Career Bookings (ARR)", value: "$50M+", description: "Enterprise deals closed" },
   { icon: Target, label: "Average Quota Achievement", value: "125%+", description: "Consistent over-performance" },
   { icon: TrendingUp, label: "Peak Performance", value: "394%", description: "Best quarterly result" },
   { icon: Calendar, label: "Enterprise Experience", value: "10+ Years", description: "Complex deal expertise" },
@@ -15,7 +15,7 @@ const keyMetrics = [
 const achievements = [
   { title: "Deal Size Range", value: "$1.5M - $4M ARR", color: "border-l-cyan-500" },
   { title: "Territory Growth", value: "£0 → £2M GP", color: "border-l-green-500" },
-  { title: "Global Ranking", value: "Top 5 Worldwide", color: "border-l-blue-500" },
+  { title: "Global Ranking", value: "Top 5 Worldwide sales at SoftwareONE", color: "border-l-blue-500" },
   { title: "Current Pipeline", value: "£4M+ ARR", color: "border-l-purple-500" },
 ];
 
