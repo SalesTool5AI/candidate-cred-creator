@@ -130,6 +130,9 @@ export const ChatInterface: React.FC = () => {
           userEmail: userEmail,
           userName: 'Visitor',
         },
+        headers: {
+          'x-user-email': userEmail
+        }
       });
 
       console.log('Edge function response:', data, error);

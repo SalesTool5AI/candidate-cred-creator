@@ -168,9 +168,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_all_conversations_for_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          user_email: string
+          user_name: string
+          created_at: string
+          updated_at: string
+          message_count: number
+        }[]
+      }
       get_current_user_email: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_messages_for_admin: {
+        Args: { conversation_uuid: string }
+        Returns: {
+          id: string
+          role: string
+          content: string
+          created_at: string
+        }[]
       }
     }
     Enums: {

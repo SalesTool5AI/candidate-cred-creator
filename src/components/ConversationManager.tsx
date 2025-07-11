@@ -35,36 +35,11 @@ export const ConversationManager = () => {
 
   const fetchConversations = async () => {
     try {
-      // Temporarily disable RLS for admin by using service role key
       const { data, error } = await supabase
-        .from('chat_conversations')
-        .select(`
-          id,
-          user_email,
-          user_name,
-          created_at,
-          updated_at
-        `)
-        .order('updated_at', { ascending: false });
+        .rpc('get_all_conversations_for_admin');
         
       if (error) throw error;
-      
-      // Get message counts separately for each conversation
-      const conversationsWithCounts = await Promise.all(
-        (data || []).map(async (conv) => {
-          const { count } = await supabase
-            .from('chat_messages')
-            .select('*', { count: 'exact', head: true })
-            .eq('conversation_id', conv.id);
-          
-          return {
-            ...conv,
-            message_count: count || 0
-          };
-        })
-      );
-
-      setConversations(conversationsWithCounts);
+      setConversations(data || []);
     } catch (error: any) {
       toast({
         title: "Error", 
@@ -79,10 +54,7 @@ export const ConversationManager = () => {
   const fetchMessages = async (conversationId: string) => {
     try {
       const { data, error } = await supabase
-        .from('chat_messages')
-        .select('*')
-        .eq('conversation_id', conversationId)
-        .order('created_at', { ascending: true });
+        .rpc('get_messages_for_admin', { conversation_uuid: conversationId });
 
       if (error) throw error;
       
