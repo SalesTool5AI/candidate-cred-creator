@@ -26,9 +26,10 @@ async function searchKnowledgeBase(query: string) {
       .from('sam_knowledge_base')
       .select('*')
       .eq('verified', true)
-      .overlaps('keywords', keywords)
+      .contains('keywords', keywords)
       .order('priority', { ascending: true })
     
+    console.log('Keyword search results:', keywordResults?.length || 0)
     keywordResults?.forEach(result => {
       searchResults.set(result.id, { ...result, relevanceScore: 3 })
     })
