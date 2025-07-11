@@ -4,6 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+// Import company logos
+import mastercardLogo from "@/assets/logos/mastercard.png";
+import johnsonMattheyLogo from "@/assets/logos/johnson-matthey.png";
+import fedexLogo from "@/assets/logos/fedex.png";
+import fidelityLogo from "@/assets/logos/fidelity.png";
+import armLogo from "@/assets/logos/arm.png";
+
 type CaseStudyContent = {
   crisis?: string;
   challenge: string;
@@ -18,6 +25,7 @@ type CaseStudy = {
   emoji: string;
   company: string;
   title: string;
+  logo: string;
   metrics: {
     arr: string;
     timeline: string;
@@ -32,6 +40,7 @@ const caseStudies: Record<string, CaseStudy> = {
   mastercard: {
     emoji: "💳",
     company: "Mastercard",
+    logo: mastercardLogo,
     title: "From Crisis to Champion: How We Turned a Security Nightmare into a $1.8M Win",
     metrics: {
       arr: "$1.8M ARR",
@@ -52,6 +61,7 @@ const caseStudies: Record<string, CaseStudy> = {
   "johnson-matthey": {
     emoji: "⚗️",
     company: "Johnson Matthey",
+    logo: johnsonMattheyLogo,
     title: "Turning Service Failure into £1M Partnership",
     metrics: {
       arr: "£1M GP",
@@ -71,6 +81,7 @@ const caseStudies: Record<string, CaseStudy> = {
   fedex: {
     emoji: "📦",
     company: "FedEx",
+    logo: fedexLogo,
     title: "From Crisis to £1.6M Win: How I Turned Cost Cuts Into Our Biggest Opportunity",
     metrics: {
       arr: "£1.6M ARR",
@@ -91,6 +102,7 @@ const caseStudies: Record<string, CaseStudy> = {
   fidelity: {
     emoji: "💰",
     company: "Fidelity International",
+    logo: fidelityLogo,
     title: "From At-Risk to $15M Partnership",
     metrics: {
       arr: "$15M contract",
@@ -110,6 +122,7 @@ const caseStudies: Record<string, CaseStudy> = {
   arm: {
     emoji: "🤖",
     company: "ARM",
+    logo: armLogo,
     title: "From Cold Call to Strategic Partner: The ARM Limited Success Story",
     metrics: {
       arr: "£1M+ annual GP",
@@ -153,7 +166,13 @@ const CaseStudy = () => {
 
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
-          <div className="text-6xl sm:text-8xl mb-4">{study.emoji}</div>
+          <div className="flex items-center justify-center mb-6">
+            <img 
+              src={study.logo} 
+              alt={`${study.company} logo`} 
+              className="h-12 w-auto max-w-[200px] object-contain"
+            />
+          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             {study.company}
           </h1>
