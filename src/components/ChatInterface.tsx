@@ -85,6 +85,34 @@ export const ChatInterface: React.FC = () => {
     }
   };
 
+  const testHealthCheck = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('chat-with-sam', {
+        body: { test: true }
+      });
+      
+      if (error) {
+        toast({
+          title: "Health Check Failed",
+          description: `Error: ${error.message}`,
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      toast({
+        title: "Health Check Results",
+        description: JSON.stringify(data, null, 2),
+      });
+    } catch (err) {
+      toast({
+        title: "Health Check Error",
+        description: err instanceof Error ? err.message : "Unknown error",
+        variant: "destructive",
+      });
+    }
+  };
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
@@ -327,6 +355,15 @@ export const ChatInterface: React.FC = () => {
                   onKeyPress={handleKeyPress}
                   disabled={isLoading}
                 />
+                <Button
+                  onClick={testHealthCheck}
+                  variant="outline"
+                  size="icon"
+                  className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                  title="Test API Health"
+                >
+                  <Bot className="w-4 h-4" />
+                </Button>
                 <Button
                   onClick={sendMessage}
                   disabled={isLoading || !inputMessage.trim()}
