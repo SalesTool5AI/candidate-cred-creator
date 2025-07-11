@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Banknote, Target, TrendingUp, Calendar, Award, Users } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const keyMetrics = [
   { icon: Banknote, label: "Total Career Bookings (ARR)", value: "$50M+", description: "Enterprise deals closed" },
@@ -19,53 +20,50 @@ const achievements = [
   { title: "Current Pipeline", value: "£4M+ ARR", color: "border-l-purple-500" },
 ];
 
-const globalClients = [
+const caseStudies = [
   { 
-    name: "FedEx", 
-    emoji: "🚚",
-    description: "Global logistics leader with complex multi-region deployment requirements",
-    dealSize: "$2.1M ARR",
-    challenge: "Modernizing legacy infrastructure across 220 countries"
-  },
-  { 
+    slug: "mastercard",
     name: "Mastercard", 
     emoji: "💳",
-    description: "Financial services giant requiring enterprise-grade security solutions",
-    dealSize: "$3.2M ARR", 
-    challenge: "Implementing secure payment processing infrastructure"
+    title: "From Crisis to Champion",
+    summary: "Transformed a security crisis into Mastercard's largest enterprise deal, beating established competitors through strategic problem-solving.",
+    metrics: "$1.8M ARR • 4-month cycle • Beat Cisco"
   },
   { 
-    name: "Arm", 
-    emoji: "🔧",
-    description: "Semiconductor company needing scalable development tools",
-    dealSize: "$1.8M ARR",
-    challenge: "Supporting global development teams with unified toolchain"
-  },
-  { 
-    name: "Barclays", 
-    emoji: "🏦",
-    description: "Major banking institution with regulatory compliance needs",
-    dealSize: "$4.0M ARR",
-    challenge: "Meeting strict financial services compliance requirements"
-  },
-  { 
+    slug: "johnson-matthey",
     name: "Johnson Matthey", 
     emoji: "⚗️",
-    description: "Specialty chemicals company requiring advanced analytics",
-    dealSize: "$1.5M ARR",
-    challenge: "Optimizing chemical processes with data-driven insights"
+    title: "Service Failure to £1M Partnership", 
+    summary: "Converted a major service failure with a strategic client into the foundation of a million-pound partnership through exceptional recovery.",
+    metrics: "£1M GP • 1,000+ requests • 10-person team"
   },
   { 
-    name: "AstraZeneca", 
-    emoji: "💊",
-    description: "Pharmaceutical giant with global research operations",
-    dealSize: "$2.8M ARR",
-    challenge: "Accelerating drug discovery through cloud collaboration"
+    slug: "fedex",
+    name: "FedEx", 
+    emoji: "📦",
+    title: "Crisis to £900K Win",
+    summary: "Turned FedEx's cost-cutting mandate into a strategic technology upgrade, delivering massive savings while securing a major contract.",
+    metrics: "£900K ARR • £4M+ savings • 3-month turnaround"
+  },
+  { 
+    slug: "fidelity",
+    name: "Fidelity", 
+    emoji: "💰",
+    title: "At-Risk to $15M Partnership",
+    summary: "Rescued an at-risk client relationship and transformed it into a $15M strategic partnership through innovative solution design.",
+    metrics: "$15M contract • $500K investment • 150%+ price increase"
+  },
+  { 
+    slug: "arm",
+    name: "ARM", 
+    emoji: "🤖",
+    title: "Cold Call to Strategic Partner",
+    summary: "Built ARM's largest technology partnership from a cold call, securing preferred vendor status and exclusive access to their development teams.",
+    metrics: "£1M+ annual GP • 18% markup eliminated • On-site access"
   },
 ];
 
 export function SalesPerformanceDashboard() {
-  const [selectedClient, setSelectedClient] = useState<typeof globalClients[0] | null>(null);
 
   return (
     <section id="sales-performance" className="py-12 sm:py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
@@ -139,55 +137,43 @@ export function SalesPerformanceDashboard() {
           </Card>
         </div>
 
-        {/* Global Clients Section */}
+        {/* Case Study Portfolio Section */}
         <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center justify-center gap-3">
               <Users className="w-6 h-6" />
-              Global Enterprise Clients
+              Enterprise Case Studies
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-              {globalClients.map((client, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="h-auto p-4 bg-gray-700/50 hover:bg-gray-600/50 border-gray-600/50 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105"
-                  onClick={() => setSelectedClient(client)}
-                >
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">{client.emoji}</div>
-                    <p className="text-sm font-medium text-white">{client.name}</p>
-                  </div>
-                </Button>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {caseStudies.map((study, index) => (
+                <Link key={index} to={`/case-study/${study.slug}`}>
+                  <Card className="h-full bg-gray-700/50 border-gray-600/50 hover:bg-gray-600/50 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+                    <CardContent className="p-6">
+                      <div className="text-center mb-4">
+                        <div className="text-4xl mb-3">{study.emoji}</div>
+                        <h3 className="text-lg font-bold text-white mb-1">{study.name}</h3>
+                        <p className="text-cyan-400 font-semibold text-sm mb-3">{study.title}</p>
+                      </div>
+                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">{study.summary}</p>
+                      <div className="border-t border-gray-600 pt-3">
+                        <p className="text-xs text-gray-400 font-medium">{study.metrics}</p>
+                      </div>
+                      <div className="mt-4">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full bg-transparent border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400"
+                        >
+                          Read Full Case Study
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
-
-            {/* Client Details */}
-            {selectedClient && (
-              <Card className="bg-gray-700/50 border-gray-600/50 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-white flex items-center gap-3">
-                    <span className="text-2xl">{selectedClient.emoji}</span>
-                    {selectedClient.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-gray-300">{selectedClient.description}</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border-l-4 border-l-green-500 pl-4">
-                      <h4 className="font-semibold text-white mb-1">Deal Size</h4>
-                      <p className="text-green-400 font-bold">{selectedClient.dealSize}</p>
-                    </div>
-                    <div className="border-l-4 border-l-blue-500 pl-4">
-                      <h4 className="font-semibold text-white mb-1">Key Challenge</h4>
-                      <p className="text-gray-300 text-sm">{selectedClient.challenge}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </CardContent>
         </Card>
       </div>
