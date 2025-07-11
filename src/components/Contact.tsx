@@ -9,7 +9,7 @@ export function Contact() {
   };
 
   const handlePhoneClick = () => {
-    window.location.href = "tel:07444473958";
+    window.open("https://wa.me/447444473958", "_blank");
   };
 
   const handleLinkedInClick = () => {
