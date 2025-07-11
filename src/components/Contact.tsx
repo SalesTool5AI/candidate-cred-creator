@@ -100,22 +100,9 @@ export function Contact() {
           </div>
           
           <div className="text-center mt-8 sm:mt-12">
-            <Card className="bg-gradient-to-r from-cyan-600 to-blue-700 text-white border-none shadow-2xl">
-              <CardContent className="p-6 sm:p-8">
-                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Ready to Drive Results Together?</h3>
-                <p className="text-base sm:text-lg mb-4 sm:mb-6 text-cyan-100">
-                  I'm always open to discussing new opportunities where I can make a significant impact.
-                </p>
-                <Button 
-                  size="lg" 
-                  className="bg-white text-cyan-600 hover:bg-gray-100 font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
-                  onClick={handleEmailClick}
-                >
-                  <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  Start the Conversation
-                </Button>
-              </CardContent>
-            </Card>
+            <p className="text-lg text-gray-400">
+              Built using Claude, Lovable & Supabase
+            </p>
           </div>
         </div>
       </div>
