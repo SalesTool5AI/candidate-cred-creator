@@ -221,9 +221,9 @@ Remember: Be helpful, specific, and authentic. If you need more context to give 
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-3-5-sonnet-20241022',
         max_tokens: 1500,
-        temperature: 0.2, // Slightly higher for more natural conversation while staying factual
+        temperature: 0.2,
         messages: messages
       })
     })
