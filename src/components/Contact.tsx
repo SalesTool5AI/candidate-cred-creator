@@ -37,8 +37,7 @@ export function Contact() {
             Let's Connect
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
-            Ready to discuss how I can drive revenue growth for your organization? 
-            Let's start the conversation.
+            Get in touch to discuss enterprise sales opportunities.
           </p>
         </div>
         
@@ -60,6 +59,15 @@ export function Contact() {
             >
               <Phone className="mr-3 h-5 w-5" />
               Call Me
+            </Button>
+            
+            <Button 
+              size="lg" 
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-4 text-lg transition-all duration-300 hover:scale-105"
+              onClick={handleLinkedInClick}
+            >
+              <User className="mr-3 h-5 w-5" />
+              LinkedIn Profile
             </Button>
           </div>
           
