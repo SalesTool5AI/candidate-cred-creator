@@ -87,8 +87,8 @@ const caseStudies: Record<string, CaseStudy> = {
   },
   fidelity: {
     emoji: "💰",
-    company: "Fidelity",
-    title: "At-Risk to $15M Partnership",
+    company: "Fidelity International",
+    title: "From At-Risk to $15M Partnership",
     metrics: {
       arr: "$15M contract",
       timeline: "$500K investment",
@@ -96,10 +96,11 @@ const caseStudies: Record<string, CaseStudy> = {
     },
     summary: "Rescued an at-risk client relationship and transformed it into a $15M strategic partnership through innovative solution design.",
     content: {
-      challenge: "Fidelity was on the verge of terminating their contract due to performance issues and was actively evaluating competitors. The relationship had deteriorated to the point where they were demanding significant price reductions and considering legal action.",
-      approach: "Rather than competing on price, I focused on rebuilding trust and demonstrating value. I invested $500K in developing custom solutions that addressed their specific pain points and aligned with their strategic objectives.",
-      execution: "The turnaround required intense stakeholder management and transparent communication. I established weekly executive reviews and implemented real-time performance monitoring to rebuild confidence in our capabilities.",
-      results: "Not only did we retain the client, but we secured a new $15M contract with pricing that was 150% higher than their original contract. The relationship became a showcase for our capabilities in the financial services sector."
+      challenge: "Fidelity International was an early VCF adopter experiencing significant platform issues that had severely damaged their relationship with VMware. With Broadcom's pending 150%+ price increases, the account was at critical risk of churning despite being a strategic enterprise client.",
+      approach: "**Phase 1: Diagnostic Deep Dive**\n• Deployed proven workshop framework to identify root causes beyond surface-level complaints\n• Invested time in comprehensive discovery rather than rushing to solutions\n• Built detailed executive report with specific recommendations\n\n**Phase 2: Commitment Through Investment**\n• Allocated $500K in professional services to demonstrate genuine partnership\n• Embedded dedicated resources: 2 customer architects, customer success managers, and technical account manager\n• Created success milestones with dedicated VMware resources attached\n\n**Phase 3: Executive Alignment**\n• Aligned UK MD, Sales Director, and CTO with client leadership team\n• Established direct executive communication channels\n• Positioned price increases within context of enhanced value and partnership",
+      execution: "The transformation required sustained commitment over 12+ months, from initial workshops through contract signature. We maintained consistent executive communication while our embedded team delivered measurable improvements. The key was demonstrating value before discussing price increases, ensuring Fidelity saw the enhanced partnership benefits that justified the significant investment.",
+      results: "• Timeline: 12+ months from workshops to signature\n• Outcome: $15M, 3-year contract ($5M ARR)\n• Strategic Value: Secured renewal and upgrade despite 150%+ price increases\n• Relationship: Transformed from vendor to trusted partner with embedded visibility",
+      leadership: "**Key Success Factors:**\n• **Diagnostic before prescription** - Understanding root causes through structured workshops\n• **Investment demonstrates commitment** - Significant professional services investment rebuilt trust\n• **Executive alignment creates confidence** - Leadership-to-leadership relationships enabled difficult conversations\n• **Partnership model drives retention** - Embedded resources provide ongoing value and intelligence\n\nThis framework has proven transferable to other at-risk enterprise accounts facing similar technical and relationship challenges."
     },
     nextCase: "arm"
   },
