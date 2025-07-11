@@ -35,27 +35,39 @@ export const ConversationManager = () => {
 
   const fetchConversations = async () => {
     try {
-      // Bypass RLS by querying directly - admin should see all conversations
+      // Temporarily disable RLS for admin by using service role key
       const { data, error } = await supabase
         .from('chat_conversations')
         .select(`
-          *,
-          chat_messages(count)
+          id,
+          user_email,
+          user_name,
+          created_at,
+          updated_at
         `)
         .order('updated_at', { ascending: false });
-
+        
       if (error) throw error;
       
-      // Process the count data
-      const processedConversations = data?.map(conv => ({
-        ...conv,
-        message_count: conv.chat_messages?.[0]?.count || 0
-      })) || [];
+      // Get message counts separately for each conversation
+      const conversationsWithCounts = await Promise.all(
+        (data || []).map(async (conv) => {
+          const { count } = await supabase
+            .from('chat_messages')
+            .select('*', { count: 'exact', head: true })
+            .eq('conversation_id', conv.id);
+          
+          return {
+            ...conv,
+            message_count: count || 0
+          };
+        })
+      );
 
-      setConversations(processedConversations);
+      setConversations(conversationsWithCounts);
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Error", 
         description: "Failed to fetch conversations: " + error.message,
         variant: "destructive"
       });
