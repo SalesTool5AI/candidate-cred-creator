@@ -21,7 +21,6 @@ const experiences = [
       "Key notes from CEO's such as Jensen Huang, Ali Ghodsi, Aaron Levie, Amjad Masad",
       "AI workshops, on marketing, GTM, productivity and coding"
     ],
-    technologies: ["AI Strategy", "Innovation", "Networking", "Leadership Development"]
   },
   {
     company: "Tyk Technologies Limited",
@@ -33,8 +32,7 @@ const experiences = [
       "Successfully created opportunities in Vinci Holdings, Barclays, Centrica, BNP Paribas, Sanlam, GSK",
       "Closed two £240k deals in Barclays with another on the way for Vinci",
       "Submitted proposal for the biggest bid Tyk have ever made (£4m ARR) with Barclays"
-    ],
-    technologies: ["Salesforce", "HubSpot", "LinkedIn Sales Navigator", "Apollo.io"]
+    ]
   },
   {
     company: "VMware by Broadcom",
@@ -46,8 +44,7 @@ const experiences = [
       "Managed strategic accounts: AstraZeneca, Fidelity International and WPP",
       "Bookings over $7m for the year putting me on 108% of Quota",
       "Part of global acquisition process with strategic focus on UK & Ireland"
-    ],
-    technologies: ["Salesforce", "VMware Cloud Services", "LinkedIn Sales Navigator"]
+    ]
   },
   {
     company: "VMware",
@@ -59,8 +56,7 @@ const experiences = [
       "Quota achievement 89-394% with bookings over $14m",
       "Managed VMware's biggest customers: FedEx, Mastercard, Santander, Ford",
       "Typical deal size $1.5m - $3m with 9-12 month sales cycles"
-    ],
-    technologies: ["VMware vSphere", "VMware Cloud", "Salesforce", "Business Case Development"]
+    ]
   },
   {
     company: "SoftwareONE",
@@ -72,8 +68,7 @@ const experiences = [
       "1 of only 4 salespeople to surpass £2m gross profit in 1 year in the UK",
       "Chosen by Global CEO for leadership programme in Amsterdam",
       "Key customer wins: Arm, Johnson Matthey, Associated British Foods, NCC Group, Sage, Zellis"
-    ],
-    technologies: ["Microsoft Azure", "Office 365", "Software Asset Management", "Cloud Migration"]
+    ]
   }
 ];
 
@@ -140,16 +135,6 @@ export function Experience() {
                   </ul>
                 </div>
                 
-                <div>
-                  <h4 className="font-semibold text-gray-200 mb-3">Technologies Used:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech, techIndex) => (
-                      <Badge key={techIndex} variant="secondary" className="bg-gray-700/50 text-cyan-300 text-xs sm:text-sm border border-gray-600/30">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
               </CardContent>
             </Card>
           ))}
