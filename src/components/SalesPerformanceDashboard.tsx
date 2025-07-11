@@ -23,7 +23,7 @@ const keyMetrics = [
 const achievements = [
   { title: "Deal Size Range", value: "$1.5M - $4M ARR", color: "border-l-cyan-500" },
   { title: "Territory Growth", value: "£0 → £2M GP", color: "border-l-green-500" },
-  { title: "Global Ranking", value: "Top 5 Worldwide sales at SoftwareONE", color: "border-l-blue-500" },
+  { title: "Top 5 Salesperson at SoftwareONE", value: "Worldwide Recognition", color: "border-l-blue-500" },
   { title: "Current Pipeline", value: "£4M+ ARR", color: "border-l-purple-500" },
 ];
 
