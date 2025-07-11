@@ -70,18 +70,20 @@ const caseStudies: Record<string, CaseStudy> = {
   fedex: {
     emoji: "📦",
     company: "FedEx",
-    title: "Crisis to £900K Win: Cost Cuts Into Opportunity",
+    title: "From Crisis to £1.6M Win: How I Turned Cost Cuts Into Our Biggest Opportunity",
     metrics: {
-      arr: "£900K ARR",
-      timeline: "£4M+ savings delivered",
-      achievement: "3-month turnaround"
+      arr: "£1.6M ARR",
+      timeline: "3-month sales cycle",
+      achievement: "£4M+ savings delivered"
     },
-    summary: "Turned FedEx's cost-cutting mandate into a strategic technology upgrade, delivering massive savings while securing a major contract.",
+    summary: "Transformed FedEx's cost-cutting crisis into a strategic partnership, delivering massive operational savings while securing our largest contract through innovative problem-solving.",
     content: {
-      challenge: "FedEx was under pressure to reduce operational costs across their global network. Their existing technology infrastructure was outdated and expensive to maintain, but they were hesitant to invest in new solutions during a cost-cutting phase.",
-      approach: "I reframed the conversation from cost-cutting to value creation. By conducting a detailed analysis of their current spending and operational inefficiencies, I demonstrated how our solutions could deliver immediate savings while improving performance.",
-      execution: "Working within their aggressive 3-month timeline, we implemented a phased approach that delivered quick wins while building towards larger transformations. This required careful project management and stakeholder alignment across multiple FedEx business units.",
-      results: "The implementation delivered over £4M in cost savings within the first year, far exceeding their initial targets. The success led to a £900K annual contract and positioned us as a strategic partner for future initiatives."
+      crisis: "When I inherited FedEx as an account, we were barely on their radar. One contact, limited engagement, and DXC owned the infrastructure conversation. We'd just closed a £2.7M ARR datacenter deal in Belgium after eight months of grinding, but FedEx still saw us as a vendor, not a strategic partner. Their IT was largely outsourced to DXC, meaning most FedEx team members had lost touch with their own systems. Classic enterprise challenge: the people making decisions weren't the ones living with the technology day-to-day. Then COVID's e-commerce boom turned into a cost-cutting nightmare. FedEx had scaled up aggressively and now needed to slash expenses fast. Our entire pipeline froze overnight.",
+      challenge: "The real challenge wasn't just frozen budgets - it was the perverse incentive structure. DXC was getting paid every time they provisioned a new server. They had zero incentive to help FedEx optimise or consolidate anything. In fact, inefficiency was their business model. Meanwhile, FedEx's finance team was demanding immediate cost reductions, but the IT team had limited visibility into their own infrastructure usage patterns.",
+      strategy: "Instead of waiting for budgets to unfreeze, I saw an opportunity. What if we could help FedEx save money instead of asking them to spend money? I quarterbacked our technical team to analyse FedEx's infrastructure using our existing SKYLINE platform. We discovered massive inefficiencies - overloaded servers running alongside completely underutilized ones. Classic enterprise waste that nobody was tracking. The key insight: our Aria operations platform could give FedEx visibility into their own infrastructure usage patterns.",
+      execution: "Here's where the real work began. I had to orchestrate multiple moving parts:\n\n• Build the business case: Quantify exactly how much FedEx could save through server consolidation and optimization\n• Align DXC: Convince them that helping FedEx reduce costs would strengthen their long-term partnership\n• Navigate FedEx politics: Expand beyond our single contact to build support across multiple senior stakeholders\n• Coordinate VMware resources: Pull in the right technical expertise at the right moments\n\nThe DXC conversation was crucial. I positioned it as: 'Help FedEx become more efficient now, and you'll be their trusted partner for the next growth phase.' They bought in. We ran a pilot that demonstrated potential savings of over £4 million in hardware, software, licenses, and labor. Not projections - actual identified waste they could eliminate immediately.",
+      results: "Three months from crisis to signature - unheard of for FedEx. £1.6M ARR in Aria licenses to extend these efficiencies across their international systems. More importantly, we'd transformed the relationship. FedEx now viewed us as strategic partners who understood their business challenges, not just technology vendors pushing products. FedEx's finance team suddenly became our biggest advocates. The conversation shifted from 'Can we afford this?' to 'Can we afford not to do this?'",
+      leadership: "The best sales cycles aren't about convincing customers to buy what you're selling. They're about aligning your solutions with their most urgent business problems. By focusing on FedEx's cost-cutting imperative rather than our product features, we found our way into a more strategic partnership. The numbers: £1.6M ARR in four months, 3-month sales cycle at a company known for 12-month decision processes, and a relationship transformation that opened doors across their entire international organization. This case study demonstrates the AE skills critical for sales management: strategic thinking, stakeholder orchestration, competitive positioning, and the ability to turn market challenges into growth opportunities."
     },
     nextCase: "fidelity"
   },
