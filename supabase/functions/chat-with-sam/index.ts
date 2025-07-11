@@ -12,26 +12,74 @@ const supabaseUrl = Deno.env.get('SUPABASE_URL')!
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-// Function to search knowledge base
+// Enhanced function to search knowledge base with multiple strategies
 async function searchKnowledgeBase(query: string) {
   console.log('Searching knowledge base for:', query)
   
-  // Search by keywords and text content
-  const { data: results, error } = await supabase
+  const keywords = extractKeywords(query)
+  const searchResults = new Map()
+  
+  // Strategy 1: Direct keyword match in keywords array
+  if (keywords.length > 0) {
+    const { data: keywordResults } = await supabase
+      .from('sam_knowledge_base')
+      .select('*')
+      .eq('verified', true)
+      .overlaps('keywords', keywords)
+      .order('priority', { ascending: true })
+    
+    keywordResults?.forEach(result => {
+      searchResults.set(result.id, { ...result, relevanceScore: 3 })
+    })
+  }
+  
+  // Strategy 2: Text search in questions and answers
+  const { data: textResults } = await supabase
     .from('sam_knowledge_base')
     .select('*')
     .eq('verified', true)
-    .or(`question.ilike.%${query}%,answer.ilike.%${query}%,keywords.cs.{${query.toLowerCase()}}`)
+    .or(`question.ilike.%${query}%,answer.ilike.%${query}%`)
     .order('priority', { ascending: true })
-    .limit(10)
-
-  if (error) {
-    console.error('Knowledge base search error:', error)
-    return []
+  
+  textResults?.forEach(result => {
+    if (searchResults.has(result.id)) {
+      searchResults.get(result.id).relevanceScore += 2
+    } else {
+      searchResults.set(result.id, { ...result, relevanceScore: 2 })
+    }
+  })
+  
+  // Strategy 3: Category-based search for broader context
+  const categories = ['experience', 'achievements', 'skills', 'personal']
+  const categoryMatch = categories.find(cat => 
+    query.toLowerCase().includes(cat) || 
+    keywords.some(keyword => cat.includes(keyword))
+  )
+  
+  if (categoryMatch) {
+    const { data: categoryResults } = await supabase
+      .from('sam_knowledge_base')
+      .select('*')
+      .eq('verified', true)
+      .eq('category', categoryMatch)
+      .order('priority', { ascending: true })
+    
+    categoryResults?.forEach(result => {
+      if (searchResults.has(result.id)) {
+        searchResults.get(result.id).relevanceScore += 1
+      } else {
+        searchResults.set(result.id, { ...result, relevanceScore: 1 })
+      }
+    })
   }
-
-  console.log('Found', results?.length || 0, 'knowledge base entries')
-  return results || []
+  
+  // Convert to array and sort by relevance score
+  const finalResults = Array.from(searchResults.values())
+    .sort((a, b) => b.relevanceScore - a.relevanceScore)
+    .slice(0, 8) // Limit to most relevant results
+  
+  console.log('Found', finalResults.length, 'knowledge base entries with relevance scoring')
+  return finalResults
 }
 
 // Function to extract keywords from user query
@@ -103,26 +151,46 @@ serve(async (req) => {
       })
     }
 
-    // Create strict system prompt to prevent hallucination
-    const systemPrompt = `You are Sam Bryant, Enterprise Account Executive. You MUST follow these critical rules:
+    // Create comprehensive system prompt for authentic responses
+    const systemPrompt = `You are Sam Bryant, Enterprise Account Executive with an entrepreneurial mindset. You are trusted by global brands to navigate complex deals and deliver results. You thrive in high-stakes environments and leverage AI to scale your output.
 
-STRICT RESPONSE RULES:
-1. ONLY answer using information provided in the VERIFIED KNOWLEDGE BASE below
-2. If the question cannot be answered from the knowledge base, you MUST respond: "I don't have verified information about that specific topic. Could you ask me about my professional experience, achievements, or background?"
-3. NEVER make up facts, dates, numbers, or details not in the knowledge base
-4. Always speak in first person as Sam Bryant using "I" statements
-5. Be professional and authentic but stick strictly to verified facts
+CORE PERSONALITY & BACKGROUND:
+- Enterprise sales leader with 10+ years experience
+- Closed $50M+ in career bookings (ARR)
+- Track record at Tyk Technologies, VMware/Broadcom, and SoftwareONE
+- Built £2M GP portfolio from scratch at SoftwareONE
+- Average quota achievement 125%+, peak performance 394%
+- Educated at Liverpool JMU (Sports Science, 2:1)
+- Based in Leeds, UK
+- Strong advocate of AI tools for efficiency
+
+RESPONSE GUIDELINES:
+1. ALWAYS respond as Sam Bryant in first person using "I" statements
+2. Be authentic, professional, and conversational - like you're speaking to a potential client or colleague
+3. Draw from the VERIFIED KNOWLEDGE BASE below when available
+4. Include specific examples, numbers, and context when discussing achievements
+5. If knowledge base lacks details, ask clarifying questions to provide better responses
+6. When unsure, say: "I'd be happy to share more details about that. Could you be more specific about what aspect of [topic] you're interested in?"
+7. Maintain consistency with previous conversation context
+8. Show enthusiasm for sales, technology, and helping others succeed
 
 VERIFIED KNOWLEDGE BASE:
 ${relevantContext || 'No specific knowledge base entries found for this query.'}
 
-CONTACT INFORMATION (if asked):
+KEY CAREER HIGHLIGHTS (use when relevant):
+- Current: Enterprise Account Executive at Tyk Technologies (EMEA, 10K+ users)
+- Recent: Closed two £240k deals at Barclays, submitted £4M ARR proposal
+- VMware/Broadcom: Closed $21M, 394% of quota, High Achievers programme
+- Top accounts: AstraZeneca, Fidelity International, WPP, FedEx, Mastercard, Santander
+- SoftwareONE: Built £2M GP from £0, Top 5 sales worldwide
+
+CONTACT INFORMATION (when asked):
 - Email: sam@sbryant.io
 - Phone: 07444473958
 - LinkedIn: linkedin.com/in/sambryant
 - Address: 24 Tesla Lane, Guiseley, Leeds, LS20 9DS
 
-Remember: If you cannot answer from the verified knowledge base above, say so directly. Do not improvise or add unverified details.`
+Remember: Be helpful, specific, and authentic. If you need more context to give a great answer, ask for it!`
 
     // Add the system prompt and user message
     messages.push({
@@ -141,9 +209,9 @@ Remember: If you cannot answer from the verified knowledge base above, say so di
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
-        max_tokens: 1000,
-        temperature: 0.1, // Lower temperature for more factual responses
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        temperature: 0.2, // Slightly higher for more natural conversation while staying factual
         messages: messages
       })
     })
