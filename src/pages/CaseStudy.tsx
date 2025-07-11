@@ -4,11 +4,35 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const caseStudies = {
+type CaseStudyContent = {
+  crisis?: string;
+  challenge: string;
+  strategy?: string;
+  approach?: string;
+  execution: string;
+  results: string;
+  leadership?: string;
+};
+
+type CaseStudy = {
+  emoji: string;
+  company: string;
+  title: string;
+  metrics: {
+    arr: string;
+    timeline: string;
+    achievement: string;
+  };
+  summary: string;
+  content: CaseStudyContent;
+  nextCase: string;
+};
+
+const caseStudies: Record<string, CaseStudy> = {
   mastercard: {
     emoji: "💳",
     company: "Mastercard",
-    title: "From Crisis to Champion: Security Nightmare to $1.8M Win",
+    title: "From Crisis to Champion: How We Turned a Security Nightmare into a $1.8M Win",
     metrics: {
       arr: "$1.8M ARR",
       timeline: "4-month cycle",
@@ -16,10 +40,12 @@ const caseStudies = {
     },
     summary: "Transformed a security crisis into Mastercard's largest enterprise deal, beating established competitors through strategic problem-solving.",
     content: {
-      challenge: "Mastercard faced a critical security breach that exposed vulnerabilities in their payment processing infrastructure. Their existing vendor relationships had failed them during the crisis, and they needed a trusted partner who could deliver enterprise-grade security solutions while maintaining their operational requirements.",
-      approach: "Rather than simply pitching our standard solutions, I assembled a cross-functional team of security experts and spent weeks understanding their unique challenges. We developed a customized security framework that not only addressed their immediate concerns but also positioned them for future growth.",
-      execution: "The implementation required coordinating with multiple stakeholders across different time zones and regulatory environments. We established clear communication protocols and provided 24/7 support during the critical transition period.",
-      results: "Not only did we secure the $1.8M annual contract, but we also helped Mastercard achieve SOC 2 compliance ahead of schedule. The partnership has since expanded to include additional services and regions."
+      crisis: "When one of Mastercard's subsidiaries biggest customers discovered 250+ vulnerabilities in their IT environment, heads rolled—literally. The CEO and COO were out, and the new leadership faced a stark reality: their payment processing infrastructure was a security disaster waiting to happen. That's where our team came in. As the Account Executive, I knew we needed a different approach than the typical enterprise sales playbook. Working closely with our technical specialists, we managed to turn what's usually a 12-month sales cycle into a 4-month success story.",
+      challenge: "The new executives weren't just looking for a security solution, they needed to rebuild trust, demonstrate competence, and do it fast. But, they had no budget allocated and were competing against Cisco, the incumbent provider who had visibility into our pricing and was aggressively undercutting us. I knew we needed to play a different game entirely.",
+      strategy: "Instead of trying to reach executives directly, I identified two internal champions who had the ear of the C-suite: the Director of Architecture and Principal Architect. My approach was simple but methodical:\n\n**Phase 1: Deep Diagnosis** - I orchestrated customer-centric workshops with our technical specialists, treating this like a medical consultation rather than a sales pitch. We needed to understand not just what was broken, but why it mattered to their business.\n\n**Phase 2: Champion Development** - Over several weeks, I worked closely with our champions to develop 7 high-level security themes that would resonate with executives while tying back to our NSX solution. We created unbranded documentation they could present as their own, knowing we'd never be allowed in the room for the final decision.\n\n**Phase 3: Momentum Building** - I established a Microsoft Teams group with all key stakeholders from both sides. This transparent collaboration accelerated trust-building and kept everyone aligned on messaging and timelines.",
+      execution: "The magic happened in the details. Every piece of documentation used their internal language. Every presentation was designed for easy integration into their executive briefings. I even included a convenience clause in the contract, if we couldn't deliver, they could terminate and get a full refund. When budget became the objection ('We have no money until next year'), our business case was so compelling that the conversation shifted to 'Which budget do we use?' They found the money in a secret squirrel budget the CSO held for emergencies.",
+      results: "• $1.8M ARR signed with expansion potential to $6M over two years\n• Sales cycle compressed from 12 months to 4 months\n• Displaced Cisco despite their aggressive pricing and incumbent advantage\n• Positioned VMware as the strategic partner for their future UK payment infrastructure overhaul\n\nBut the real victory? Our champions became genuine advocates who drove the deal internally while we provided the ammunition.",
+      leadership: "This wasn't about having the best product or the lowest price. It was about orchestrating a complex B2B sale by understanding that in enterprise deals, you're not just selling to a company, you're selling through people who have their own careers and reputations on the line. By making our champions look brilliant to their executives, we created a win-win that turned a crisis into our biggest new logo win of the year for the network security division. This case study demonstrates my approach to complex enterprise sales: diagnose first, sell through champions, and always make the customer the hero of their own story."
     },
     nextCase: "johnson-matthey"
   },
@@ -161,9 +187,22 @@ const CaseStudy = () => {
 
         {/* Case Study Content */}
         <div className="max-w-4xl mx-auto space-y-8">
+          {study.content.crisis && (
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-xl text-orange-400">The Crisis That Changed Everything</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300 leading-relaxed">{study.content.crisis}</p>
+              </CardContent>
+            </Card>
+          )}
+
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl text-red-400">The Challenge</CardTitle>
+              <CardTitle className="text-xl text-red-400">
+                {study.content.crisis ? 'The Challenge: More Than Just Technology' : 'The Challenge'}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-300 leading-relaxed">{study.content.challenge}</p>
@@ -172,16 +211,22 @@ const CaseStudy = () => {
 
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl text-yellow-400">The Approach</CardTitle>
+              <CardTitle className="text-xl text-yellow-400">
+                {study.content.strategy ? 'The Strategy: Sell Through Champions, Not Around Them' : 'The Approach'}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-300 leading-relaxed">{study.content.approach}</p>
+              <div className="text-gray-300 leading-relaxed whitespace-pre-line">
+                {study.content.strategy || study.content.approach}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl text-blue-400">The Execution</CardTitle>
+              <CardTitle className="text-xl text-blue-400">
+                {study.content.strategy ? 'The Execution: Details That Win Deals' : 'The Execution'}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-300 leading-relaxed">{study.content.execution}</p>
@@ -190,12 +235,25 @@ const CaseStudy = () => {
 
           <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-xl text-green-400">The Results</CardTitle>
+              <CardTitle className="text-xl text-green-400">
+                {study.content.strategy ? 'The Results: Beyond the Numbers' : 'The Results'}
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-300 leading-relaxed">{study.content.results}</p>
+              <div className="text-gray-300 leading-relaxed whitespace-pre-line">{study.content.results}</div>
             </CardContent>
           </Card>
+
+          {study.content.leadership && (
+            <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-xl text-purple-400">The Leadership Lesson</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-300 leading-relaxed">{study.content.leadership}</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Next Case Study */}
