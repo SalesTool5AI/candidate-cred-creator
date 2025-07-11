@@ -43,7 +43,7 @@ export function Hero() {
           {/* Headline */}
           <div className="mb-6 sm:mb-8">
             <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-cyan-400">
-              Enterprise Sales Executive | $30m+ Career Bookings
+              Enterprise Sales Executive | $50m+ Career Bookings
             </h2>
           </div>
           
