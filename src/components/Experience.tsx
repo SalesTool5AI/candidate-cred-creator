@@ -3,10 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 // Import company logos
-import tykLogo from "@/assets/logos/tyk.png";
-import vmwareLogo from "@/assets/logos/vmware.png";
-import broadcomLogo from "@/assets/logos/broadcom.png";
-import softwareOneLogo from "@/assets/logos/softwareone.png";
+import tykLogo from "@/assets/logos/tyk-white.png";
+import vmwareLogo from "@/assets/logos/vmware-white.png";
+import broadcomLogo from "@/assets/logos/broadcom-white.png";
+import softwareOneLogo from "@/assets/logos/softwareone-white.png";
 
 const experiences = [
   {
