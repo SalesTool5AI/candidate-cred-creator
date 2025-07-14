@@ -105,7 +105,7 @@ export function Experience() {
                       <img 
                         src={exp.logo} 
                         alt={`${exp.company} logo`} 
-                        className="h-10 w-auto max-w-[100px] object-contain"
+                        className="h-10 w-auto max-w-[80px] object-contain"
                       />
                     </div>
                     <div>
