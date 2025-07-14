@@ -1,4 +1,5 @@
 import { useParams, Navigate, Link } from "react-router-dom";
+import { useEffect } from "react";
 import { ArrowLeft, Calendar, DollarSign, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -143,6 +144,11 @@ const caseStudies: Record<string, CaseStudy> = {
 
 const CaseStudy = () => {
   const { slug } = useParams<{ slug: string }>();
+  
+  // Scroll to top when component mounts or slug changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
   
   if (!slug || !caseStudies[slug as keyof typeof caseStudies]) {
     return <Navigate to="/" replace />;
