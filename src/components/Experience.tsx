@@ -4,10 +4,10 @@ import { Badge } from "@/components/ui/badge";
 
 // Import company logos
 import perplexityLogo from "/lovable-uploads/84d2349d-84cb-4c52-b2ac-0a43c2bd2d6b.png";
-import tykLogo from "@/assets/logos/tyk-white.png";
+import tykLogo from "@/assets/logos/tyk-new.png";
 import vmwareLogo from "@/assets/logos/vmware-white.png";
-import broadcomLogo from "@/assets/logos/broadcom-white.png";
-import softwareOneLogo from "@/assets/logos/softwareone-white.png";
+import broadcomLogo from "@/assets/logos/broadcom-new.png";
+import softwareOneLogo from "@/assets/logos/softwareone-new.png";
 
 const experiences = [
   {
