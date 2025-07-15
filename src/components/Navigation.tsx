@@ -16,29 +16,29 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 backdrop-blur-md border-b-2 border-cyan-500/30 shadow-2xl shadow-cyan-500/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo/Name */}
           <div className="flex-shrink-0">
             <Link 
               to="/"
-              className="text-white font-semibold text-lg hover:text-cyan-400 transition-colors"
+              className="text-white font-bold text-xl bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent hover:from-cyan-200 hover:to-white transition-all duration-300 transform hover:scale-105"
             >
               Sam Bryant
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
                   isActive(item.path) 
-                    ? 'text-cyan-400 border-b-2 border-cyan-400' 
-                    : 'text-gray-300 hover:text-white'
+                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
                 }`}
               >
                 {item.label}
@@ -47,7 +47,7 @@ const Navigation = () => {
             <Button 
               variant="outline" 
               size="sm"
-              className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white"
+              className="ml-4 border-2 border-cyan-500 text-cyan-400 bg-gray-900/50 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-105"
               onClick={() => {
                 const link = document.createElement('a');
                 link.href = 'https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf';
@@ -61,11 +61,11 @@ const Navigation = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center space-x-3">
             <Button 
               variant="outline" 
               size="sm"
-              className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white"
+              className="border-2 border-cyan-500 text-cyan-400 bg-gray-900/50 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-cyan-500/20"
               onClick={() => {
                 const link = document.createElement('a');
                 link.href = 'https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf';
@@ -77,7 +77,7 @@ const Navigation = () => {
             </Button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-300 hover:text-white"
+              className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -87,16 +87,16 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-900 border-t border-gray-800">
+            <div className="px-3 pt-2 pb-4 space-y-2 bg-gradient-to-b from-gray-900 to-slate-900 border-t-2 border-cyan-500/30 shadow-2xl">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
                     isActive(item.path) 
-                      ? 'text-cyan-400 bg-gray-800' 
-                      : 'text-gray-300 hover:text-white'
+                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                   }`}
                 >
                   {item.label}
