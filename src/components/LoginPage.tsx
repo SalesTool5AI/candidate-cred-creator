@@ -6,6 +6,17 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
+// Company logos
+import fedexLogo from '@/assets/logos/fedex-clean.png';
+import mastercardLogo from '@/assets/logos/mastercard.png';
+import astrazenecaLogo from '@/assets/logos/astrazeneca.png';
+import johnsonMattheyLogo from '@/assets/logos/johnson-matthey.png';
+import fidelityLogo from '@/assets/logos/fidelity.png';
+import fordLogo from '@/assets/logos/ford.png';
+import armLogo from '@/assets/logos/arm.png';
+import abfLogo from '@/assets/logos/abf.svg';
+import barclaysLogo from '@/assets/logos/barclays.png';
+
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -190,10 +201,26 @@ export const LoginPage: React.FC = () => {
         </Card>
 
         {/* New tagline */}
-        <div className="text-center">
-          <p className="text-gray-200 text-lg font-light leading-relaxed max-w-lg">
+        <div className="text-center mb-8">
+          <p className="text-gray-200 text-lg font-light leading-relaxed max-w-lg mb-6">
             Helping Global Enterprises Solve Complex Problems Through Strategic Sales, Empathy & Execution
           </p>
+          
+          {/* Sold to section */}
+          <div className="text-center">
+            <p className="text-gray-400 text-sm font-medium mb-4 uppercase tracking-wider">Sold to</p>
+            <div className="flex flex-wrap justify-center items-center gap-6 max-w-2xl mx-auto">
+              <img src={fedexLogo} alt="FedEx" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={mastercardLogo} alt="Mastercard" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={astrazenecaLogo} alt="AstraZeneca" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={johnsonMattheyLogo} alt="Johnson Matthey" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={fidelityLogo} alt="Fidelity International" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={fordLogo} alt="Ford" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={armLogo} alt="Arm" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={abfLogo} alt="Associated British Foods" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={barclaysLogo} alt="Barclays" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
