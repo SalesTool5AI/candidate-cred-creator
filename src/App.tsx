@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthGate } from "@/components/AuthGate";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import CaseStudy from "./pages/CaseStudy";
@@ -19,12 +20,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/case-study/:slug" element={<CaseStudy />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
+          <AuthGate>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/case-study/:slug" element={<CaseStudy />} />
+              <Route path="/admin" element={<Admin />} />
+            </Routes>
+          </AuthGate>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
