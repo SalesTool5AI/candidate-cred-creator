@@ -104,6 +104,15 @@ export const LoginPage: React.FC = () => {
       </div>
 
       <div className="relative z-10 w-full max-w-md px-4 flex flex-col items-center">
+        {/* Profile Picture */}
+        <div className="mb-6 flex justify-center">
+          <img 
+            src="/lovable-uploads/b76ddfd7-5e01-4edf-b5a4-0d1bae7fb384.png" 
+            alt="Sam Bryant" 
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-cyan-400 shadow-2xl object-cover"
+          />
+        </div>
+        
         <Card className="bg-gray-900/50 border-gray-700/50 backdrop-blur-sm shadow-2xl mb-8">
           <CardHeader className="text-center pb-6">
             <CardTitle className="text-2xl font-light text-white mb-2">
