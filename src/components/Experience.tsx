@@ -101,11 +101,11 @@ export function Experience() {
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-[200px] h-[60px] flex items-center justify-center bg-black/10 rounded">
+                    <div className={exp.company === "Perplexity" ? "bg-black p-2 rounded" : ""}>
                       <img 
                         src={exp.logo} 
                         alt={`${exp.company} logo`} 
-                        className="h-[40px] w-auto object-contain"
+                        className="h-10 w-auto max-w-[80px] object-contain"
                       />
                     </div>
                     <div>
