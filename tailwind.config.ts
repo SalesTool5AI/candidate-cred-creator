@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Syne', 'sans-serif'],
-				syne: ['Syne', 'sans-serif'],
+				sans: ['Krub', 'sans-serif'],
+				krub: ['Krub', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
