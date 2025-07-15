@@ -59,7 +59,7 @@ export function Hero() {
               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
               onClick={() => {
                 const link = document.createElement('a');
-                link.href = '/cv-sam-bryant.pdf';
+                link.href = 'https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf';
                 link.download = 'Sam-Bryant-CV.pdf';
                 link.click();
               }}
