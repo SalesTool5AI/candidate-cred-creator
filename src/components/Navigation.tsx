@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Bot } from 'lucide-react';
+import { Menu, X, Bot, Download } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
@@ -44,29 +44,37 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
-            <Link to="/chat">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white"
-              >
-                <Bot className="w-4 h-4 mr-2" />
-                Chat with AI Sam
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = 'https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf';
+                link.download = 'Sam-Bryant-CV.pdf';
+                link.click();
+              }}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download CV
+            </Button>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-            <Link to="/chat">
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white"
-              >
-                <Bot className="w-4 h-4" />
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = 'https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf';
+                link.download = 'Sam-Bryant-CV.pdf';
+                link.click();
+              }}
+            >
+              <Download className="w-4 h-4" />
+            </Button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-300 hover:text-white"

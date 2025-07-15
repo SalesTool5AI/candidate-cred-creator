@@ -70,7 +70,7 @@ export const ChatInterface: React.FC = () => {
       const welcomeMessage = {
         id: 'welcome',
         role: 'assistant' as const,
-        content: "Hi! I'm an AI assistant trained on Sam Bryant's professional background and experience. I can answer questions about his career, achievements, work style, expertise, and more. What would you like to know about Sam?",
+        content: "Hi I am trained on Sam Bryant's, work, case studies, experience and philosophy. I can answer questions about his career, achievements, work style, expertise, and more. What would you like to know about Sam?",
         created_at: new Date().toISOString(),
       };
       setMessages([welcomeMessage]);

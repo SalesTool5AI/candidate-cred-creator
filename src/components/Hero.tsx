@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Download, Mail, Phone } from "lucide-react";
+import { ArrowDown, Bot } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -51,39 +52,20 @@ export function Hero() {
             Helping Enterprise Software Companies Win, Land and Expand Global Accounts
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 px-4">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = 'https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf';
-                link.download = 'Sam-Bryant-CV.pdf';
-                link.click();
-              }}
-            >
-              <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              Download CV
-            </Button>
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
-              onClick={() => scrollToSection('how-i-sell')}
-            >
-              <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              Learn How I Sell
-            </Button>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 text-gray-300 text-sm sm:text-base px-4">
-            <div className="flex items-center">
-              <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              <span>sam@sbryant.io</span>
+          <div className="flex flex-col items-center justify-center mb-12 sm:mb-16 px-4 space-y-4">
+            <div className="text-center">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-white">The Sam Bryant Assistant</h3>
+              <p className="text-lg text-cyan-400 font-semibold mb-6">AI Powered</p>
             </div>
-            <div className="flex items-center">
-              <Phone className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              <span>07444473958</span>
-            </div>
+            <Link to="/chat">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl transition-all duration-300 hover:scale-105 shadow-2xl"
+              >
+                <Bot className="mr-3 h-6 w-6" />
+                Start Chat
+              </Button>
+            </Link>
           </div>
         </div>
         
