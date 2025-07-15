@@ -30,7 +30,7 @@ export function Hero() {
           {/* Profile Picture */}
           <div className="mb-6 sm:mb-8 flex justify-center">
             <img 
-              src="/lovable-uploads/d5d74f7d-4a40-4978-96a9-c110d15a553e.png" 
+              src="/lovable-uploads/b76ddfd7-5e01-4edf-b5a4-0d1bae7fb384.png" 
               alt="Sam Bryant" 
               className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full border-4 border-cyan-400 shadow-2xl object-cover"
             />
