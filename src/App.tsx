@@ -10,6 +10,9 @@ import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import CaseStudy from "./pages/CaseStudy";
 import Admin from "./pages/Admin";
+import HowISellPage from "./pages/HowISell";
+import WhatIBringPage from "./pages/WhatIBring";
+import MoreThanSellerPage from "./pages/MoreThanSeller";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +26,9 @@ const App = () => (
           <AuthGate>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/how-i-sell" element={<HowISellPage />} />
+              <Route path="/what-i-bring" element={<WhatIBringPage />} />
+              <Route path="/more-than-seller" element={<MoreThanSellerPage />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/case-study/:slug" element={<CaseStudy />} />
               <Route path="/admin" element={<Admin />} />
