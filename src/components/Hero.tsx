@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail, Phone, Trophy } from "lucide-react";
+import { ArrowDown, Download, Mail, Phone } from "lucide-react";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
@@ -57,10 +57,15 @@ export function Hero() {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg transition-all duration-300 hover:scale-105"
-              onClick={() => scrollToSection('sales-performance')}
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/cv-sam-bryant.pdf';
+                link.download = 'Sam-Bryant-CV.pdf';
+                link.click();
+              }}
             >
-              <Trophy className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              View Performance
+              <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              Download CV
             </Button>
             <Button 
               size="lg" 
