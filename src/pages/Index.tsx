@@ -21,6 +21,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string>('');
+  const [isExpanded, setIsExpanded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -67,15 +68,6 @@ const Index = () => {
 
       setConversationId(data.id);
 
-      // Add welcome message
-      const welcomeMessage = {
-        id: 'welcome',
-        role: 'assistant' as const,
-        content: "Hi I am trained on Sam Bryant's, work, case studies, experience and philosophy. I can answer questions about his career, achievements, work style, expertise, and more. What would you like to know about Sam?",
-        created_at: new Date().toISOString(),
-      };
-      setMessages([welcomeMessage]);
-
     } catch (error) {
       console.error('Error initializing conversation:', error);
       toast({
@@ -88,6 +80,11 @@ const Index = () => {
 
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+
+    // Expand the chat interface when user sends first message
+    if (!isExpanded) {
+      setIsExpanded(true);
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -197,24 +194,10 @@ const Index = () => {
 
   const suggestedQuestions = [
     "Tell me about your biggest achievements",
-    "What motivates you professionally?",
-    "How do you prefer to receive feedback?",
+    "What motivates you professionally?", 
     "What's your approach to enterprise sales?",
-    "Tell me about your experience with AI tools",
-    "What makes you different from other salespeople?"
+    "Tell me about your experience with AI tools"
   ];
-
-  const handleEmailClick = () => {
-    window.location.href = "mailto:sam@sbryant.io?subject=Enterprise Sales Opportunity";
-  };
-
-  const handlePhoneClick = () => {
-    window.open("https://wa.me/447444473958", "_blank");
-  };
-
-  const handleLinkedInClick = () => {
-    window.open("https://linkedin.com/in/sambryant", "_blank");
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
@@ -265,77 +248,16 @@ const Index = () => {
 
           {/* Chat Interface */}
           <div className="max-w-4xl mx-auto">
-            <div className="h-[60vh] border border-gray-700 backdrop-blur-sm flex flex-col rounded-lg shadow-xl bg-gray-900/50">
-              <div className="border-b border-gray-700 flex flex-col space-y-1.5 p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
-                    <Bot className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">AI Sam Bryant</h3>
-                    <p className="text-xs text-gray-400">Ask me anything about Sam's background and experience</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex-1 flex flex-col p-0">
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
-                          message.role === 'user'
-                            ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
-                            : 'bg-gray-800 text-gray-100 border border-gray-700'
-                        }`}
-                      >
-                        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                        <p className="text-xs opacity-70 mt-1">
-                          {new Date(message.created_at).toLocaleTimeString()}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                  
-                  {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span className="text-sm">AI Sam is thinking...</span>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div ref={messagesEndRef} />
-                </div>
-
-                {messages.length === 1 && (
-                  <div className="p-4 border-t border-gray-700">
-                    <p className="text-sm text-gray-400 mb-3">Suggested questions to get started:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {suggestedQuestions.map((question, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setInputMessage(question)}
-                          className="text-left text-xs p-2 hover:opacity-80 rounded border border-gray-600 text-gray-300 transition-colors bg-gray-800"
-                        >
-                          {question}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="p-4 border-t border-gray-700">
+            {!isExpanded ? (
+              /* Minimal Chat Interface */
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-gray-900/50 border border-gray-700 rounded-full p-4 backdrop-blur-sm">
                   <div className="flex space-x-2">
                     <Input
                       value={inputMessage}
                       onChange={(e) => setInputMessage(e.target.value)}
                       placeholder="Hi I am trained on Sam Bryant's, work, case studies, experience and philosophy."
-                      className="flex-1 bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
+                      className="flex-1 bg-transparent border-none text-white placeholder-gray-400 focus:ring-0 focus:outline-none"
                       onKeyPress={handleKeyPress}
                       disabled={isLoading}
                     />
@@ -343,65 +265,115 @@ const Index = () => {
                       onClick={sendMessage}
                       disabled={isLoading || !inputMessage.trim()}
                       size="icon"
-                      className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+                      className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-full"
                     >
                       <Send className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
+                
+                {/* Suggested Questions */}
+                <div className="mt-6 text-center">
+                  <p className="text-sm text-gray-400 mb-3">Try asking:</p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {suggestedQuestions.map((question, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setInputMessage(question)}
+                        className="text-xs px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-full text-gray-300 hover:bg-gray-700/50 transition-colors"
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="text-center mt-8">
+                  <p className="text-sm text-gray-400">
+                    Built using Claude, Lovable & Supabase
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            ) : (
+              /* Expanded Chat Interface */
+              <div className="animate-scale-in">
+                <div className="h-[60vh] border border-gray-700 backdrop-blur-sm flex flex-col rounded-lg shadow-xl bg-gray-900/50">
+                  <div className="border-b border-gray-700 flex flex-col space-y-1.5 p-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
+                        <Bot className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">AI Sam Bryant</h3>
+                        <p className="text-xs text-gray-400">Ask me anything about Sam's background and experience</p>
+                      </div>
+                    </div>
+                  </div>
 
-      {/* Contact Section - moved and simplified */}
-      <section className="py-12 bg-gradient-to-b from-black to-slate-900 relative">
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-              Let's Connect
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Get in touch to discuss enterprise sales opportunities.
-            </p>
-          </div>
-          
-          <div className="max-w-md mx-auto">
-            <div className="flex flex-col gap-3">
-              <Button 
-                size="lg" 
-                className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-semibold py-3 text-base transition-all duration-300"
-                onClick={handleEmailClick}
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Email Me
-              </Button>
-              
-              <Button 
-                size="lg" 
-                className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 text-base transition-all duration-300"
-                onClick={handlePhoneClick}
-              >
-                <MessageCircle className="mr-2 h-4 w-4" />
-                WhatsApp Me
-              </Button>
-              
-              <Button 
-                size="lg" 
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 text-base transition-all duration-300"
-                onClick={handleLinkedInClick}
-              >
-                <Linkedin className="mr-2 h-4 w-4" />
-                LinkedIn Profile
-              </Button>
-            </div>
-            
-            <div className="text-center mt-8">
-              <p className="text-base text-gray-400">
-                Built using Claude, Lovable & Supabase
-              </p>
-            </div>
+                  <div className="flex-1 flex flex-col p-0">
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                      {messages.map((message) => (
+                        <div
+                          key={message.id}
+                          className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                        >
+                          <div
+                            className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ${
+                              message.role === 'user'
+                                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
+                                : 'bg-gray-800 text-gray-100 border border-gray-700'
+                            }`}
+                          >
+                            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                            <p className="text-xs opacity-70 mt-1">
+                              {new Date(message.created_at).toLocaleTimeString()}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                      
+                      {isLoading && (
+                        <div className="flex justify-start">
+                          <div className="bg-gray-800 text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span className="text-sm">AI Sam is thinking...</span>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div ref={messagesEndRef} />
+                    </div>
+
+                    <div className="p-4 border-t border-gray-700">
+                      <div className="flex space-x-2">
+                        <Input
+                          value={inputMessage}
+                          onChange={(e) => setInputMessage(e.target.value)}
+                          placeholder="Ask AI Sam anything..."
+                          className="flex-1 bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
+                          onKeyPress={handleKeyPress}
+                          disabled={isLoading}
+                        />
+                        <Button
+                          onClick={sendMessage}
+                          disabled={isLoading || !inputMessage.trim()}
+                          size="icon"
+                          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+                        >
+                          <Send className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-center mt-4">
+                  <p className="text-sm text-gray-400">
+                    Built using Claude, Lovable & Supabase
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
