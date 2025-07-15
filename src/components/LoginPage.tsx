@@ -7,15 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 // Company logos
-import fedexLogo from '/lovable-uploads/e36a8b80-6bf4-4cec-8ea8-fa643dfb6f5d.png';
+import fedexLogo from '@/assets/logos/fedex-clean.png';
 import mastercardLogo from '@/assets/logos/mastercard.png';
-import astrazenecaLogo from '@/assets/logos/astrazeneca-clean.png';
-import johnsonMattheyLogo from '@/assets/logos/johnson-matthey-clean.png';
+import astrazenecaLogo from '@/assets/logos/astrazeneca.png';
+import johnsonMattheyLogo from '@/assets/logos/johnson-matthey.png';
 import fidelityLogo from '@/assets/logos/fidelity.png';
-import fordLogo from '@/assets/logos/ford-clean.png';
-import armLogo from '/lovable-uploads/05040b0f-a8cf-4d7e-9660-7a3554c519d4.png';
-import abfLogo from '/lovable-uploads/fbc50f86-9552-453a-a615-8c40847d73f2.png';
-import barclaysLogo from '@/assets/logos/barclays-clean.png';
+import fordLogo from '@/assets/logos/ford.png';
+import armLogo from '@/assets/logos/arm.png';
+import abfLogo from '@/assets/logos/abf.svg';
+import barclaysLogo from '@/assets/logos/barclays.png';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -209,16 +209,16 @@ export const LoginPage: React.FC = () => {
           {/* Sold to section */}
           <div className="text-center">
             <p className="text-gray-400 text-sm font-medium mb-4 uppercase tracking-wider">Sold to</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 max-w-3xl mx-auto">
-              <img src={fedexLogo} alt="FedEx" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+            <div className="flex flex-wrap justify-center items-center gap-6 max-w-2xl mx-auto">
+              <img src={fedexLogo} alt="FedEx" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
               <img src={mastercardLogo} alt="Mastercard" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
-              <img src={astrazenecaLogo} alt="AstraZeneca" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={astrazenecaLogo} alt="AstraZeneca" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
               <img src={johnsonMattheyLogo} alt="Johnson Matthey" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
               <img src={fidelityLogo} alt="Fidelity International" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
               <img src={fordLogo} alt="Ford" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
-              <img src={armLogo} alt="Arm" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
-              <img src={abfLogo} alt="Associated British Foods" className="h-10 opacity-70 hover:opacity-100 transition-opacity" />
-              <img src={barclaysLogo} alt="Barclays" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={armLogo} alt="Arm" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={abfLogo} alt="Associated British Foods" className="h-8 opacity-70 hover:opacity-100 transition-opacity" />
+              <img src={barclaysLogo} alt="Barclays" className="h-6 opacity-70 hover:opacity-100 transition-opacity" />
             </div>
           </div>
         </div>
