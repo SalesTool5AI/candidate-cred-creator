@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Bot, Download } from 'lucide-react';
+import { Menu, X, Bot, Download, Mail, MessageCircle, Linkedin } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
@@ -14,6 +14,18 @@ const Navigation = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleEmailClick = () => {
+    window.location.href = "mailto:sam@sbryant.io?subject=Enterprise Sales Opportunity";
+  };
+
+  const handlePhoneClick = () => {
+    window.open("https://wa.me/447444473958", "_blank");
+  };
+
+  const handleLinkedInClick = () => {
+    window.open("https://linkedin.com/in/sambryant", "_blank");
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 backdrop-blur-md border-b-2 border-cyan-500/30 shadow-2xl shadow-cyan-500/10">
@@ -44,6 +56,38 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* Contact Buttons */}
+            <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-600">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border border-cyan-500/50 text-cyan-400 bg-gray-900/50 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                onClick={handleEmailClick}
+                title="Email Me"
+              >
+                <Mail className="w-4 h-4" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border border-green-500/50 text-green-400 bg-gray-900/50 hover:bg-green-500 hover:text-white transition-all duration-300"
+                onClick={handlePhoneClick}
+                title="WhatsApp Me"
+              >
+                <MessageCircle className="w-4 h-4" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border border-blue-500/50 text-blue-400 bg-gray-900/50 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                onClick={handleLinkedInClick}
+                title="LinkedIn Profile"
+              >
+                <Linkedin className="w-4 h-4" />
+              </Button>
+            </div>
+            
             <Button 
               variant="outline" 
               size="sm"
@@ -102,6 +146,40 @@ const Navigation = () => {
                   {item.label}
                 </Link>
               ))}
+              
+              {/* Mobile Contact Section */}
+              <div className="border-t border-gray-600 pt-3 mt-3">
+                <p className="text-xs text-gray-400 px-4 mb-2">Let's Connect</p>
+                <div className="flex space-x-2 px-4">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="flex-1 border border-cyan-500/50 text-cyan-400 bg-gray-900/50 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                    onClick={handleEmailClick}
+                  >
+                    <Mail className="w-4 h-4 mr-1" />
+                    Email
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="flex-1 border border-green-500/50 text-green-400 bg-gray-900/50 hover:bg-green-500 hover:text-white transition-all duration-300"
+                    onClick={handlePhoneClick}
+                  >
+                    <MessageCircle className="w-4 h-4 mr-1" />
+                    WhatsApp
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="flex-1 border border-blue-500/50 text-blue-400 bg-gray-900/50 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                    onClick={handleLinkedInClick}
+                  >
+                    <Linkedin className="w-4 h-4 mr-1" />
+                    LinkedIn
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         )}
