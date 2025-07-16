@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Bot, Download, Mail, MessageCircle, Linkedin } from 'lucide-react';
+import { Menu, X, Bot, Download, Mail, MessageCircle, Linkedin, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
 
   const navItems = [
     { label: 'How I Sell', path: '/how-i-sell' },
-    { label: 'What I Bring', path: '/what-i-bring' },
     { label: 'More than a Seller', path: '/more-than-seller' },
   ];
 
+  const whatIBringItems = [
+    { label: 'Sales Performance Dashboard', path: '/what-i-bring/sales-performance' },
+    { label: 'Enterprise Case Studies', path: '/what-i-bring/case-studies' },
+    { label: 'Professional Journey', path: '/what-i-bring/professional-journey' },
+  ];
+
   const isActive = (path: string) => location.pathname === path;
+  const isWhatIBringActive = () => location.pathname.startsWith('/what-i-bring');
 
   const handleEmailClick = () => {
     window.location.href = "mailto:sam@sbryant.io?subject=Enterprise Sales Opportunity";
@@ -56,6 +63,42 @@ const Navigation = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {/* What I Bring Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+              <Link
+                to="/what-i-bring"
+                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
+                  isWhatIBringActive() 
+                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
+                }`}
+              >
+                What I Bring
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </Link>
+              
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-64 bg-gray-900/95 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl shadow-cyan-500/20 z-50">
+                  <div className="py-2">
+                    {whatIBringItems.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-cyan-500/20 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-200"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             
             {/* Contact Buttons */}
             <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-600">
@@ -140,6 +183,33 @@ const Navigation = () => {
                   {item.label}
                 </Link>
               ))}
+              
+              {/* Mobile What I Bring Section */}
+              <div className="space-y-1">
+                <Link
+                  to="/what-i-bring"
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                    isWhatIBringActive() 
+                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                  }`}
+                >
+                  What I Bring
+                </Link>
+                <div className="ml-4 space-y-1">
+                  {whatIBringItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 text-xs text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all duration-300 rounded-lg"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
               
               {/* Mobile Contact Section */}
               <div className="border-t border-gray-600 pt-3 mt-3">
