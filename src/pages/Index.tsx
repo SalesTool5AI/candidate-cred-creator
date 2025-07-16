@@ -204,7 +204,7 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section with Chat Interface */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white relative overflow-hidden">
+      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white relative overflow-hidden pt-20">
         {/* Animated background elements */}
         <div className="absolute inset-0">
           {/* Network lines */}
@@ -221,29 +221,29 @@ const Index = () => {
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             {/* Profile Picture */}
-            <div className="mb-6 flex justify-center">
+            <div className="mb-4 flex justify-center">
               <img 
                 src="/lovable-uploads/b76ddfd7-5e01-4edf-b5a4-0d1bae7fb384.png" 
                 alt="Sam Bryant" 
-                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-cyan-400 shadow-2xl object-cover"
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-cyan-400 shadow-2xl object-cover"
               />
             </div>
             
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
               Sam Bryant
             </h1>
             
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-cyan-400 mb-4">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold text-cyan-400 mb-3">
               Enterprise Sales Executive | $50m+ Career Bookings
             </h2>
             
-            <p className="text-base sm:text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-gray-300 mb-6 max-w-2xl mx-auto">
               Helping Enterprise Software Companies Win, Land and Expand Global Accounts
             </p>
             
-            <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-white">Ask my digital twin</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 text-white">Ask my digital twin</h3>
           </div>
 
           {/* Chat Interface */}
@@ -273,14 +273,14 @@ const Index = () => {
                 </div>
                 
                 {/* Suggested Questions */}
-                <div className="mt-6 text-center">
-                  <p className="text-sm text-gray-400 mb-3">Try asking:</p>
+                <div className="mt-4 text-center">
+                  <p className="text-xs text-gray-400 mb-2">Try asking:</p>
                   <div className="flex flex-wrap justify-center gap-2">
                     {suggestedQuestions.map((question, index) => (
                       <button
                         key={index}
                         onClick={() => setInputMessage(question)}
-                        className="text-xs px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-full text-gray-300 hover:bg-gray-700/50 transition-colors"
+                        className="text-xs px-2 py-1.5 bg-gray-800/50 border border-gray-600 rounded-full text-gray-300 hover:bg-gray-700/50 transition-colors"
                       >
                         {question}
                       </button>
@@ -288,8 +288,8 @@ const Index = () => {
                   </div>
                 </div>
                 
-                <div className="text-center mt-8">
-                  <p className="text-sm text-gray-400">
+                <div className="text-center mt-4">
+                  <p className="text-xs text-gray-400">
                     Built using Claude, Lovable & Supabase
                   </p>
                 </div>
@@ -309,7 +309,7 @@ const Index = () => {
                   </div>
 
                   {/* Messages Area */}
-                  <div className="h-[50vh] overflow-y-auto p-4 space-y-3">
+                  <div className="h-[40vh] overflow-y-auto p-4 space-y-3">
                     {messages.map((message) => (
                       <div
                         key={message.id}
@@ -362,8 +362,8 @@ const Index = () => {
                   </div>
                 </div>
                 
-                <div className="text-center mt-4">
-                  <p className="text-sm text-gray-400">
+                <div className="text-center mt-2">
+                  <p className="text-xs text-gray-400">
                     Built using Claude, Lovable & Supabase
                   </p>
                 </div>
