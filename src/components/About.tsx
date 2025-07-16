@@ -17,9 +17,6 @@ export function About() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             About Me
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
-            The person behind the numbers - my story, values, and what drives my passion for sales excellence.
-          </p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
@@ -27,17 +24,15 @@ export function About() {
             <Card className="border-none shadow-xl bg-gray-800/50 backdrop-blur-sm border-gray-700/50">
               <CardContent className="p-6 sm:p-8">
                 <Quote className="h-8 w-8 sm:h-12 sm:w-12 text-cyan-400 mb-4 sm:mb-6" />
-                <blockquote className="text-base sm:text-lg text-gray-200 leading-relaxed mb-4 sm:mb-6">
-                  "Enterprise sales leadership with an entrepreneurial mindset - I thrive in high-stakes 
-                  environments where complex deals require strategic thinking and relationship building. 
-                  My goal is to leave every team, customer, and process better than I found it."
-                </blockquote>
-                <div className="border-t border-gray-600 pt-4 sm:pt-6">
-                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                    With over 10 years in enterprise software sales, I've learned that success comes from 
-                    understanding client challenges deeply and leveraging AI tools to scale my output. 
-                    I'm trusted by global brands to navigate complex deals and consistently deliver results 
-                    that exceed expectations.
+                <div className="text-sm sm:text-base text-gray-300 leading-relaxed space-y-4">
+                  <p>
+                    I'm driven by more than just hitting targets, I want to build a career that balances success with meaning. Outside of work, I'm a dad and partner first, which keeps me grounded and focused on what truly matters. That sense of responsibility and empathy informs how I lead conversations, build relationships, and support customers and teammates alike.
+                  </p>
+                  <p>
+                    I believe in continuous growth, not just professionally but personally. Whether it's staying active, exploring new music, or diving into psychology and nutrition, I bring that same curiosity and energy into every part of my life. This balance helps me stay resilient and adaptable in the fast-paced world of enterprise software sales.
+                  </p>
+                  <p>
+                    Ultimately, I'm here to create lasting impact, not only in deals closed but in trust earned and value delivered over time.
                   </p>
                 </div>
               </CardContent>
