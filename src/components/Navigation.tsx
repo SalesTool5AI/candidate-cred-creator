@@ -92,24 +92,8 @@ const Navigation = () => {
               variant="outline" 
               size="sm"
               className="ml-4 border-2 border-cyan-500 text-cyan-400 bg-gray-900/50 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-105"
-              onClick={async () => {
-                try {
-                  const response = await fetch('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf');
-                  if (!response.ok) throw new Error('Failed to fetch CV');
-                  const blob = await response.blob();
-                  const url = window.URL.createObjectURL(blob);
-                  const link = document.createElement('a');
-                  link.href = url;
-                  link.download = 'Sam-Bryant-CV.pdf';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  window.URL.revokeObjectURL(url);
-                } catch (error) {
-                  console.error('Download failed:', error);
-                  // Fallback to direct link
-                  window.open('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf', '_blank');
-                }
+              onClick={() => {
+                window.open('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf', '_blank');
               }}
             >
               <Download className="w-4 h-4 mr-2" />
@@ -123,24 +107,8 @@ const Navigation = () => {
               variant="outline" 
               size="sm"
               className="border-2 border-cyan-500 text-cyan-400 bg-gray-900/50 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-cyan-500/20"
-              onClick={async () => {
-                try {
-                  const response = await fetch('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf');
-                  if (!response.ok) throw new Error('Failed to fetch CV');
-                  const blob = await response.blob();
-                  const url = window.URL.createObjectURL(blob);
-                  const link = document.createElement('a');
-                  link.href = url;
-                  link.download = 'Sam-Bryant-CV.pdf';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  window.URL.revokeObjectURL(url);
-                } catch (error) {
-                  console.error('Download failed:', error);
-                  // Fallback to direct link
-                  window.open('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf', '_blank');
-                }
+              onClick={() => {
+                window.open('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf', '_blank');
               }}
             >
               <Download className="w-4 h-4" />
