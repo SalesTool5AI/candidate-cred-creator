@@ -40,7 +40,7 @@ const CaseStudiesPage = () => {
       slug: 'fidelity',
       title: 'Fidelity International',
       subtitle: 'From At-Risk to $15M Partnership',
-      value: '$15M contract',
+      value: '$5m ARR',
       duration: '12+ months',
       description: 'Rescued an at-risk client relationship and transformed it into a $15M strategic partnership through innovative solution design.',
       highlights: ['150%+ price increase accepted', '$500K professional services investment', 'Vendor to trusted partner'],
