@@ -50,20 +50,6 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                  isActive(item.path) 
-                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-            
             {/* What I Bring Dropdown */}
             <div 
               className="relative"
@@ -99,6 +85,20 @@ const Navigation = () => {
                 </div>
               )}
             </div>
+            
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                  isActive(item.path) 
+                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
             
             {/* Contact Buttons */}
             <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-600">
@@ -169,21 +169,6 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-3 pt-2 pb-4 space-y-2 bg-gradient-to-b from-gray-900 to-slate-900 border-t-2 border-cyan-500/30 shadow-2xl">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                    isActive(item.path) 
-                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              
               {/* Mobile What I Bring Section */}
               <div className="space-y-1">
                 <Link
@@ -210,6 +195,21 @@ const Navigation = () => {
                   ))}
                 </div>
               </div>
+              
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                    isActive(item.path) 
+                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
               
               {/* Mobile Contact Section */}
               <div className="border-t border-gray-600 pt-3 mt-3">
