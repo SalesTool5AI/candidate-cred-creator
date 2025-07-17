@@ -2,3 +2,6 @@ project_id = "navnadoeznbzvqivamem"
 
 [functions.chat-with-sam]
 verify_jwt = false
+
+[functions.send-access-request-notification]
+verify_jwt = false

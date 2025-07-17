@@ -5,11 +5,15 @@ import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AccessRequestForm } from '@/components/AccessRequestForm';
+import { ArrowLeft } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [domain, setDomain] = useState('');
   const { toast } = useToast();
 
   const handleMagicLink = async (e: React.FormEvent) => {
@@ -28,11 +32,9 @@ export const LoginPage: React.FC = () => {
         .single();
 
       if (domainError || !allowedDomain) {
-        toast({
-          title: "Access Denied",
-          description: `Sorry, ${domain} is not an authorized domain. This portfolio is only accessible to specific companies I've applied to.`,
-          variant: "destructive",
-        });
+        // Store domain and email for the request form
+        setDomain(domain);
+        setShowRequestForm(true);
         setLoading(false);
         return;
       }
@@ -113,88 +115,116 @@ export const LoginPage: React.FC = () => {
           />
         </div>
         
-        <Card className="bg-gray-900/50 border-gray-700/50 backdrop-blur-sm shadow-2xl mb-8">
-          <CardHeader className="text-center pb-6">
-            <CardTitle className="text-2xl font-light text-white mb-2">
-              Sam Bryant's Portfolio
-            </CardTitle>
-            <CardDescription className="text-gray-300">
-              Strategic Sales Leadership Portfolio
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {!sent ? (
-              <form onSubmit={handleMagicLink} className="space-y-6">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-3">
-                    Company Email Address
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your.name@company.com"
-                    required
-                    className="w-full bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-cyan-400/20"
-                  />
-                  <p className="text-xs text-gray-400 mt-2">
-                    Only authorized company domains can access this portfolio
-                  </p>
-                </div>
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-medium py-3 transition-all duration-300 transform hover:scale-105"
-                >
-                  {loading ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span>Sending...</span>
+        {showRequestForm ? (
+          <div className="w-full">
+            <Button
+              onClick={() => {
+                setShowRequestForm(false);
+                setEmail('');
+                setDomain('');
+              }}
+              variant="ghost"
+              className="mb-4 text-gray-300 hover:text-white"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Login
+            </Button>
+            <AccessRequestForm
+              email={email}
+              domain={domain}
+              onSuccess={() => {
+                setShowRequestForm(false);
+                setSent(true);
+              }}
+            />
+          </div>
+        ) : (
+          <>
+            <Card className="bg-gray-900/50 border-gray-700/50 backdrop-blur-sm shadow-2xl mb-8">
+              <CardHeader className="text-center pb-6">
+                <CardTitle className="text-2xl font-light text-white mb-2">
+                  Sam Bryant's Portfolio
+                </CardTitle>
+                <CardDescription className="text-gray-300">
+                  Strategic Sales Leadership Portfolio
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {!sent ? (
+                  <form onSubmit={handleMagicLink} className="space-y-6">
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-3">
+                        Company Email Address
+                      </label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="your.name@company.com"
+                        required
+                        className="w-full bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-cyan-400/20"
+                      />
+                      <p className="text-xs text-gray-400 mt-2">
+                        Only authorized company domains can access this portfolio
+                      </p>
                     </div>
-                  ) : (
-                    "Send Magic Link"
-                  )}
-                </Button>
-              </form>
-            ) : (
-              <div className="text-center space-y-6">
-                <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 p-6 rounded-lg border border-green-500/20">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-medium py-3 transition-all duration-300 transform hover:scale-105"
+                    >
+                      {loading ? (
+                        <div className="flex items-center space-x-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </div>
+                      ) : (
+                        "Send Magic Link"
+                      )}
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="text-center space-y-6">
+                    <div className="bg-gradient-to-r from-green-500/10 to-cyan-500/10 p-6 rounded-lg border border-green-500/20">
+                      <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-cyan-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <h3 className="font-semibold text-white mb-2">Request Submitted!</h3>
+                      <p className="text-gray-300 text-sm mb-2">
+                        Your access request has been sent. You'll receive an email confirmation shortly.
+                      </p>
+                      <p className="text-cyan-400 font-medium text-sm mb-3">{email}</p>
+                      <p className="text-gray-400 text-xs">
+                        I'll review your request and get back to you within 24 hours.
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSent(false);
+                        setEmail('');
+                        setShowRequestForm(false);
+                      }}
+                      className="w-full border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
+                    >
+                      Submit Another Request
+                    </Button>
                   </div>
-                  <h3 className="font-semibold text-white mb-2">Check Your Email!</h3>
-                  <p className="text-gray-300 text-sm mb-2">
-                    We've sent a secure login link to
-                  </p>
-                  <p className="text-cyan-400 font-medium text-sm mb-3">{email}</p>
-                  <p className="text-gray-400 text-xs">
-                    Click the link in your email to access the portfolio
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setSent(false);
-                    setEmail('');
-                  }}
-                  className="w-full border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
-                >
-                  Try Different Email
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                )}
+              </CardContent>
+            </Card>
 
-        {/* New tagline */}
-        <div className="text-center">
-          <p className="text-gray-200 text-lg font-light leading-relaxed max-w-lg">
-            Helping Global Enterprises Solve Complex Problems Through Strategic Sales, Empathy & Execution
-          </p>
-        </div>
+            {/* New tagline */}
+            <div className="text-center">
+              <p className="text-gray-200 text-lg font-light leading-relaxed max-w-lg">
+                Helping Global Enterprises Solve Complex Problems Through Strategic Sales, Empathy & Execution
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
