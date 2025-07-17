@@ -119,7 +119,7 @@ export const LoginPage: React.FC = () => {
               Sam Bryant's Portfolio
             </CardTitle>
             <CardDescription className="text-gray-300">
-              Exclusive access for hiring managers
+              Strategic Sales Leadership Portfolio
             </CardDescription>
           </CardHeader>
           <CardContent>
