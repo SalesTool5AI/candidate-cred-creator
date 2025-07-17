@@ -124,6 +124,48 @@ export type Database = {
           },
         ]
       }
+      pending_access_requests: {
+        Row: {
+          company_name: string | null
+          created_at: string
+          domain: string
+          email: string
+          id: string
+          request_message: string | null
+          requested_at: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          company_name?: string | null
+          created_at?: string
+          domain: string
+          email: string
+          id?: string
+          request_message?: string | null
+          requested_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          company_name?: string | null
+          created_at?: string
+          domain?: string
+          email?: string
+          id?: string
+          request_message?: string | null
+          requested_at?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sam_knowledge_base: {
         Row: {
           answer: string
