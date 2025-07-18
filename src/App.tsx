@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import HowISellPage from "./pages/HowISell";
 import WhatIBringPage from "./pages/WhatIBring";
 import MoreThanSellerPage from "./pages/MoreThanSeller";
+import MyValuesPage from "./pages/MyValues";
 import SalesPerformancePage from "./pages/SalesPerformance";
 import CaseStudiesPage from "./pages/CaseStudies";
 import ProfessionalJourneyPage from "./pages/ProfessionalJourney";
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/what-i-bring/case-studies" element={<CaseStudiesPage />} />
               <Route path="/what-i-bring/professional-journey" element={<ProfessionalJourneyPage />} />
               <Route path="/more-than-seller" element={<MoreThanSellerPage />} />
+              <Route path="/my-values" element={<MyValuesPage />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/case-study/:slug" element={<CaseStudy />} />
               <Route path="/admin" element={<Admin />} />

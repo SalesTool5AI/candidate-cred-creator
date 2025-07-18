@@ -1,6 +1,7 @@
 
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { Quote } from "lucide-react";
+import { Quote, ArrowRight } from "lucide-react";
 
 export function About() {
   return (
@@ -40,35 +41,18 @@ export function About() {
           </div>
           
           <div className="space-y-4 sm:space-y-6">
-            <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700/50">
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">My Values</h3>
-              <div className="space-y-3 text-sm sm:text-base text-gray-300">
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-1">1. Integrity First</h4>
-                  <p>I believe in doing the right thing, always. Whether I'm working with a customer, teammate, or partner, honesty, empathy, and trust are non-negotiables.</p>
+            <Link to="/my-values" className="block">
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700/50 hover:border-cyan-400/50 cursor-pointer group">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">My Values</h3>
+                  <ArrowRight className="h-5 w-5 text-cyan-400 group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-1">2. Strive for Excellence</h4>
-                  <p>I hold myself to high standards and take pride in delivering results. I'm constantly learning, refining, and raising the bar, not just to win, but to lead by example. This is deep rooted from my professional sports background.</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-1">3. Freedom Through Impact</h4>
-                  <p>Success for me means building both financial and time freedom. I'm intentional about how I spend my time and energy, designing a life for my family with opportunities and filled with experiences.</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-1">4. Growth-Minded</h4>
-                  <p>I'm curious by nature, about people, business, psychology, and performance. I seek out tools, insights, and conversations that help me level up and stay ahead of the competition.</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-1">5. Create Real Value</h4>
-                  <p>I'm here to make a difference. Whether I'm mentoring others, solving complex customer problems, or building enterprise account patches, I always leave things better than I found them.</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-cyan-400 mb-1">6. Relationships Over Transactions</h4>
-                  <p>Long-term partnerships matter more to me than short-term wins. I take the time to understand people, build trust, and communicate in ways that feel natural and human.</p>
-                </div>
+                <p className="text-sm sm:text-base text-gray-300">
+                  Discover the core principles that guide my approach to business, relationships, and life. 
+                  Click to explore the 6 values that shape everything I do.
+                </p>
               </div>
-            </div>
+            </Link>
             
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-700/50">
               <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">🚀 What I Bring</h3>
