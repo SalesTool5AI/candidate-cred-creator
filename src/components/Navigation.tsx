@@ -48,9 +48,16 @@ const Navigation = () => {
           <div className="flex-shrink-0">
             <Link 
               to="/"
-              className="text-white font-bold text-xl bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent hover:from-cyan-200 hover:to-white transition-all duration-300 transform hover:scale-105"
+              className="flex items-center space-x-3 text-white font-bold text-xl bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent hover:from-cyan-200 hover:to-white transition-all duration-300 transform hover:scale-105"
             >
-              Sam Bryant
+              {location.pathname !== '/' && (
+                <img 
+                  src="/lovable-uploads/3f4fc08d-c66d-42b8-8aab-5e13b546fe80.png" 
+                  alt="Sam Bryant" 
+                  className="w-10 h-10 rounded-full border-2 border-cyan-400 object-cover"
+                />
+              )}
+              <span>Sam Bryant</span>
             </Link>
           </div>
 
