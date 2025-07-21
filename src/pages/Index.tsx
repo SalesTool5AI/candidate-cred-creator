@@ -290,7 +290,7 @@ const Index = () => {
                 
                 <div className="text-center mt-4">
                   <p className="text-xs text-gray-400">
-                    Built using Claude, Lovable & Supabase
+                    Built using Lovable, Claude, Supabase, Cloudflare, & Resend
                   </p>
                 </div>
               </div>
@@ -364,7 +364,7 @@ const Index = () => {
                 
                 <div className="text-center mt-2">
                   <p className="text-xs text-gray-400">
-                    Built using Claude, Lovable & Supabase
+                    Built using Lovable, Claude, Supabase, Cloudflare, & Resend
                   </p>
                 </div>
               </div>
