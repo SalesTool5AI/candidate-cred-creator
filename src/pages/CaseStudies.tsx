@@ -50,7 +50,7 @@ const CaseStudiesPage = () => {
       slug: 'arm',
       title: 'ARM Limited',
       subtitle: 'From Cold Call to Strategic Partner',
-      value: '£1M+ annual GP',
+      value: '£1M ARR',
       duration: '3 years',
       description: 'Transformed a cold call into ARM\'s largest technology partnership, securing preferred vendor status and exclusive access.',
       highlights: ['Office access 2 days/week', 'SW1 strategic account', 'Six-figure savings'],

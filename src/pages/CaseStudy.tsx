@@ -126,7 +126,7 @@ const caseStudies: Record<string, CaseStudy> = {
     logo: armLogo,
     title: "From Cold Call to Strategic Partner: The ARM Limited Success Story",
     metrics: {
-      arr: "£1M+ annual GP",
+      arr: "£1M ARR",
       timeline: "Office access 2 days/week",
       achievement: "SW1 strategic account"
     },
