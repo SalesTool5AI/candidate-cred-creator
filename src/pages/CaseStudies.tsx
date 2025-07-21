@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Building2, Target, Users } from 'lucide-react';
+import { ArrowRight, Building2, Target, Users, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const CaseStudiesPage = () => {
@@ -55,6 +55,16 @@ const CaseStudiesPage = () => {
       description: 'Transformed a cold call into ARM\'s largest technology partnership, securing preferred vendor status and exclusive access.',
       highlights: ['Office access 2 days/week', 'SW1 strategic account', 'Six-figure savings'],
       icon: Target,
+    },
+    {
+      slug: 'astrazeneca',
+      title: 'AstraZeneca',
+      subtitle: 'Account Recovery from Crisis',
+      value: '£2M ARR',
+      duration: '4 months',
+      description: 'Recovered a deteriorating £1.5m ARR account from 6-month communication blackout, protecting company from £2m contractual losses.',
+      highlights: ['6-month blackout recovery', 'Legal risk mitigation', '33% value increase'],
+      icon: Shield,
     },
   ];
 
