@@ -18,6 +18,7 @@ import SalesPerformancePage from "./pages/SalesPerformance";
 import CaseStudiesPage from "./pages/CaseStudies";
 import ProfessionalJourneyPage from "./pages/ProfessionalJourney";
 import TestimonialsPage from "./pages/Testimonials";
+import SalesTechStackPage from "./pages/SalesTechStack";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/how-i-sell" element={<HowISellPage />} />
+              <Route path="/how-i-sell/sales-tech-stack" element={<SalesTechStackPage />} />
               <Route path="/what-i-bring" element={<WhatIBringPage />} />
               <Route path="/what-i-bring/sales-performance" element={<SalesPerformancePage />} />
               <Route path="/what-i-bring/case-studies" element={<CaseStudiesPage />} />

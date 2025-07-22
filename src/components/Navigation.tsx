@@ -12,6 +12,7 @@ const Navigation = () => {
 
   const howISellItems = [
     { label: 'How I Sell', path: '/how-i-sell' },
+    { label: 'Sales Tech Stack', path: '/how-i-sell/sales-tech-stack' },
     { label: 'Testimonials', path: '/testimonials' },
   ];
 
@@ -29,7 +30,7 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
   const isWhatIBringActive = () => location.pathname.startsWith('/what-i-bring');
   const isMoreThanSellerActive = () => location.pathname === '/more-than-seller' || location.pathname === '/my-values';
-  const isHowISellActive = () => location.pathname === '/how-i-sell' || location.pathname === '/testimonials';
+  const isHowISellActive = () => location.pathname === '/how-i-sell' || location.pathname === '/how-i-sell/sales-tech-stack' || location.pathname === '/testimonials';
 
   const handleEmailClick = () => {
     window.location.href = "mailto:sam@sbryant.io?subject=Enterprise Sales Opportunity";
