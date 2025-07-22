@@ -17,6 +17,7 @@ import MyValuesPage from "./pages/MyValues";
 import SalesPerformancePage from "./pages/SalesPerformance";
 import CaseStudiesPage from "./pages/CaseStudies";
 import ProfessionalJourneyPage from "./pages/ProfessionalJourney";
+import TestimonialsPage from "./pages/Testimonials";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/what-i-bring/professional-journey" element={<ProfessionalJourneyPage />} />
               <Route path="/more-than-seller" element={<MoreThanSellerPage />} />
               <Route path="/my-values" element={<MyValuesPage />} />
+              <Route path="/testimonials" element={<TestimonialsPage />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/case-study/:slug" element={<CaseStudy />} />
               <Route path="/admin" element={<Admin />} />

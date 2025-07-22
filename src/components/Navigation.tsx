@@ -7,10 +7,12 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMoreThanSellerDropdownOpen, setIsMoreThanSellerDropdownOpen] = useState(false);
+  const [isHowISellDropdownOpen, setIsHowISellDropdownOpen] = useState(false);
   const location = useLocation();
 
-  const navItems = [
+  const howISellItems = [
     { label: 'How I Sell', path: '/how-i-sell' },
+    { label: 'Testimonials', path: '/testimonials' },
   ];
 
   const moreThanSellerItems = [
@@ -27,6 +29,7 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
   const isWhatIBringActive = () => location.pathname.startsWith('/what-i-bring');
   const isMoreThanSellerActive = () => location.pathname === '/more-than-seller' || location.pathname === '/my-values';
+  const isHowISellActive = () => location.pathname === '/how-i-sell' || location.pathname === '/testimonials';
 
   const handleEmailClick = () => {
     window.location.href = "mailto:sam@sbryant.io?subject=Enterprise Sales Opportunity";
@@ -135,19 +138,41 @@ const Navigation = () => {
               )}
             </div>
             
-            {navItems.map((item) => (
+            {/* How I Sell Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsHowISellDropdownOpen(true)}
+              onMouseLeave={() => setIsHowISellDropdownOpen(false)}
+            >
               <Link
-                key={item.path}
-                to={item.path}
-                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                  isActive(item.path) 
+                to="/how-i-sell"
+                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
+                  isHowISellActive() 
                     ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
                     : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
                 }`}
               >
-                {item.label}
+                How I Sell
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isHowISellDropdownOpen ? 'rotate-180' : ''}`} />
               </Link>
-            ))}
+              
+              {/* Dropdown Menu */}
+              {isHowISellDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-48 bg-gray-900/95 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl shadow-cyan-500/20 z-50">
+                  <div className="py-2">
+                    {howISellItems.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-cyan-500/20 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-200"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             
             {/* Contact Buttons */}
             <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-600">
@@ -272,20 +297,32 @@ const Navigation = () => {
                 </div>
               </div>
               
-              {navItems.map((item) => (
+              {/* Mobile How I Sell Section */}
+              <div className="space-y-1">
                 <Link
-                  key={item.path}
-                  to={item.path}
+                  to="/how-i-sell"
                   onClick={() => setIsMenuOpen(false)}
                   className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                    isActive(item.path) 
+                    isHowISellActive() 
                       ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
                       : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                   }`}
                 >
-                  {item.label}
+                  How I Sell
                 </Link>
-              ))}
+                <div className="ml-4 space-y-1">
+                  {howISellItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 text-xs text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all duration-300 rounded-lg"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
               
               {/* Mobile Contact Section */}
               <div className="border-t border-gray-600 pt-3 mt-3">
