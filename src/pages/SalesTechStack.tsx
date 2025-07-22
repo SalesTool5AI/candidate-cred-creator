@@ -54,8 +54,8 @@ const SalesTechStackPage = () => {
                   </TableRow>
                   <TableRow className="border-gray-700">
                     <TableCell className="text-gray-300 font-medium">Discovery</TableCell>
-                    <TableCell className="text-gray-300">JamieAI / Flintt / Google Docs / Claude</TableCell>
-                    <TableCell className="text-gray-300">Capturing the notes and transforming them into something actionable and useful for us and the prospect. Running prompts to critical think and using the inversion theory to find the areas we need to investigate and explore.</TableCell>
+                    <TableCell className="text-gray-300">JamieAI / Fluint / Google Docs / Claude</TableCell>
+                    <TableCell className="text-gray-300">Capturing the notes and transforming them into an actionable business case that helps the customer and me frame why we are going through this dance.</TableCell>
                   </TableRow>
                   <TableRow className="border-gray-700">
                     <TableCell className="text-gray-300 font-medium">Qualification</TableCell>
