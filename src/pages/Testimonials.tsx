@@ -17,7 +17,7 @@ const Testimonials = () => {
     {
       quote: "Sam is excellent, I really can't speak highly enough of him. Very natural, positive sales person who will grow any patch he is given. He would genuinely be one of my first hires to any sales team.",
       author: "Dave Knowles",
-      title: "Enterprise Sales Director"
+      title: "VMware Enterprise Sales Director"
     },
     {
       quote: "Sam Bryant worked for me throughout his time at SoftwareONE. I couldn't rate him highly enough as a salesperson and only wish I could get him to come and join my team again!",
