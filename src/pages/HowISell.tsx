@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Navigation from '@/components/Navigation';
 
 const HowISellPage = () => {
@@ -43,6 +44,62 @@ const HowISellPage = () => {
                   Sales is about trust, timing, and clarity. I bring all three.
                 </p>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm mt-8">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-white text-center">
+                My Sales Tech Stack
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-gray-700">
+                    <TableHead className="text-cyan-400 font-semibold">Sales Phase</TableHead>
+                    <TableHead className="text-cyan-400 font-semibold">AI Tool</TableHead>
+                    <TableHead className="text-cyan-400 font-semibold">Relevance</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Industry Research</TableCell>
+                    <TableCell className="text-gray-300">Claude/NotebookLM/Perplexity</TableCell>
+                    <TableCell className="text-gray-300">Knowing the customer and understanding the industry trends/news. This information is then used for prospecting in calls, meetings to be relevant.</TableCell>
+                  </TableRow>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Account Specific Research</TableCell>
+                    <TableCell className="text-gray-300">LinkedIn Sales Navigator/Claude/Sumble</TableCell>
+                    <TableCell className="text-gray-300">Understanding their org chart, key people, analysing annual reports, earning calls, second order effects on persona's in terms of industry news.</TableCell>
+                  </TableRow>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Prospecting</TableCell>
+                    <TableCell className="text-gray-300">Apollo/Lusha/LinkedIn</TableCell>
+                    <TableCell className="text-gray-300">Website tracking, sequencing, cold calls, automation with ICPs.</TableCell>
+                  </TableRow>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Discovery</TableCell>
+                    <TableCell className="text-gray-300">JamieAI / Flintt / Google Docs / Claude</TableCell>
+                    <TableCell className="text-gray-300">Capturing the notes and transforming them into something actionable and useful for us and the prospect. Running prompts to critical think and using the inversion theory to find the areas we need to investigate and explore.</TableCell>
+                  </TableRow>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Qualification</TableCell>
+                    <TableCell className="text-gray-300">MEDDPICC Custom built GPT</TableCell>
+                    <TableCell className="text-gray-300">Act's as a sense check to ensure the deal is healthy and to critique what more we could be doing.</TableCell>
+                  </TableRow>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Proposals</TableCell>
+                    <TableCell className="text-gray-300">Pitch</TableCell>
+                    <TableCell className="text-gray-300">Interactive pitches that allow creativity, somewhere between a deck and a deal room.</TableCell>
+                  </TableRow>
+                  <TableRow className="border-gray-700">
+                    <TableCell className="text-gray-300">Staying organised and systematic</TableCell>
+                    <TableCell className="text-gray-300">Hubspot/Tick Tick</TableCell>
+                    <TableCell className="text-gray-300">Goals/Tasks/Calendar planning broken down into Pipeline Generation, Customer commitments with priority given to revenue generating activities via tagging.</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
         </div>
