@@ -49,7 +49,7 @@ const SalesTechStackPage = () => {
                   <TableRow className="border-gray-700">
                     <TableCell className="text-gray-300 font-medium">Account Specific Research</TableCell>
                     <TableCell className="text-gray-300">
-                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">LinkedIn</a> Sales Navigator / 
+                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">LinkedIn Sales Navigator</a> / 
                       <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Claude</a> / 
                       <a href="https://sumble.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Sumble</a>
                     </TableCell>
@@ -58,7 +58,7 @@ const SalesTechStackPage = () => {
                   <TableRow className="border-gray-700">
                     <TableCell className="text-gray-300 font-medium">Prospecting</TableCell>
                     <TableCell className="text-gray-300">
-                      Apollo / 
+                      <a href="https://apollo.io" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Apollo</a> / 
                       <a href="https://lusha.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Lusha</a> / 
                       <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">LinkedIn</a>
                     </TableCell>
@@ -76,7 +76,9 @@ const SalesTechStackPage = () => {
                   </TableRow>
                   <TableRow className="border-gray-700">
                     <TableCell className="text-gray-300 font-medium">Qualification</TableCell>
-                    <TableCell className="text-gray-300">MEDDPICC Custom built GPT</TableCell>
+                    <TableCell className="text-gray-300">
+                      <a href="https://openai.com/index/introducing-gpts/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">MEDDPICC Custom built GPT</a>
+                    </TableCell>
                     <TableCell className="text-gray-300">Act's as a sense check to ensure the deal is healthy and to critique what more we could be doing.</TableCell>
                   </TableRow>
                   <TableRow className="border-gray-700">
