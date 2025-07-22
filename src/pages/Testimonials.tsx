@@ -28,6 +28,11 @@ const Testimonials = () => {
       quote: "I'm absolutely made up for you Sam, getting that order booked and the few coming too. You are a superb person and your work ethic is exemplary. We need to continue to help you shine.",
       author: "Peter Clitheroe",
       title: "VP Sales EMEA at Tyk"
+    },
+    {
+      quote: "I just wanted to call out your Q3 performance for recognition. 163% of target at £522k is a fantastic achievement, as is the 50% mix of MV and Mgd Svcs in that performance, not to mention the 1.818m you've achieved YTD! Thanks for setting such a great example to our upcoming BDMs, much appreciated. Keep up the awesome work and look forward to finishing the year well in Q4.",
+      author: "Richard Best",
+      title: "SoftwareONE Sales Director"
     }
   ];
 
