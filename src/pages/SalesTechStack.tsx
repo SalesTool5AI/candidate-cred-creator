@@ -19,13 +19,6 @@ const SalesTechStackPage = () => {
 
           <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-white text-center mb-4">
-                AI-Powered Sales Technology
-              </CardTitle>
-              <p className="text-gray-300 text-center max-w-3xl mx-auto">
-                I leverage cutting-edge AI tools and technology throughout my sales process to maximize efficiency, 
-                deliver deeper insights, and create more meaningful customer experiences.
-              </p>
             </CardHeader>
             <CardContent className="p-8">
               <Table>
@@ -69,7 +62,7 @@ const SalesTechStackPage = () => {
                     <TableCell className="text-gray-300">
                       <a href="https://meetjamie.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">JamieAI</a> / 
                       <a href="https://fluint.io" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Fluint</a> / 
-                      Google Docs / 
+                      <a href="https://docs.google.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Google Docs</a> / 
                       <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Claude</a>
                     </TableCell>
                     <TableCell className="text-gray-300">Capturing the notes and transforming them into an actionable business case that helps the customer and me frame why we are going through this dance.</TableCell>
