@@ -46,7 +46,7 @@ const SalesTechStackPage = () => {
                       <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Claude</a> / 
                       <a href="https://sumble.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Sumble</a>
                     </TableCell>
-                    <TableCell className="text-gray-300">Understanding their org chart, key people, analysing annual reports, earning calls, second order effects on persona's in terms of industry news.</TableCell>
+                    <TableCell className="text-gray-300">Understanding their org chart, key people, analysing annual reports, earning calls, second order effects on persona's in terms of industry news. Understanding their current technology stack.</TableCell>
                   </TableRow>
                   <TableRow className="border-gray-700">
                     <TableCell className="text-gray-300 font-medium">Prospecting</TableCell>
