@@ -55,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Access Requests <onboarding@resend.dev>",
+      from: "Access Requests <noreply@sbryant.io>",
       to: ["sam@sbryant.io"],
       subject: `New Access Request from ${company_name}`,
       html: `
@@ -74,7 +74,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to the requester
     const userEmailResponse = await resend.emails.send({
-      from: "Sam Bryant <onboarding@resend.dev>",
+      from: "Sam Bryant <noreply@sbryant.io>",
       to: [email],
       subject: "Access Request Received",
       html: `
