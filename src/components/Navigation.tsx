@@ -103,42 +103,6 @@ const Navigation = () => {
               )}
             </div>
             
-            {/* More than a Seller Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setIsMoreThanSellerDropdownOpen(true)}
-              onMouseLeave={() => setIsMoreThanSellerDropdownOpen(false)}
-            >
-              <Link
-                to="/more-than-seller"
-                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
-                  isMoreThanSellerActive() 
-                    ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25 transform scale-105' 
-                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50 hover:shadow-md'
-                }`}
-              >
-                More than a Seller
-                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isMoreThanSellerDropdownOpen ? 'rotate-180' : ''}`} />
-              </Link>
-              
-              {/* Dropdown Menu */}
-              {isMoreThanSellerDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-background/95 backdrop-blur-md border border-primary/30 rounded-lg shadow-2xl shadow-primary/20 z-50">
-                  <div className="py-2">
-                    {moreThanSellerItems.map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className="block px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-primary/20 hover:bg-gradient-to-r hover:from-primary/10 hover:to-brand-blue/10 transition-all duration-200"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-            
             {/* How I Sell Dropdown */}
             <div 
               className="relative"
@@ -162,6 +126,42 @@ const Navigation = () => {
                 <div className="absolute top-full left-0 mt-1 w-48 bg-background/95 backdrop-blur-md border border-primary/30 rounded-lg shadow-2xl shadow-primary/20 z-50">
                   <div className="py-2">
                     {howISellItems.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className="block px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-primary/20 hover:bg-gradient-to-r hover:from-primary/10 hover:to-brand-blue/10 transition-all duration-200"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* More than a Seller Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsMoreThanSellerDropdownOpen(true)}
+              onMouseLeave={() => setIsMoreThanSellerDropdownOpen(false)}
+            >
+              <Link
+                to="/more-than-seller"
+                className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
+                  isMoreThanSellerActive() 
+                    ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25 transform scale-105' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50 hover:shadow-md'
+                }`}
+              >
+                More than a Seller
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isMoreThanSellerDropdownOpen ? 'rotate-180' : ''}`} />
+              </Link>
+              
+              {/* Dropdown Menu */}
+              {isMoreThanSellerDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-48 bg-background/95 backdrop-blur-md border border-primary/30 rounded-lg shadow-2xl shadow-primary/20 z-50">
+                  <div className="py-2">
+                    {moreThanSellerItems.map((item) => (
                       <Link
                         key={item.path}
                         to={item.path}
@@ -271,33 +271,6 @@ const Navigation = () => {
                 </div>
               </div>
               
-              {/* Mobile More than a Seller Section */}
-              <div className="space-y-1">
-                <Link
-                  to="/more-than-seller"
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
-                    isMoreThanSellerActive() 
-                      ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25' 
-                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
-                  }`}
-                >
-                  More than a Seller
-                </Link>
-                <div className="ml-4 space-y-1">
-                  {moreThanSellerItems.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all duration-300 rounded-lg"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              
               {/* Mobile How I Sell Section */}
               <div className="space-y-1">
                 <Link
@@ -313,6 +286,33 @@ const Navigation = () => {
                 </Link>
                 <div className="ml-4 space-y-1">
                   {howISellItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all duration-300 rounded-lg"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Mobile More than a Seller Section */}
+              <div className="space-y-1">
+                <Link
+                  to="/more-than-seller"
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
+                    isMoreThanSellerActive() 
+                      ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25' 
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
+                  }`}
+                >
+                  More than a Seller
+                </Link>
+                <div className="ml-4 space-y-1">
+                  {moreThanSellerItems.map((item) => (
                     <Link
                       key={item.path}
                       to={item.path}
