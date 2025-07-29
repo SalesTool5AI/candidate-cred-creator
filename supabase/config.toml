@@ -1,7 +1,9 @@
 project_id = "navnadoeznbzvqivamem"
 
+# SECURITY: Enable JWT verification for production security
 [functions.chat-with-sam]
-verify_jwt = false
+verify_jwt = true
 
+# SECURITY: Enable JWT verification for production security  
 [functions.send-access-request-notification]
-verify_jwt = false
+verify_jwt = true
