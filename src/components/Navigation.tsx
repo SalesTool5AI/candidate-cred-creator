@@ -45,20 +45,20 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 backdrop-blur-md border-b-2 border-cyan-500/30 shadow-2xl shadow-cyan-500/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-background via-secondary to-background backdrop-blur-md border-b-2 border-primary/30 shadow-2xl shadow-primary/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo/Name */}
           <div className="flex-shrink-0">
             <Link 
               to="/"
-              className="flex items-center space-x-3 text-white font-bold text-xl bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent hover:from-cyan-200 hover:to-white transition-all duration-300 transform hover:scale-105"
+              className="flex items-center space-x-3 text-foreground font-bold text-xl bg-gradient-to-r from-foreground to-brand-cyan-light bg-clip-text text-transparent hover:from-brand-cyan-light hover:to-foreground transition-all duration-300 transform hover:scale-105"
             >
               {location.pathname !== '/' && (
                 <img 
                   src="/lovable-uploads/3f4fc08d-c66d-42b8-8aab-5e13b546fe80.png" 
                   alt="Sam Bryant" 
-                  className="w-10 h-10 rounded-full border-2 border-cyan-400 object-cover"
+                  className="w-10 h-10 rounded-full border-2 border-primary object-cover"
                 />
               )}
               <span>Sam Bryant</span>
@@ -77,8 +77,8 @@ const Navigation = () => {
                 to="/what-i-bring"
                 className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
                   isWhatIBringActive() 
-                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
+                    ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25 transform scale-105' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50 hover:shadow-md'
                 }`}
               >
                 What I Bring
@@ -87,13 +87,13 @@ const Navigation = () => {
               
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 w-64 bg-gray-900/95 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl shadow-cyan-500/20 z-50">
+                <div className="absolute top-full left-0 mt-1 w-64 bg-background/95 backdrop-blur-md border border-primary/30 rounded-lg shadow-2xl shadow-primary/20 z-50">
                   <div className="py-2">
                     {whatIBringItems.map((item) => (
                       <Link
                         key={item.path}
                         to={item.path}
-                        className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-cyan-500/20 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-200"
+                        className="block px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-primary/20 hover:bg-gradient-to-r hover:from-primary/10 hover:to-brand-blue/10 transition-all duration-200"
                       >
                         {item.label}
                       </Link>
@@ -113,8 +113,8 @@ const Navigation = () => {
                 to="/more-than-seller"
                 className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
                   isMoreThanSellerActive() 
-                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
+                    ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25 transform scale-105' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50 hover:shadow-md'
                 }`}
               >
                 More than a Seller
@@ -123,13 +123,13 @@ const Navigation = () => {
               
               {/* Dropdown Menu */}
               {isMoreThanSellerDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-gray-900/95 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl shadow-cyan-500/20 z-50">
+                <div className="absolute top-full left-0 mt-1 w-48 bg-background/95 backdrop-blur-md border border-primary/30 rounded-lg shadow-2xl shadow-primary/20 z-50">
                   <div className="py-2">
                     {moreThanSellerItems.map((item) => (
                       <Link
                         key={item.path}
                         to={item.path}
-                        className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-cyan-500/20 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-200"
+                        className="block px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-primary/20 hover:bg-gradient-to-r hover:from-primary/10 hover:to-brand-blue/10 transition-all duration-200"
                       >
                         {item.label}
                       </Link>
@@ -149,8 +149,8 @@ const Navigation = () => {
                 to="/how-i-sell"
                 className={`relative px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg flex items-center ${
                   isHowISellActive() 
-                    ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25 transform scale-105' 
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:shadow-md'
+                    ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25 transform scale-105' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50 hover:shadow-md'
                 }`}
               >
                 How I Sell
@@ -159,13 +159,13 @@ const Navigation = () => {
               
               {/* Dropdown Menu */}
               {isHowISellDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-gray-900/95 backdrop-blur-md border border-cyan-500/30 rounded-lg shadow-2xl shadow-cyan-500/20 z-50">
+                <div className="absolute top-full left-0 mt-1 w-48 bg-background/95 backdrop-blur-md border border-primary/30 rounded-lg shadow-2xl shadow-primary/20 z-50">
                   <div className="py-2">
                     {howISellItems.map((item) => (
                       <Link
                         key={item.path}
                         to={item.path}
-                        className="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-cyan-500/20 hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 transition-all duration-200"
+                        className="block px-4 py-3 text-sm text-muted-foreground hover:text-foreground hover:bg-primary/20 hover:bg-gradient-to-r hover:from-primary/10 hover:to-brand-blue/10 transition-all duration-200"
                       >
                         {item.label}
                       </Link>
@@ -176,11 +176,11 @@ const Navigation = () => {
             </div>
             
             {/* Contact Buttons */}
-            <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-600">
+            <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-border">
               <Button 
                 variant="outline" 
                 size="sm"
-                className="border border-cyan-500/50 text-cyan-400 bg-gray-900/50 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                className="border border-primary/50 text-primary bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                 onClick={handleEmailClick}
                 title="Email Me"
               >
@@ -189,7 +189,7 @@ const Navigation = () => {
               <Button 
                 variant="outline" 
                 size="sm"
-                className="border border-green-500/50 text-green-400 bg-gray-900/50 hover:bg-green-500 hover:text-white transition-all duration-300"
+                className="border border-brand-green/50 text-brand-green bg-background/50 hover:bg-brand-green hover:text-primary-foreground transition-all duration-300"
                 onClick={handlePhoneClick}
                 title="WhatsApp Me"
               >
@@ -198,7 +198,7 @@ const Navigation = () => {
               <Button 
                 variant="outline" 
                 size="sm"
-                className="border border-blue-500/50 text-blue-400 bg-gray-900/50 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                className="border border-brand-blue/50 text-brand-blue bg-background/50 hover:bg-brand-blue hover:text-primary-foreground transition-all duration-300"
                 onClick={handleLinkedInClick}
                 title="LinkedIn Profile"
               >
@@ -209,7 +209,7 @@ const Navigation = () => {
             <Button 
               variant="outline" 
               size="sm"
-              className="ml-4 border-2 border-cyan-500 text-cyan-400 bg-gray-900/50 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-105"
+              className="ml-4 border-2 border-primary text-primary bg-background/50 hover:bg-gradient-to-r hover:from-primary hover:to-brand-blue hover:text-primary-foreground hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-105"
               onClick={() => {
                 window.open('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf', '_blank');
               }}
@@ -224,7 +224,7 @@ const Navigation = () => {
             <Button 
               variant="outline" 
               size="sm"
-              className="border-2 border-cyan-500 text-cyan-400 bg-gray-900/50 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 hover:text-white hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-cyan-500/20"
+              className="border-2 border-primary text-primary bg-background/50 hover:bg-gradient-to-r hover:from-primary hover:to-brand-blue hover:text-primary-foreground hover:border-transparent transition-all duration-300 font-semibold shadow-lg shadow-primary/20"
               onClick={() => {
                 window.open('https://navnadoeznbzvqivamem.supabase.co/storage/v1/object/public/cv-files/cv-sam-bryant.pdf', '_blank');
               }}
@@ -233,7 +233,7 @@ const Navigation = () => {
             </Button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all duration-300"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -243,7 +243,7 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-3 pt-2 pb-4 space-y-2 bg-gradient-to-b from-gray-900 to-slate-900 border-t-2 border-cyan-500/30 shadow-2xl">
+            <div className="px-3 pt-2 pb-4 space-y-2 bg-gradient-to-b from-background to-secondary border-t-2 border-primary/30 shadow-2xl">
               {/* Mobile What I Bring Section */}
               <div className="space-y-1">
                 <Link
@@ -251,8 +251,8 @@ const Navigation = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
                     isWhatIBringActive() 
-                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                      ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25' 
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
                   }`}
                 >
                   What I Bring
@@ -263,7 +263,7 @@ const Navigation = () => {
                       key={item.path}
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 text-xs text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all duration-300 rounded-lg"
+                      className="block w-full text-left px-4 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all duration-300 rounded-lg"
                     >
                       {item.label}
                     </Link>
@@ -278,8 +278,8 @@ const Navigation = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
                     isMoreThanSellerActive() 
-                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                      ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25' 
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
                   }`}
                 >
                   More than a Seller
@@ -290,7 +290,7 @@ const Navigation = () => {
                       key={item.path}
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 text-xs text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all duration-300 rounded-lg"
+                      className="block w-full text-left px-4 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all duration-300 rounded-lg"
                     >
                       {item.label}
                     </Link>
@@ -305,8 +305,8 @@ const Navigation = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block w-full text-left px-4 py-3 text-sm font-semibold transition-all duration-300 rounded-lg ${
                     isHowISellActive() 
-                      ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                      ? 'text-foreground bg-gradient-to-r from-primary to-brand-blue shadow-lg shadow-primary/25' 
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
                   }`}
                 >
                   How I Sell
@@ -317,7 +317,7 @@ const Navigation = () => {
                       key={item.path}
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 text-xs text-gray-400 hover:text-white hover:bg-gray-800/50 transition-all duration-300 rounded-lg"
+                      className="block w-full text-left px-4 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-all duration-300 rounded-lg"
                     >
                       {item.label}
                     </Link>
@@ -326,13 +326,13 @@ const Navigation = () => {
               </div>
               
               {/* Mobile Contact Section */}
-              <div className="border-t border-gray-600 pt-3 mt-3">
-                <p className="text-xs text-gray-400 px-4 mb-2">Let's Connect</p>
+              <div className="border-t border-border pt-3 mt-3">
+                <p className="text-xs text-muted-foreground px-4 mb-2">Let's Connect</p>
                 <div className="flex space-x-2 px-4">
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="flex-1 border border-cyan-500/50 text-cyan-400 bg-gray-900/50 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                    className="flex-1 border border-primary/50 text-primary bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                     onClick={handleEmailClick}
                   >
                     <Mail className="w-4 h-4 mr-1" />
@@ -341,7 +341,7 @@ const Navigation = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="flex-1 border border-green-500/50 text-green-400 bg-gray-900/50 hover:bg-green-500 hover:text-white transition-all duration-300"
+                    className="flex-1 border border-brand-green/50 text-brand-green bg-background/50 hover:bg-brand-green hover:text-primary-foreground transition-all duration-300"
                     onClick={handlePhoneClick}
                   >
                     <MessageCircle className="w-4 h-4 mr-1" />
@@ -350,7 +350,7 @@ const Navigation = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="flex-1 border border-blue-500/50 text-blue-400 bg-gray-900/50 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                    className="flex-1 border border-brand-blue/50 text-brand-blue bg-background/50 hover:bg-brand-blue hover:text-primary-foreground transition-all duration-300"
                     onClick={handleLinkedInClick}
                   >
                     <Linkedin className="w-4 h-4 mr-1" />

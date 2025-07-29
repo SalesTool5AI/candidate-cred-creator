@@ -271,29 +271,29 @@ export const ChatInterface: React.FC = () => {
   ];
 
   return (
-    <div className="dark min-h-screen bg-gradient-to-b from-gray-900 to-black p-4" style={{backgroundColor: '#111827'}}>
+    <div className="dark min-h-screen bg-gradient-to-b from-background to-background/80 p-4">
       <div className="max-w-4xl mx-auto">
-        <div className="h-[80vh] border border-gray-700 backdrop-blur-sm flex flex-col rounded-lg shadow-sm" style={{backgroundColor: '#111827'}}>
-          <div className="border-b border-gray-700 flex flex-col space-y-1.5 p-6" style={{backgroundColor: '#111827'}}>
+        <div className="h-[80vh] border border-border backdrop-blur-sm flex flex-col rounded-lg shadow-sm bg-background">
+          <div className="border-b border-border flex flex-col space-y-1.5 p-6 bg-background">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-r from-primary to-brand-blue rounded-full flex items-center justify-center">
+                <Bot className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="text-2xl font-semibold leading-none tracking-tight text-white">AI Sam Bryant</h3>
-                <p className="text-sm text-gray-400">Ask me anything about Sam's background and experience</p>
+                <h3 className="text-2xl font-semibold leading-none tracking-tight text-foreground">AI Sam Bryant</h3>
+                <p className="text-sm text-muted-foreground">Ask me anything about Sam's background and experience</p>
               </div>
             </div>
             <div className="mt-2 p-2 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-              <p className="text-xs text-blue-300 flex items-center">
+              <p className="text-xs text-brand-blue flex items-center">
                 <Bot className="w-3 h-3 mr-1" />
                 This is an AI assistant trained on Sam Bryant's professional information
               </p>
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col p-0" style={{backgroundColor: '#111827'}}>
-            <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{backgroundColor: '#111827'}}>
+          <div className="flex-1 flex flex-col p-0 bg-background">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -302,10 +302,9 @@ export const ChatInterface: React.FC = () => {
                   <div
                     className={`max-w-xs sm:max-w-md px-4 py-2 rounded-lg ring-0 outline-none focus:ring-0 ${
                       message.role === 'user'
-                        ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white'
-                        : 'text-gray-100 border border-gray-700'
+                        ? 'bg-gradient-to-r from-primary to-brand-blue text-primary-foreground'
+                        : 'text-foreground border border-border bg-secondary'
                     }`}
-                    style={message.role === 'assistant' ? {backgroundColor: '#1f2937'} : {}}
                   >
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                     <p className="text-xs opacity-70 mt-1">
@@ -317,7 +316,7 @@ export const ChatInterface: React.FC = () => {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="text-gray-100 px-4 py-2 rounded-lg flex items-center space-x-2 border border-gray-700 ring-0 outline-none focus:ring-0" style={{backgroundColor: '#1f2937'}}>
+                  <div className="text-foreground px-4 py-2 rounded-lg flex items-center space-x-2 border border-border ring-0 outline-none focus:ring-0 bg-secondary">
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span className="text-sm">AI Sam is thinking...</span>
                   </div>
@@ -328,15 +327,14 @@ export const ChatInterface: React.FC = () => {
             </div>
 
             {messages.length === 1 && (
-              <div className="p-4 border-t border-gray-700" style={{backgroundColor: '#111827'}}>
-                <p className="text-sm text-gray-400 mb-3">Suggested questions to get started:</p>
+              <div className="p-4 border-t border-border bg-background">
+                <p className="text-sm text-muted-foreground mb-3">Suggested questions to get started:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {suggestedQuestions.map((question, index) => (
                     <button
                       key={index}
                       onClick={() => setInputMessage(question)}
-                      className="text-left text-xs p-2 hover:opacity-80 rounded border border-gray-600 text-gray-300 transition-colors"
-                      style={{backgroundColor: '#1f2937'}}
+                      className="text-left text-xs p-2 hover:opacity-80 rounded border border-border text-muted-foreground transition-colors bg-secondary"
                     >
                       {question}
                     </button>
@@ -345,13 +343,13 @@ export const ChatInterface: React.FC = () => {
               </div>
             )}
 
-            <div className="p-4 border-t border-gray-700" style={{backgroundColor: '#111827'}}>
+            <div className="p-4 border-t border-border bg-background">
               <div className="flex space-x-2">
                 <Input
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   placeholder="Ask AI Sam anything..."
-                  className="flex-1 bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
+                  className="flex-1 bg-input border-border text-foreground placeholder-muted-foreground"
                   onKeyPress={handleKeyPress}
                   disabled={isLoading}
                 />
@@ -359,7 +357,7 @@ export const ChatInterface: React.FC = () => {
                   onClick={testHealthCheck}
                   variant="outline"
                   size="icon"
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                  className="border-border text-muted-foreground hover:bg-secondary"
                   title="Test API Health"
                 >
                   <Bot className="w-4 h-4" />
@@ -368,7 +366,7 @@ export const ChatInterface: React.FC = () => {
                   onClick={sendMessage}
                   disabled={isLoading || !inputMessage.trim()}
                   size="icon"
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
+                  className="bg-gradient-to-r from-primary to-brand-blue hover:from-brand-cyan-dark hover:to-brand-blue"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
