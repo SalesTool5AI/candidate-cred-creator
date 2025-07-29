@@ -5,7 +5,7 @@ import { Quote, ArrowRight } from "lucide-react";
 
 export function About() {
   return (
-    <section className="py-12 sm:py-20 bg-gradient-to-b from-background to-secondary relative overflow-hidden">
+    <section className="min-h-screen py-12 sm:py-20 bg-gradient-to-b from-background to-secondary relative overflow-hidden">
       {/* Background network elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/3 left-1/4 w-px h-20 bg-gradient-to-b from-primary/20 to-transparent transform -rotate-45"></div>

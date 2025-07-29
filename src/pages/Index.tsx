@@ -200,11 +200,11 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
       <Navigation />
       
       {/* Hero Section with Chat Interface */}
-      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white relative overflow-hidden pt-20">
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary to-background text-foreground relative overflow-hidden pt-20">
         {/* Animated background elements */}
         <div className="absolute inset-0">
           {/* Network lines */}
