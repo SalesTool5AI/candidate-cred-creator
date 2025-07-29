@@ -74,12 +74,12 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section className="py-12 sm:py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
+    <section className="py-12 sm:py-20 bg-gradient-to-b from-secondary to-background relative overflow-hidden">
       {/* Background network elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-10 w-px h-24 bg-gradient-to-b from-cyan-400/20 to-transparent transform rotate-45"></div>
-        <div className="absolute bottom-1/4 right-10 w-px h-20 bg-gradient-to-b from-blue-400/15 to-transparent transform -rotate-30"></div>
-        <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-cyan-400/60 rounded-full animate-pulse delay-400"></div>
+        <div className="absolute top-1/4 left-10 w-px h-24 bg-gradient-to-b from-primary/20 to-transparent transform rotate-45"></div>
+        <div className="absolute bottom-1/4 right-10 w-px h-20 bg-gradient-to-b from-brand-blue/15 to-transparent transform -rotate-30"></div>
+        <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-primary/60 rounded-full animate-pulse delay-400"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -90,7 +90,7 @@ export function Experience() {
           {experiences.map((exp, index) => (
             <Card 
               key={index} 
-              className="hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-l-4 border-l-cyan-500 bg-gray-800/50 border-gray-700/50 backdrop-blur-sm"
+              className="hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-l-4 border-l-primary bg-card/50 border-border/50 backdrop-blur-sm"
             >
               <CardHeader className="pb-4 sm:pb-6">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -103,27 +103,27 @@ export function Experience() {
                       />
                     </div>
                     <div>
-                      <CardTitle className="text-xl sm:text-2xl text-white mb-1">
+                      <CardTitle className="text-xl sm:text-2xl text-foreground mb-1">
                         {exp.position}
                       </CardTitle>
-                      <p className="text-lg sm:text-xl text-cyan-400 font-semibold">
+                      <p className="text-lg sm:text-xl text-primary font-semibold">
                         {exp.company}
                       </p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="text-gray-300 border-gray-600 mt-2 md:mt-0 self-start md:self-center">
+                  <Badge variant="outline" className="text-muted-foreground border-border mt-2 md:mt-0 self-start md:self-center">
                     {exp.period}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="mb-4 sm:mb-6">
-                  <h4 className="font-semibold text-gray-200 mb-3">Key Achievements:</h4>
+                  <h4 className="font-semibold text-card-foreground mb-3">Key Achievements:</h4>
                   <ul className="space-y-2">
                     {exp.achievements.map((achievement, achIndex) => (
                       <li key={achIndex} className="flex items-start">
-                        <span className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                        <span className="text-sm sm:text-base text-gray-300">{achievement}</span>
+                        <span className="w-2 h-2 bg-brand-green rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                        <span className="text-sm sm:text-base text-muted-foreground">{achievement}</span>
                       </li>
                     ))}
                   </ul>
