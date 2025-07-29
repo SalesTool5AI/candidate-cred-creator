@@ -87,9 +87,6 @@ export function Experience() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             Professional Journey
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
-            A track record of consistent growth and exceptional performance in enterprise sales roles.
-          </p>
         </div>
         
         <div className="space-y-6 sm:space-y-8">
