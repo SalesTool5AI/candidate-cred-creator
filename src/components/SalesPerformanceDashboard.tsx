@@ -1,17 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Banknote, Target, TrendingUp, Calendar, Award, Users } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
-// Import company logos
-import mastercardLogo from "@/assets/logos/mastercard.png";
-import johnsonMattheyLogo from "@/assets/logos/johnson-matthey.png";
-import fedexLogo from "@/assets/logos/fedex-simple.png";
-import fidelityLogo from "@/assets/logos/fidelity.png";
-import armLogo from "@/assets/logos/arm.png";
+import { Banknote, Target, TrendingUp, Calendar, Award } from "lucide-react";
 
 const keyMetrics = [
   { icon: Banknote, label: "Total Career Bookings (ARR)", value: "$50M+", description: "Enterprise deals closed" },
@@ -27,53 +16,6 @@ const achievements = [
   { title: "Salesperson of the Quarter", value: "VMware Q2 2022", color: "border-l-purple-500" },
 ];
 
-const caseStudies = [
-  { 
-    slug: "mastercard",
-    name: "Mastercard", 
-    emoji: "💳",
-    logo: mastercardLogo,
-    title: "From Crisis to Champion",
-    summary: "Transformed a security crisis into Mastercard's largest enterprise deal, beating established competitors through strategic problem-solving.",
-    metrics: "$1.8M ARR • 4-month cycle • Beat Cisco"
-  },
-  { 
-    slug: "johnson-matthey",
-    name: "Johnson Matthey", 
-    emoji: "⚗️",
-    logo: johnsonMattheyLogo,
-    title: "Service Failure to £1M Partnership", 
-    summary: "Converted a major service failure with a strategic client into the foundation of a million-pound partnership through exceptional recovery.",
-    metrics: "£1M GP • 1,000+ requests • 10-person team"
-  },
-  { 
-    slug: "fedex",
-    name: "FedEx", 
-    emoji: "📦",
-    logo: fedexLogo,
-    title: "Crisis to $1.6M Win",
-    summary: "Turned FedEx's cost-cutting mandate into a strategic technology upgrade, delivering massive savings while securing a major contract.",
-    metrics: "$1.6M ARR • £4M+ savings • 3-month turnaround"
-  },
-  { 
-    slug: "fidelity",
-    name: "Fidelity", 
-    emoji: "💰",
-    logo: fidelityLogo,
-    title: "At-Risk to $15M Partnership",
-    summary: "Rescued an at-risk client relationship and transformed it into a $15M strategic partnership through innovative solution design.",
-    metrics: "$15M contract • $500K investment • 150%+ price increase"
-  },
-  { 
-    slug: "arm",
-    name: "ARM", 
-    emoji: "🤖",
-    logo: armLogo,
-    title: "Cold Call to Strategic Partner",
-    summary: "Built ARM's largest technology partnership from a cold call, securing preferred vendor status and exclusive access to their development teams.",
-    metrics: "£1M+ annual GP • 18% markup eliminated • On-site access"
-  },
-];
 
 export function SalesPerformanceDashboard() {
 
@@ -149,51 +91,6 @@ export function SalesPerformanceDashboard() {
           </Card>
         </div>
 
-        {/* Case Study Portfolio Section */}
-        <Card className="bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-xl sm:text-2xl text-cyan-400 flex items-center justify-center gap-3">
-              <Users className="w-6 h-6" />
-              Enterprise Case Studies
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {caseStudies.map((study, index) => (
-                <Link key={index} to={`/case-study/${study.slug}`}>
-                    <Card className="h-full bg-gray-700/50 border-gray-600/50 hover:bg-gray-600/50 hover:border-cyan-400/50 transition-all duration-300 hover:scale-105 cursor-pointer">
-                      <CardContent className="p-6">
-                        <div className="text-center mb-4">
-                          <div className="flex items-center justify-center mb-3">
-                            <img 
-                              src={study.logo} 
-                              alt={`${study.name} logo`} 
-                              className="h-8 w-auto max-w-[120px] object-contain"
-                            />
-                          </div>
-                          <h3 className="text-lg font-bold text-white mb-1">{study.name}</h3>
-                          <p className="text-cyan-400 font-semibold text-sm mb-3">{study.title}</p>
-                        </div>
-                      <p className="text-gray-300 text-sm mb-4 leading-relaxed">{study.summary}</p>
-                      <div className="border-t border-gray-600 pt-3">
-                        <p className="text-xs text-gray-400 font-medium">{study.metrics}</p>
-                      </div>
-                      <div className="mt-4">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full bg-transparent border-cyan-400/50 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400"
-                        >
-                          Read Full Case Study
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </section>
   );
