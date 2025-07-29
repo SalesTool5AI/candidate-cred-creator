@@ -65,7 +65,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom brand colors using semantic tokens
+				'brand-cyan': {
+					DEFAULT: 'hsl(var(--cyan-primary))',
+					light: 'hsl(var(--cyan-light))',
+					dark: 'hsl(var(--cyan-dark))'
+				},
+				'brand-blue': 'hsl(var(--blue-accent))',
+				'brand-green': 'hsl(var(--green-accent))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
