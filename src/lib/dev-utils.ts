@@ -1,13 +1,12 @@
 export const isDevelopment = (): boolean => {
   if (typeof window === 'undefined') return false;
   
+  // SECURITY: Restrict development mode to only localhost
+  // Remove production domains to prevent auth bypass in production
   const hostname = window.location.hostname;
   return (
     hostname === 'localhost' ||
     hostname === '127.0.0.1' ||
-    hostname.includes('lovable.app') ||
-    hostname.includes('vercel.app') ||
-    hostname.includes('netlify.app') ||
     process.env.NODE_ENV === 'development'
   );
 };

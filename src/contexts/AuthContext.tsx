@@ -27,8 +27,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   const setMockUser = (mockUser: any) => {
-    setUser(mockUser);
-    setLoading(false);
+    // SECURITY: Only allow mock users in localhost development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      setUser(mockUser);
+      setLoading(false);
+    } else {
+      console.warn('Mock user access denied in production environment');
+    }
   };
 
   useEffect(() => {
@@ -44,12 +49,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const domain = email?.split('@')[1];
           
           if (email && domain) {
-            // Get company name from allowed_domains
+            // Get company name from allowed_domains - use maybeSingle for safety
             const { data: domainData } = await supabase
               .from('allowed_domains')
               .select('company_name')
               .eq('domain', domain)
-              .single();
+              .maybeSingle();
             
             if (domainData) {
               // Insert or update authorized user record
