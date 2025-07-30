@@ -43,6 +43,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(session);
         setUser(session?.user ?? null);
         
+        // Clean up URL hash after successful authentication
+        if (event === 'SIGNED_IN' && session?.user && window.location.hash) {
+          // Replace the current URL to remove the auth tokens from the hash
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        
         // Track authorized users when they sign in
         if (event === 'SIGNED_IN' && session?.user) {
           const email = session.user.email;
