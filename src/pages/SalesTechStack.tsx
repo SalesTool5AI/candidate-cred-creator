@@ -1,102 +1,115 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Search, Users, FileText, TrendingUp } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 
-const SalesTechStackPage = () => {
+const SalesTechStack = () => {
+  const toolCategories = [
+    {
+      category: "Intelligence & Research",
+      icon: Search,
+      tools: [
+        { name: "ChatGPT", description: "AI-powered research and content creation" },
+        { name: "Claude", description: "Advanced AI reasoning and analysis" },
+        { name: "LinkedIn Sales Navigator", description: "Professional prospecting and insights" },
+        { name: "Sumble", description: "Technical stack intelligence" },
+        { name: "Perplexity", description: "Financial research and market intelligence" }
+      ]
+    },
+    {
+      category: "Deal Collaboration", 
+      icon: Users,
+      tools: [
+        { name: "Google Docs", description: "Collaborative document creation" },
+        { name: "Microsoft Word", description: "Professional document formatting" },
+        { name: "Microsoft Teams", description: "Enterprise communication" },
+        { name: "Slack", description: "Team collaboration and messaging" },
+        { name: "WhatsApp", description: "Direct customer communication" }
+      ]
+    },
+    {
+      category: "Discovery & Notes",
+      icon: FileText, 
+      tools: [
+        { name: "Jamie.AI", description: "AI-powered meeting notes and insights" },
+        { name: "Executive Templates", description: "Structured discovery frameworks" },
+        { name: "Business Case Templates", description: "ROI and value proposition tools" }
+      ]
+    },
+    {
+      category: "Outreach & Pipeline",
+      icon: TrendingUp,
+      tools: [
+        { name: "Apollo.io", description: "Prospecting and outreach automation" },
+        { name: "HubSpot", description: "CRM and pipeline management" },
+        { name: "LinkedIn Sales Navigator", description: "Social selling and networking" }
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
       <Navigation />
       
       <section className="pt-20 pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Headline and Introduction */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-white mb-4">
-              My Sales Tech Stack
+            <h1 className="text-5xl font-bold text-white mb-6">
+              Tools of the Craft
             </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto mb-8"></div>
+            <p className="text-xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
+              These tools allow me to operate with precision, deepen relationships, and stay proactive in managing my pipeline. But tools only support what matters most: building trust and delivering value. I use AI to help with critical thinking as opposed to automation.
+            </p>
           </div>
 
-          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-            <CardHeader>
-            </CardHeader>
-            <CardContent className="p-8">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-gray-700">
-                    <TableHead className="text-cyan-400 font-semibold">Sales Phase</TableHead>
-                    <TableHead className="text-cyan-400 font-semibold">AI Tool</TableHead>
-                    <TableHead className="text-cyan-400 font-semibold">Relevance</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Industry Research</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Claude</a> / 
-                      <a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">NotebookLM</a> / 
-                      <a href="https://perplexity.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Perplexity</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Knowing the customer and understanding the industry trends/news. This information is then used for prospecting in calls, meetings to be relevant.</TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Account Specific Research</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">LinkedIn Sales Navigator</a> / 
-                      <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Claude</a> / 
-                      <a href="https://sumble.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Sumble</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Understanding their org chart, key people, analysing annual reports, earning calls, second order effects on persona's in terms of industry news. Understanding their current technology stack.</TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Prospecting</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://apollo.io" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Apollo</a> / 
-                      <a href="https://lusha.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Lusha</a> / 
-                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">LinkedIn</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Website tracking, sequencing, cold calls, automation with ICPs.</TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Discovery</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://meetjamie.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">JamieAI</a> / 
-                      <a href="https://fluint.io" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Fluint</a> / 
-                      <a href="https://docs.google.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Google Docs</a> / 
-                      <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Claude</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Capturing the notes and transforming them into an actionable business case that helps the customer and me frame why we are going through this dance.</TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Qualification</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://openai.com/index/introducing-gpts/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">MEDDPICC Custom built GPT</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Act's as a sense check to ensure the deal is healthy and to critique what more we could be doing.</TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Proposals</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://pitch.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Pitch</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Interactive pitches that allow creativity, somewhere between a deck and a deal room.</TableCell>
-                  </TableRow>
-                  <TableRow className="border-gray-700">
-                    <TableCell className="text-gray-300 font-medium">Staying organised and systematic</TableCell>
-                    <TableCell className="text-gray-300">
-                      <a href="https://hubspot.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Hubspot</a> / 
-                      <a href="https://ticktick.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline">Tick Tick</a>
-                    </TableCell>
-                    <TableCell className="text-gray-300">Goals/Tasks/Calendar planning broken down into Pipeline Generation, Customer commitments with priority given to revenue generating activities via tagging.</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          {/* Tool Categories */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {toolCategories.map((category, categoryIndex) => {
+              const CategoryIcon = category.icon;
+              return (
+                <Card key={categoryIndex} className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-3 text-2xl text-white">
+                      <CategoryIcon className="h-8 w-8 text-cyan-400" />
+                      <span>{category.category}</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {category.tools.map((tool, toolIndex) => (
+                        <div key={toolIndex} className="flex flex-col space-y-1 p-4 rounded-lg bg-gray-700/30 hover:bg-gray-700/50 transition-colors">
+                          <h4 className="font-semibold text-cyan-400 text-lg">{tool.name}</h4>
+                          <p className="text-gray-300 text-sm leading-relaxed">{tool.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Philosophy Statement */}
+          <div className="text-center mt-16">
+            <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm inline-block max-w-4xl">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-cyan-400 mb-4">
+                  Technology Enhances, Relationships Drive Results
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-lg">
+                  While these tools amplify my capabilities, they never replace the fundamentals: 
+                  understanding people, solving real problems, and building genuine trust. Technology 
+                  is my force multiplier, not my substitute for authentic relationship building.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
     </div>
   );
 };
 
-export default SalesTechStackPage;
+export default SalesTechStack;

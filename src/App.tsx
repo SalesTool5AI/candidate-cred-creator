@@ -19,6 +19,9 @@ import CaseStudiesPage from "./pages/CaseStudies";
 import ProfessionalJourneyPage from "./pages/ProfessionalJourney";
 import TestimonialsPage from "./pages/Testimonials";
 import SalesTechStackPage from "./pages/SalesTechStack";
+import MySalesPhilosophyPage from "./pages/MySalesPhilosophy";
+import ScaleFrameworkPage from "./pages/ScaleFramework";
+import ProvenResultsPage from "./pages/ProvenResults";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,9 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/how-i-sell" element={<HowISellPage />} />
+              <Route path="/how-i-sell/philosophy" element={<MySalesPhilosophyPage />} />
+              <Route path="/how-i-sell/scale-framework" element={<ScaleFrameworkPage />} />
+              <Route path="/how-i-sell/proven-results" element={<ProvenResultsPage />} />
               <Route path="/how-i-sell/sales-tech-stack" element={<SalesTechStackPage />} />
               <Route path="/what-i-bring" element={<WhatIBringPage />} />
               <Route path="/what-i-bring/sales-performance" element={<SalesPerformancePage />} />
