@@ -15,6 +15,7 @@ const Navigation = () => {
     { label: 'The SCALE Framework', path: '/how-i-sell/scale-framework' },
     { label: 'Proven Results & Case Studies', path: '/how-i-sell/proven-results' },
     { label: 'My Sales Tech Stack', path: '/how-i-sell/sales-tech-stack' },
+    { label: 'Testimonials', path: '/testimonials' },
   ];
 
   const moreThanSellerItems = [
@@ -31,7 +32,7 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
   const isWhatIBringActive = () => location.pathname.startsWith('/what-i-bring');
   const isMoreThanSellerActive = () => location.pathname === '/more-than-seller' || location.pathname === '/my-values';
-  const isHowISellActive = () => location.pathname === '/how-i-sell' || location.pathname.startsWith('/how-i-sell/');
+  const isHowISellActive = () => location.pathname === '/how-i-sell' || location.pathname.startsWith('/how-i-sell/') || location.pathname === '/testimonials';
 
   const handleEmailClick = () => {
     window.location.href = "mailto:sam@sbryant.io?subject=Enterprise Sales Opportunity";
