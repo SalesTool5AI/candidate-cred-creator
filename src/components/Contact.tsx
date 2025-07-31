@@ -36,7 +36,7 @@ export function Contact() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             Let's Connect
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
+          <p className="text-lg sm:text-xl text-foreground max-w-2xl mx-auto px-4">
             Get in touch to discuss enterprise sales opportunities.
           </p>
         </div>

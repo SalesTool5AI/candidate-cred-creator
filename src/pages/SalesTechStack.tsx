@@ -58,7 +58,7 @@ const SalesTechStack = () => {
               Tools of the Craft
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 mx-auto mb-8"></div>
-            <p className="text-xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-xl text-foreground leading-relaxed max-w-4xl mx-auto">
               These tools allow me to operate with precision, deepen relationships, and stay proactive in managing my pipeline. But tools only support what matters most: building trust and delivering value. I use AI to help with critical thinking as opposed to automation.
             </p>
           </div>
@@ -80,7 +80,7 @@ const SalesTechStack = () => {
                       {category.tools.map((tool, toolIndex) => (
                         <div key={toolIndex} className="flex flex-col space-y-1 p-4 rounded-lg bg-gray-700/30 hover:bg-gray-700/50 transition-colors">
                           <h4 className="font-semibold text-cyan-400 text-lg">{tool.name}</h4>
-                          <p className="text-gray-300 text-sm leading-relaxed">{tool.description}</p>
+                          <p className="text-foreground text-sm leading-relaxed">{tool.description}</p>
                         </div>
                       ))}
                     </div>
@@ -97,7 +97,7 @@ const SalesTechStack = () => {
                 <h3 className="text-2xl font-bold text-cyan-400 mb-4">
                   Technology Enhances, Relationships Drive Results
                 </h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
+                <p className="text-foreground leading-relaxed text-lg">
                   While these tools amplify my capabilities, they never replace the fundamentals: 
                   understanding people, solving real problems, and building genuine trust. Technology 
                   is my force multiplier, not my substitute for authentic relationship building.

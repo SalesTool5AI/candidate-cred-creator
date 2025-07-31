@@ -107,4 +107,9 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-family: 'Krub', sans-serif;
   }
+
+  /* Ensure consistent body text color */
+  p, .body-text {
+    @apply text-foreground;
+  }
 }

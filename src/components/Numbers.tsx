@@ -43,7 +43,7 @@ export function Numbers() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             The Numbers
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto px-4">
+          <p className="text-lg sm:text-xl text-foreground max-w-2xl mx-auto px-4">
             SoftwareONE performance data showcasing consistent achievement and growth across 6 years.
           </p>
         </div>
@@ -65,7 +65,7 @@ export function Numbers() {
                 <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                   {stat.label}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-300">
+                <p className="text-sm sm:text-base text-foreground">
                   {stat.description}
                 </p>
               </CardContent>
