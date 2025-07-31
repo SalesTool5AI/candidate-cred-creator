@@ -68,7 +68,7 @@ export function About() {
               <p className="text-sm sm:text-base text-muted-foreground">
                 Former academy footballer turned sales leader. I believe in continuous learning, 
                 strategic thinking, and the power of technology to transform how we work. 
-                Always ready for the next challenge.
+                Always ready for the next challenge. My interests include, Football (For my sins I support Leeds United), golf, tennis, running, the gym & house music. I also like to invest and take an active interest in the financial markets.
               </p>
             </div>
           </div>
