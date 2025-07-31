@@ -21,9 +21,8 @@ const SalesTechStack = () => {
       icon: Users,
       tools: [
         { name: "Google Docs", description: "Collaborative document creation" },
-        { name: "Microsoft Word", description: "Professional document formatting" },
-        { name: "Microsoft Teams", description: "Enterprise communication" },
-        { name: "Slack", description: "Team collaboration and messaging" },
+        { name: "Microsoft Teams", description: "External channel to get closer to customers" },
+        { name: "Slack", description: "External channel to get closer to customers" },
         { name: "WhatsApp", description: "Direct customer communication" }
       ]
     },
