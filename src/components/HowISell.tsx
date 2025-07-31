@@ -32,7 +32,7 @@ const HowISell = () => {
               </p>
               
               <p className="text-foreground leading-relaxed mb-6">
-                But beyond numbers, my philosophy is rooted in honesty, empathy, and long-term thinking. I aim to be the person customers want to hear from, not because I'm persistent, but because I'm useful. And I carry that same intent internally, collaborating with product, marketing, and pre-sales to build cohesive, customer-centric plays.
+                But beyond numbers, my philosophy is rooted in honesty, empathy, and long-term thinking. I aim to be the person customers want to hear from, not because I'm persistent, but because I'm useful. And I carry that same intent internally, collaborating with product, marketing, and pre-sales to build cohesive, customer-centric plays. I treat my role as the CEO of the account, creating the vision of where to take the account, supporting and building the best team to help us win the customer, and taking responsibility for everyone who interacts with the customer.
               </p>
               
               <p className="text-xl text-cyan-400 font-semibold text-center">
