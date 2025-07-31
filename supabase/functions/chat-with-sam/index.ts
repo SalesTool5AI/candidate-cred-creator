@@ -318,7 +318,7 @@ CORE FACTS ABOUT SAM BRYANT:
 - Location: Leeds, UK
 - Education: Sports Science degree from Liverpool John Moores University (2:1)
 - Career highlights: $50M+ in career bookings, 125%+ average quota achievement
-- Peak achievement: 394% of quota at VMware/Broadcom ($21M closed)
+- Peak achievement: 394% of quota at VMware/Broadcom ($15M closed)
 - Key clients: Barclays, AstraZeneca, Fidelity International, WPP, FedEx, Mastercard, Santander
 - Passionate about: Leveraging AI and modern tools for sales efficiency
 
