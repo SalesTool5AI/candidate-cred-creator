@@ -59,7 +59,7 @@ export function About() {
               <p className="text-sm sm:text-base text-muted-foreground">
                 Entrepreneurial mindset combined with enterprise sales expertise. I excel at translating 
                 technical solutions into business value and leverage AI tools to scale my effectiveness 
-                in high-stakes environments.
+                in high-stakes environments. I am creative and in my spare time recently have been experimenting with the possibilities of AI, understanding how AI agents work, how no code tools like replit and lovable work. Not only has this improved my knowledge of AI but has helped my day to day conversations with technology leaders and helped me to understand more of their world and day to day challenges.
               </p>
             </div>
             
