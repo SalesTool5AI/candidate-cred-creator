@@ -62,11 +62,13 @@ const Index = () => {
           user_name: 'Visitor',
         })
         .select()
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
-      setConversationId(data.id);
+      if (data) {
+        setConversationId(data.id);
+      }
 
     } catch (error) {
       console.error('Error initializing conversation:', error);
@@ -80,6 +82,12 @@ const Index = () => {
 
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+    
+    // Prevent double submissions
+    if (isLoading) {
+      console.warn('Message send already in progress');
+      return;
+    }
 
     // Expand the chat interface when user sends first message
     if (!isExpanded) {

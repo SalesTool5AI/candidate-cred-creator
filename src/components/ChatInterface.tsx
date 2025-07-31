@@ -60,11 +60,13 @@ export const ChatInterface: React.FC = () => {
           user_name: 'Visitor',
         })
         .select()
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
-      setConversationId(data.id);
+      if (data) {
+        setConversationId(data.id);
+      }
 
       // Add welcome message
       const welcomeMessage = {
@@ -115,6 +117,12 @@ export const ChatInterface: React.FC = () => {
 
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+    
+    // Prevent double submissions
+    if (isLoading) {
+      console.warn('Message send already in progress');
+      return;
+    }
 
     console.log('Sending message:', inputMessage);
 

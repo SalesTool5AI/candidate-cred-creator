@@ -29,7 +29,7 @@ export const LoginPage: React.FC = () => {
         .from('allowed_domains')
         .select('*')
         .eq('domain', domain)
-        .single();
+        .maybeSingle();
 
       if (domainError || !allowedDomain) {
         // Store domain and email for the request form

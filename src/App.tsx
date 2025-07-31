@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGate } from "@/components/AuthGate";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { SecurityHeaders } from "@/components/SecurityHeaders";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
 import CaseStudy from "./pages/CaseStudy";
@@ -26,13 +28,15 @@ import ProvenResultsPage from "./pages/ProvenResults";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AuthGate>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          <SecurityHeaders />
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AuthGate>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/how-i-sell" element={<HowISellPage />} />
@@ -56,6 +60,7 @@ const App = () => (
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;
