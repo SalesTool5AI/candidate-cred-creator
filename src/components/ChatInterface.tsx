@@ -53,22 +53,39 @@ export const ChatInterface: React.FC = () => {
 
   const initializeConversation = async (email: string) => {
     try {
-      const { data, error } = await supabase
+      // First check if user already has a conversation
+      const { data: existingConversation } = await supabase
         .from('chat_conversations')
-        .insert({
-          user_email: email,
-          user_name: 'Visitor',
-        })
-        .select()
+        .select('id')
+        .eq('user_email', email)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .maybeSingle();
 
-      if (error) throw error;
+      let conversationId = existingConversation?.id;
 
-      if (data) {
-        setConversationId(data.id);
+      // If no existing conversation, create a new one
+      if (!conversationId) {
+        const { data: newConversation, error } = await supabase
+          .from('chat_conversations')
+          .insert({
+            user_email: email,
+            user_name: 'Visitor',
+          })
+          .select('id')
+          .single();
+
+        if (error) {
+          console.error('Error creating conversation:', error);
+          // Still set up the welcome message even if DB fails
+        } else {
+          conversationId = newConversation.id;
+        }
       }
 
-      // Add welcome message
+      setConversationId(conversationId);
+
+      // Add welcome message regardless of DB status
       const welcomeMessage = {
         id: 'welcome',
         role: 'assistant' as const,
@@ -79,11 +96,14 @@ export const ChatInterface: React.FC = () => {
 
     } catch (error) {
       console.error('Error initializing conversation:', error);
-      toast({
-        title: "Error",
-        description: "Failed to initialize chat. Please refresh the page.",
-        variant: "destructive",
-      });
+      // Don't show error toast - just log it and continue with welcome message
+      const welcomeMessage = {
+        id: 'welcome',
+        role: 'assistant' as const,
+        content: "Hi I am trained on Sam Bryant's, work, case studies, experience and philosophy. I can answer questions about his career, achievements, work style, expertise, and more. What would you like to know about Sam?",
+        created_at: new Date().toISOString(),
+      };
+      setMessages([welcomeMessage]);
     }
   };
 
