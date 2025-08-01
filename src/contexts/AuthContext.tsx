@@ -8,7 +8,6 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   signOut: () => Promise<void>;
-  setMockUser: (user: any) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,15 +25,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const setMockUser = (mockUser: any) => {
-    // SECURITY: Only allow mock users in localhost development
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      setUser(mockUser);
-      setLoading(false);
-    } else {
-      console.warn('Mock user access denied in production environment');
-    }
-  };
 
   useEffect(() => {
     // Set up auth state listener first
@@ -117,7 +107,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signOut, setMockUser }}>
+    <AuthContext.Provider value={{ user, session, loading, signOut }}>
       {children}
     </AuthContext.Provider>
   );
