@@ -373,12 +373,16 @@ Remember: Be helpful and conversational. If you don't have specific information,
       )
     }
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('Anthropic API error:', errorText)
+    const data = await response.json()
+    console.log('Anthropic API success - response received')
+
+    const assistantMessage = data.content?.[0]?.text
+
+    if (!assistantMessage) {
+      console.error('No message content in response:', data)
       return new Response(
         JSON.stringify({ 
-          error: `Anthropic API error: ${response.status} - ${errorText}`,
+          error: 'No response content from AI',
           success: false 
         }),
         { 
@@ -391,20 +395,20 @@ Remember: Be helpful and conversational. If you don't have specific information,
       )
     }
 
-    const data = await response.json()
-    const aiResponse = data.content[0].text
-
-    console.log('AI response generated successfully')
-    
-    return new Response(JSON.stringify({ 
-      response: aiResponse,
-      success: true 
-    }), {
-      headers: { 
-        ...corsHeaders, 
-        'Content-Type': 'application/json' 
+    console.log('Returning successful response')
+    return new Response(
+      JSON.stringify({ 
+        message: assistantMessage,
+        knowledgeEntriesUsed: knowledgeResults.length,
+        success: true 
+      }),
+      { 
+        headers: { 
+          ...corsHeaders,
+          'Content-Type': 'application/json' 
+        } 
       }
-    })
+    )
 
   } catch (error) {
     console.error('=== Edge function error ===')

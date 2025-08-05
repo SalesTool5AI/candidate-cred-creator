@@ -158,17 +158,6 @@ export const ChatInterface: React.FC = () => {
     setInputMessage('');
     setIsLoading(true);
 
-    // Create placeholder assistant message for streaming
-    const assistantMessageId = (Date.now() + 1).toString();
-    const assistantMessage: Message = {
-      id: assistantMessageId,
-      role: 'assistant',
-      content: '',
-      created_at: new Date().toISOString(),
-    };
-
-    setMessages(prev => [...prev, assistantMessage]);
-
     try {
       // Save user message to database if we have a conversation ID
       if (conversationId) {
@@ -192,56 +181,87 @@ export const ChatInterface: React.FC = () => {
         }));
 
       console.log('Calling chat-with-sam function...');
-      
-      const response = await supabase.functions.invoke('chat-with-sam', {
+      console.log('Request details:', { 
+        userEmail, 
+        currentInput, 
+        conversationId,
+        historyLength: conversationHistory.length 
+      });
+
+      // Call the edge function with detailed error handling
+      const { data, error } = await supabase.functions.invoke('chat-with-sam', {
         body: {
           message: currentInput,
           conversationHistory,
           userEmail: userEmail,
-          userName: 'Visitor'
+          userName: 'Visitor',
+        },
+        headers: {
+          'x-user-email': userEmail
         }
       });
 
-      if (response.error) {
-        throw new Error(response.error.message || 'Failed to get response');
+      console.log('Edge function response:', { data, error });
+
+      if (error) {
+        console.error('Supabase function error details:', {
+          name: error.name,
+          message: error.message,
+          context: error.context,
+          stack: error.stack
+        });
+        throw new Error(`Function call failed: ${error.message}`);
       }
 
-      const aiResponse = response.data?.response || response.data;
-      if (!aiResponse) {
-        throw new Error('No response received');
-      }
+      if (data && data.success) {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: data.message,
+          created_at: new Date().toISOString(),
+        };
 
-      // Update the assistant message with the final response
-      setMessages(prev => 
-        prev.map(msg => 
-          msg.id === assistantMessageId 
-            ? { ...msg, content: aiResponse }
-            : msg
-        )
-      );
+        setMessages(prev => [...prev, assistantMessage]);
 
-      // Save final assistant message to database
-      if (conversationId) {
-        try {
-          await supabase.from('chat_messages').insert({
-            conversation_id: conversationId,
-            role: 'assistant',
-            content: aiResponse,
-          });
-        } catch (dbError) {
-          console.log('Failed to save assistant message to DB:', dbError);
+        // Save assistant message to database if we have a conversation ID
+        if (conversationId) {
+          try {
+            await supabase.from('chat_messages').insert({
+              conversation_id: conversationId,
+              role: 'assistant',
+              content: assistantMessage.content,
+            });
+          } catch (dbError) {
+            console.log('Failed to save assistant message to DB:', dbError);
+          }
         }
+      } else {
+        throw new Error(data?.error || 'Failed to get response from AI');
       }
 
     } catch (error) {
       console.error('Full error details:', error);
       
-      // Remove the placeholder assistant message and add error message
-      setMessages(prev => prev.filter(msg => msg.id !== assistantMessageId));
+      // Extract the actual error message from the response
+      const errorData = error?.data || error;
+      let errorMessage = "Failed to send message. Please try again.";
+      let errorDetails = '';
       
-      const errorMessage = error?.message?.includes('Failed to fetch') 
-        ? "Connection failed. Please check your internet connection and try again."
-        : "I'm having trouble responding right now. Please try again in a moment.";
+      // Handle different error types with more detailed messages
+      if (error?.name === 'FunctionsFetchError') {
+        errorMessage = "Connection to AI service failed. Please check your internet connection and try again.";
+      } else if (errorData?.error) {
+        errorMessage = errorData.error;
+        if (errorData.details) {
+          errorDetails = typeof errorData.details === 'string' 
+            ? errorData.details 
+            : JSON.stringify(errorData.details, null, 2);
+        }
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (error?.message?.includes('ANTHROPIC_API_KEY')) {
+        errorMessage = "AI service configuration error. Please contact support.";
+      }
       
       toast({
         title: "Error",
@@ -251,7 +271,7 @@ export const ChatInterface: React.FC = () => {
       
       // Add error message to chat
       const errorMsg: Message = {
-        id: (Date.now() + 2).toString(),
+        id: (Date.now() + 1).toString(),
         role: 'assistant',
         content: "I'm sorry, I'm having trouble responding right now. Please try again in a moment.",
         created_at: new Date().toISOString(),
