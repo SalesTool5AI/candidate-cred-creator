@@ -158,6 +158,17 @@ export const ChatInterface: React.FC = () => {
     setInputMessage('');
     setIsLoading(true);
 
+    // Create placeholder assistant message for streaming
+    const assistantMessageId = (Date.now() + 1).toString();
+    const assistantMessage: Message = {
+      id: assistantMessageId,
+      role: 'assistant',
+      content: '',
+      created_at: new Date().toISOString(),
+    };
+
+    setMessages(prev => [...prev, assistantMessage]);
+
     try {
       // Save user message to database if we have a conversation ID
       if (conversationId) {
@@ -180,88 +191,96 @@ export const ChatInterface: React.FC = () => {
           content: msg.content
         }));
 
-      console.log('Calling chat-with-sam function...');
-      console.log('Request details:', { 
-        userEmail, 
-        currentInput, 
-        conversationId,
-        historyLength: conversationHistory.length 
-      });
-
-      // Call the edge function with detailed error handling
-      const { data, error } = await supabase.functions.invoke('chat-with-sam', {
-        body: {
+      console.log('Calling chat-with-sam function for streaming...');
+      
+      // Make streaming request using environment variables
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      
+      const response = await fetch(`${supabaseUrl}/functions/v1/chat-with-sam`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'x-user-email': userEmail
+        },
+        body: JSON.stringify({
           message: currentInput,
           conversationHistory,
           userEmail: userEmail,
           userName: 'Visitor',
-        },
-        headers: {
-          'x-user-email': userEmail
-        }
+        })
       });
 
-      console.log('Edge function response:', { data, error });
-
-      if (error) {
-        console.error('Supabase function error details:', {
-          name: error.name,
-          message: error.message,
-          context: error.context,
-          stack: error.stack
-        });
-        throw new Error(`Function call failed: ${error.message}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      if (data && data.success) {
-        const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: data.message,
-          created_at: new Date().toISOString(),
-        };
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No response stream available');
+      }
 
-        setMessages(prev => [...prev, assistantMessage]);
+      let fullResponse = '';
+      const decoder = new TextDecoder();
 
-        // Save assistant message to database if we have a conversation ID
-        if (conversationId) {
-          try {
-            await supabase.from('chat_messages').insert({
-              conversation_id: conversationId,
-              role: 'assistant',
-              content: assistantMessage.content,
-            });
-          } catch (dbError) {
-            console.log('Failed to save assistant message to DB:', dbError);
+      while (true) {
+        const { done, value } = await reader.read();
+        
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            if (data === '[DONE]') continue;
+            
+            try {
+              const parsed = JSON.parse(data);
+              if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+                fullResponse += parsed.delta.text;
+                
+                // Update the assistant message in real-time
+                setMessages(prev => 
+                  prev.map(msg => 
+                    msg.id === assistantMessageId 
+                      ? { ...msg, content: fullResponse }
+                      : msg
+                  )
+                );
+              }
+            } catch (e) {
+              // Skip invalid JSON lines
+              console.log('Skipping invalid JSON:', data);
+            }
           }
         }
-      } else {
-        throw new Error(data?.error || 'Failed to get response from AI');
+      }
+
+      // Save final assistant message to database
+      if (conversationId && fullResponse) {
+        try {
+          await supabase.from('chat_messages').insert({
+            conversation_id: conversationId,
+            role: 'assistant',
+            content: fullResponse,
+          });
+        } catch (dbError) {
+          console.log('Failed to save assistant message to DB:', dbError);
+        }
       }
 
     } catch (error) {
       console.error('Full error details:', error);
       
-      // Extract the actual error message from the response
-      const errorData = error?.data || error;
-      let errorMessage = "Failed to send message. Please try again.";
-      let errorDetails = '';
+      // Remove the placeholder assistant message and add error message
+      setMessages(prev => prev.filter(msg => msg.id !== assistantMessageId));
       
-      // Handle different error types with more detailed messages
-      if (error?.name === 'FunctionsFetchError') {
-        errorMessage = "Connection to AI service failed. Please check your internet connection and try again.";
-      } else if (errorData?.error) {
-        errorMessage = errorData.error;
-        if (errorData.details) {
-          errorDetails = typeof errorData.details === 'string' 
-            ? errorData.details 
-            : JSON.stringify(errorData.details, null, 2);
-        }
-      } else if (error?.message) {
-        errorMessage = error.message;
-      } else if (error?.message?.includes('ANTHROPIC_API_KEY')) {
-        errorMessage = "AI service configuration error. Please contact support.";
-      }
+      const errorMessage = error?.message?.includes('Failed to fetch') 
+        ? "Connection failed. Please check your internet connection and try again."
+        : "I'm having trouble responding right now. Please try again in a moment.";
       
       toast({
         title: "Error",
@@ -271,7 +290,7 @@ export const ChatInterface: React.FC = () => {
       
       // Add error message to chat
       const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: (Date.now() + 2).toString(),
         role: 'assistant',
         content: "I'm sorry, I'm having trouble responding right now. Please try again in a moment.",
         created_at: new Date().toISOString(),

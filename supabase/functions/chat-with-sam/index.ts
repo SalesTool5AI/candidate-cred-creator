@@ -349,6 +349,7 @@ Remember: Be helpful and conversational. If you don't have specific information,
         model: 'claude-3-5-haiku-20241022',
         max_tokens: 800,
         temperature: 0.2,
+        stream: true,
         messages: messages
       })
     })
@@ -373,42 +374,17 @@ Remember: Be helpful and conversational. If you don't have specific information,
       )
     }
 
-    const data = await response.json()
-    console.log('Anthropic API success - response received')
-
-    const assistantMessage = data.content?.[0]?.text
-
-    if (!assistantMessage) {
-      console.error('No message content in response:', data)
-      return new Response(
-        JSON.stringify({ 
-          error: 'No response content from AI',
-          success: false 
-        }),
-        { 
-          status: 500,
-          headers: { 
-            ...corsHeaders,
-            'Content-Type': 'application/json' 
-          } 
-        }
-      )
-    }
-
-    console.log('Returning successful response')
-    return new Response(
-      JSON.stringify({ 
-        message: assistantMessage,
-        knowledgeEntriesUsed: knowledgeResults.length,
-        success: true 
-      }),
-      { 
-        headers: { 
-          ...corsHeaders,
-          'Content-Type': 'application/json' 
-        } 
+    // Return streaming response
+    console.log('Setting up streaming response')
+    
+    return new Response(response.body, {
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
       }
-    )
+    })
 
   } catch (error) {
     console.error('=== Edge function error ===')
