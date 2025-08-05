@@ -349,7 +349,6 @@ Remember: Be helpful and conversational. If you don't have specific information,
         model: 'claude-3-5-haiku-20241022',
         max_tokens: 800,
         temperature: 0.2,
-        stream: true,
         messages: messages
       })
     })
@@ -374,15 +373,36 @@ Remember: Be helpful and conversational. If you don't have specific information,
       )
     }
 
-    // Return streaming response
-    console.log('Setting up streaming response')
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Anthropic API error:', errorText)
+      return new Response(
+        JSON.stringify({ 
+          error: `Anthropic API error: ${response.status} - ${errorText}`,
+          success: false 
+        }),
+        { 
+          status: 500,
+          headers: { 
+            ...corsHeaders,
+            'Content-Type': 'application/json' 
+          } 
+        }
+      )
+    }
+
+    const data = await response.json()
+    const aiResponse = data.content[0].text
+
+    console.log('AI response generated successfully')
     
-    return new Response(response.body, {
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
+    return new Response(JSON.stringify({ 
+      response: aiResponse,
+      success: true 
+    }), {
+      headers: { 
+        ...corsHeaders, 
+        'Content-Type': 'application/json' 
       }
     })
 

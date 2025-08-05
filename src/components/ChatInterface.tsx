@@ -191,81 +191,42 @@ export const ChatInterface: React.FC = () => {
           content: msg.content
         }));
 
-      console.log('Calling chat-with-sam function for streaming...');
+      console.log('Calling chat-with-sam function...');
       
-      // Make streaming request using environment variables
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      
-      const response = await fetch(`${supabaseUrl}/functions/v1/chat-with-sam`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseAnonKey}`,
-          'x-user-email': userEmail
-        },
-        body: JSON.stringify({
+      const response = await supabase.functions.invoke('chat-with-sam', {
+        body: {
           message: currentInput,
           conversationHistory,
           userEmail: userEmail,
-          userName: 'Visitor',
-        })
+          userName: 'Visitor'
+        }
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.error) {
+        throw new Error(response.error.message || 'Failed to get response');
       }
 
-      const reader = response.body?.getReader();
-      if (!reader) {
-        throw new Error('No response stream available');
+      const aiResponse = response.data?.response || response.data;
+      if (!aiResponse) {
+        throw new Error('No response received');
       }
 
-      let fullResponse = '';
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6);
-            if (data === '[DONE]') continue;
-            
-            try {
-              const parsed = JSON.parse(data);
-              if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
-                fullResponse += parsed.delta.text;
-                
-                // Update the assistant message in real-time
-                setMessages(prev => 
-                  prev.map(msg => 
-                    msg.id === assistantMessageId 
-                      ? { ...msg, content: fullResponse }
-                      : msg
-                  )
-                );
-              }
-            } catch (e) {
-              // Skip invalid JSON lines
-              console.log('Skipping invalid JSON:', data);
-            }
-          }
-        }
-      }
+      // Update the assistant message with the final response
+      setMessages(prev => 
+        prev.map(msg => 
+          msg.id === assistantMessageId 
+            ? { ...msg, content: aiResponse }
+            : msg
+        )
+      );
 
       // Save final assistant message to database
-      if (conversationId && fullResponse) {
+      if (conversationId) {
         try {
           await supabase.from('chat_messages').insert({
             conversation_id: conversationId,
             role: 'assistant',
-            content: fullResponse,
+            content: aiResponse,
           });
         } catch (dbError) {
           console.log('Failed to save assistant message to DB:', dbError);
