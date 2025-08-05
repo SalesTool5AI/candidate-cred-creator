@@ -10,7 +10,7 @@ const keyMetrics = [
 ];
 
 const achievements = [
-  { title: "Deal Size Range", value: "$1.5M - $4M ARR", color: "border-l-primary" },
+  { title: "Deal Size Range", value: "$1.5M - $5M ARR", color: "border-l-primary" },
   { title: "Territory Growth", value: "£0 → £2M GP", color: "border-l-brand-green" },
   { title: "Top 5 sales at SoftwareONE", value: "Worldwide Recognition", color: "border-l-brand-blue" },
   { title: "Salesperson of the Quarter", value: "VMware Q2 2022", color: "border-l-accent" },
