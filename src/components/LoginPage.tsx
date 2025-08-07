@@ -31,8 +31,15 @@ export const LoginPage: React.FC = () => {
         .eq('domain', domain)
         .maybeSingle();
 
-      if (domainError || !allowedDomain) {
-        // Store domain and email for the request form
+      // Also check if specific email is individually authorized
+      const { data: authorizedEmail, error: emailError } = await supabase
+        .from('authorized_emails')
+        .select('*')
+        .eq('email', email)
+        .maybeSingle();
+
+      if ((domainError || !allowedDomain) && (emailError || !authorizedEmail)) {
+        // Neither domain nor specific email is authorized
         setDomain(domain);
         setShowRequestForm(true);
         setLoading(false);
@@ -55,9 +62,10 @@ export const LoginPage: React.FC = () => {
         });
       } else {
         setSent(true);
+        const companyName = allowedDomain?.company_name || "Sam Bryant";
         toast({
           title: "Magic Link Sent!",
-          description: `Check your email at ${email} for a secure login link from ${allowedDomain.company_name}.`,
+          description: `Check your email at ${email} for a secure login link from ${companyName}.`,
         });
       }
     } catch (error) {

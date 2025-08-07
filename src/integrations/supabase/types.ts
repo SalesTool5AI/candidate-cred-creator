@@ -38,6 +38,27 @@ export type Database = {
         }
         Relationships: []
       }
+      authorized_emails: {
+        Row: {
+          authorized_by: string | null
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          authorized_by?: string | null
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          authorized_by?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
       authorized_users: {
         Row: {
           company_name: string
