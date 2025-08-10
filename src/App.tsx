@@ -24,7 +24,7 @@ import SalesTechStackPage from "./pages/SalesTechStack";
 import MySalesPhilosophyPage from "./pages/MySalesPhilosophy";
 import ScaleFrameworkPage from "./pages/ScaleFramework";
 import ProvenResultsPage from "./pages/ProvenResults";
-
+import ExportContentPage from "./pages/ExportContent";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -54,6 +54,7 @@ const App = () => (
               <Route path="/chat" element={<Chat />} />
               <Route path="/case-study/:slug" element={<CaseStudy />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/export-content" element={<ExportContentPage />} />
             </Routes>
           </AuthGate>
         </BrowserRouter>
