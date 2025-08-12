@@ -5,6 +5,24 @@ import type { Database } from './types';
 const SUPABASE_URL = "https://navnadoeznbzvqivamem.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hdm5hZG9lem5ienZxaXZhbWVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4OTc3NzUsImV4cCI6MjA2NzQ3Mzc3NX0.O5UsGLAEVnwZGhzYjg4ePCWgz1qEiLBSfqDKRGV4kME";
 
+// Ensure a per-visitor email exists for RLS and set it as a header
+const getOrCreateChatUserEmail = () => {
+  try {
+    const key = 'chat_user_email';
+    let email = localStorage.getItem(key);
+    if (!email) {
+      const rand = Math.random().toString(36).slice(2, 8);
+      email = `visitor_${Date.now()}_${rand}@session.com`;
+      localStorage.setItem(key, email);
+    }
+    return email;
+  } catch {
+    return 'anonymous';
+  }
+};
+
+const USER_EMAIL_HEADER = getOrCreateChatUserEmail();
+
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
@@ -13,5 +31,10 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     storage: localStorage,
     persistSession: true,
     autoRefreshToken: true,
-  }
+  },
+  global: {
+    headers: {
+      'x-user-email': USER_EMAIL_HEADER,
+    },
+  },
 });
