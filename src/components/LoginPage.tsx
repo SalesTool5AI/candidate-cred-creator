@@ -10,13 +10,15 @@ import { ArrowLeft } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [showRequestForm, setShowRequestForm] = useState(false);
   const [domain, setDomain] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
   const { toast } = useToast();
 
-  const handleMagicLink = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -31,42 +33,54 @@ export const LoginPage: React.FC = () => {
         .eq('domain', domain)
         .maybeSingle();
 
-      // Also check if specific email is individually authorized
-      const { data: authorizedEmail, error: emailError } = await supabase
-        .from('authorized_emails')
-        .select('*')
-        .eq('email', email)
-        .maybeSingle();
-
-      if ((domainError || !allowedDomain) && (emailError || !authorizedEmail)) {
-        // Neither domain nor specific email is authorized
+      // Note: authorized_emails table doesn't exist, so only check domains
+      if (domainError || !allowedDomain) {
+        // Domain is not authorized
         setDomain(domain);
         setShowRequestForm(true);
         setLoading(false);
         return;
       }
 
-      // Send magic link
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/`,
-        },
-      });
+      // Handle sign up or sign in
+      let error;
+      
+      if (isSignUp) {
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/`,
+          },
+        });
+        error = signUpError;
+      } else {
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        error = signInError;
+      }
 
       if (error) {
         toast({
-          title: "Error",
+          title: "Authentication Error",
           description: error.message,
           variant: "destructive",
         });
       } else {
-        setSent(true);
         const companyName = allowedDomain?.company_name || "Sam Bryant";
-        toast({
-          title: "Magic Link Sent!",
-          description: `Check your email at ${email} for a secure login link from ${companyName}.`,
-        });
+        if (isSignUp) {
+          toast({
+            title: "Account Created!",
+            description: `Welcome to ${companyName}! You may need to verify your email.`,
+          });
+        } else {
+          toast({
+            title: "Login Successful!",
+            description: `Welcome back to ${companyName}!`,
+          });
+        }
       }
     } catch (error) {
       toast({
@@ -159,7 +173,7 @@ export const LoginPage: React.FC = () => {
               </CardHeader>
               <CardContent>
                 {!sent ? (
-                  <form onSubmit={handleMagicLink} className="space-y-6">
+                  <form onSubmit={handleAuth} className="space-y-6">
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-3">
                         Company Email Address
@@ -173,9 +187,32 @@ export const LoginPage: React.FC = () => {
                         required
                         className="w-full bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-cyan-400/20"
                       />
-                      <p className="text-xs text-gray-400 mt-2">
-                        Only authorized company domains can access this portfolio
-                      </p>
+                    </div>
+                    <div>
+                      <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-3">
+                        Password
+                      </label>
+                      <Input
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        required
+                        className="w-full bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-cyan-400/20"
+                      />
+                    </div>
+                    <p className="text-xs text-gray-400">
+                      Only authorized company domains can access this portfolio
+                    </p>
+                    <div className="flex items-center justify-between text-sm">
+                      <button
+                        type="button"
+                        onClick={() => setIsSignUp(!isSignUp)}
+                        className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                      >
+                        {isSignUp ? "Already have an account? Sign In" : "Need an account? Sign Up"}
+                      </button>
                     </div>
                     <Button
                       type="submit"
@@ -185,10 +222,10 @@ export const LoginPage: React.FC = () => {
                       {loading ? (
                         <div className="flex items-center space-x-2">
                           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          <span>Sending...</span>
+                          <span>{isSignUp ? "Creating Account..." : "Signing In..."}</span>
                         </div>
                       ) : (
-                        "Send Magic Link"
+                        isSignUp ? "Create Account" : "Sign In"
                       )}
                     </Button>
                   </form>
