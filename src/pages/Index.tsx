@@ -55,6 +55,7 @@ const Index = () => {
 
   const initializeConversation = async (email: string) => {
     try {
+      console.log('Initializing conversation for:', email);
       const { data, error } = await supabase
         .from('chat_conversations')
         .insert({
@@ -64,19 +65,20 @@ const Index = () => {
         .select()
         .maybeSingle();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error initializing conversation:', error);
+        // Don't show error toast for conversation init - chat can work without it
+        return;
+      }
 
       if (data) {
+        console.log('Conversation initialized:', data.id);
         setConversationId(data.id);
       }
 
     } catch (error) {
       console.error('Error initializing conversation:', error);
-      toast({
-        title: "Error",
-        description: "Failed to initialize chat. Please refresh the page.",
-        variant: "destructive",
-      });
+      // Don't block the page load - chat can work without conversation ID
     }
   };
 
